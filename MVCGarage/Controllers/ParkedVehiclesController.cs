@@ -72,6 +72,7 @@ namespace MVCGarage.Controllers
         {
             if (ModelState.IsValid)
             {
+                //parkedVehicle.ArrivalTime = DateTime.Now;
                 _context.Add(parkedVehicle);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -97,27 +98,31 @@ namespace MVCGarage.Controllers
                 Id = parkedVehicle.Id,
                 Brand = parkedVehicle.Brand,
                 Color = parkedVehicle.Color,
-                Colors = Enum.GetValues<Color>()
-                                .Select(g => new SelectListItem
-                                {
-                                    Text = g.ToString(),
-                                    Value = g.ToString()
-                                })
-                                .ToList(),
+                //Colors = Enum.GetValues<Color>()
+                //                .Select(g => new SelectListItem
+                //                {
+                //                    Text = g.ToString(),
+                //                    Value = g.ToString()
+                //                })
+                //                .ToList(),
                 Model = parkedVehicle.Model,
                 RegistrationNumber = parkedVehicle.RegistrationNumber,
                 Type = parkedVehicle.Type,
-                Types = Enum.GetValues<VehicleType>()
-                                .Select(g => new SelectListItem
-                                {
-                                    Text = g.ToString(),
-                                    Value = g.ToString()
-                                })
-                                .ToList(),
                 WheelCount = parkedVehicle.WheelCount
 
             };
             return View(parkedVehicleVM);
+        }
+
+        private  List<SelectListItem> GetVehicleTypeSelectList()
+        {
+            return Enum.GetValues<VehicleType>()
+                                            .Select(g => new SelectListItem
+                                            {
+                                                Text = g.ToString(),
+                                                Value = g.ToString()
+                                            })
+                                            .ToList();
         }
 
         // POST: ParkedVehicles/Edit/5
@@ -166,6 +171,7 @@ namespace MVCGarage.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
             return View(cvm);
         }
 
