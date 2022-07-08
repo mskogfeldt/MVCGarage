@@ -3,6 +3,6 @@
 
     public class IndexViewModel
     {
-        public IEnumerable<ParkedVehicleViewModel> ParkedVehicles { get; set; } = new List<ParkedVehicleViewModel>();
+        public IEnumerable<IndexParkedVehicleViewModel> ParkedVehicles { get; set; } = new List<IndexParkedVehicleViewModel>();
     }
 }

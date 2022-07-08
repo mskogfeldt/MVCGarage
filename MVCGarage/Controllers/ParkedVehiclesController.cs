@@ -42,6 +42,7 @@ namespace MVCGarage.Controllers
             {
                 return NotFound();
             }
+
             var model = new DetailsViewModel
             {
                 ArrivalTime = parkedVehicle.ArrivalTime,
@@ -68,16 +69,27 @@ namespace MVCGarage.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Park([Bind("Id,Color,Type,RegistrationNumber,Brand,Model,WheelCount,ArrivalTime")] ParkedVehicle parkedVehicle)
+        public async Task<IActionResult> Park(ParkViewModel pvm)
         {
             if (ModelState.IsValid)
             {
-                //parkedVehicle.ArrivalTime = DateTime.Now;
+                var parkedVehicle = new ParkedVehicle
+                {
+                    Brand = pvm.Brand,
+                    Color = pvm.Color,
+                    Id = pvm.Id,
+                    Model = pvm.Model,
+                    RegistrationNumber = pvm.RegistrationNumber,
+                    Type = pvm.Type,
+                    WheelCount = pvm.WheelCount,
+                    ArrivalTime = DateTime.Now
+                };
+
                 _context.Add(parkedVehicle);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(parkedVehicle);
+            return View(pvm);
         }
 
         // GET: ParkedVehicles/Edit/5
@@ -114,7 +126,7 @@ namespace MVCGarage.Controllers
             return View(parkedVehicleVM);
         }
 
-        private  List<SelectListItem> GetVehicleTypeSelectList()
+        private List<SelectListItem> GetVehicleTypeSelectList()
         {
             return Enum.GetValues<VehicleType>()
                                             .Select(g => new SelectListItem
@@ -160,7 +172,7 @@ namespace MVCGarage.Controllers
 
                     //_context.Update(parkedVehicle);
                     //await _context.SaveChangesAsync();
-            }
+                }
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!ParkedVehicleExists(cvm.Id))
@@ -205,7 +217,7 @@ namespace MVCGarage.Controllers
                 TotalParkedTime = totalParkedTimeSpan.ToString(),
                 RegistrationNumber = parkedVehicle.RegistrationNumber,
                 Type = parkedVehicle.Type,
-                WheelCount = parkedVehicle.WheelCount                
+                WheelCount = parkedVehicle.WheelCount
             };
 
             return View(cvm);

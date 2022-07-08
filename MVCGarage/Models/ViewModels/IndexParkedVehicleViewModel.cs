@@ -3,7 +3,7 @@
 
 namespace MVCGarage.Models.ViewModels
 {
-    public class ParkedVehicleViewModel
+    public class IndexParkedVehicleViewModel
     {
         public int Id { get; set; }
         public VehicleType Type { get; set; }
