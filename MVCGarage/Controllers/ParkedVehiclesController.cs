@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using MVCGarage.Data;
 using MVCGarage.Models.Entities;
 
-namespace MVCGarage.Models
+namespace MVCGarage.Controllers
 {
     public class ParkedVehiclesController : Controller
     {
@@ -22,9 +22,9 @@ namespace MVCGarage.Models
         // GET: ParkedVehicles
         public async Task<IActionResult> Index()
         {
-              return _context.ParkedVehicle != null ? 
-                          View(await _context.ParkedVehicle.ToListAsync()) :
-                          Problem("Entity set 'MVCGarageContext.ParkedVehicle'  is null.");
+            return _context.ParkedVehicle != null ?
+                        View(await _context.ParkedVehicle.ToListAsync()) :
+                        Problem("Entity set 'MVCGarageContext.ParkedVehicle'  is null.");
         }
 
         // GET: ParkedVehicles/Details/5
@@ -118,8 +118,8 @@ namespace MVCGarage.Models
             return View(parkedVehicle);
         }
 
-        // GET: ParkedVehicles/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        // GET: ParkedVehicles/Checkout/5
+        public async Task<IActionResult> Checkout(int? id)
         {
             if (id == null || _context.ParkedVehicle == null)
             {
@@ -136,10 +136,10 @@ namespace MVCGarage.Models
             return View(parkedVehicle);
         }
 
-        // POST: ParkedVehicles/Delete/5
-        [HttpPost, ActionName("Delete")]
+        // POST: ParkedVehicles/Checkout/5
+        [HttpPost, ActionName("Checkout")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> CheckoutConfirmed(int id)
         {
             if (_context.ParkedVehicle == null)
             {
@@ -150,14 +150,14 @@ namespace MVCGarage.Models
             {
                 _context.ParkedVehicle.Remove(parkedVehicle);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ParkedVehicleExists(int id)
         {
-          return (_context.ParkedVehicle?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.ParkedVehicle?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
