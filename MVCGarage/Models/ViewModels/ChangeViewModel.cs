@@ -12,6 +12,7 @@ namespace MVCGarage.Models.ViewModels
         public int Id { get; set; }
         [Required]
         public Color Color { get; set; }
+        public IEnumerable<SelectListItem> Colors { get; set; } = new List<SelectListItem>();
         [Required]
         public VehicleType Type { get; set; }
         public IEnumerable<SelectListItem> Types { get; set; } = new List<SelectListItem>();

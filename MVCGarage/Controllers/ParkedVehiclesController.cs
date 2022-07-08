@@ -42,7 +42,6 @@ namespace MVCGarage.Controllers
             {
                 return NotFound();
             }
-
             return View(parkedVehicle);
         }
 
@@ -86,10 +85,17 @@ namespace MVCGarage.Controllers
                 Id = parkedVehicle.Id,
                 Brand = parkedVehicle.Brand,
                 Color = parkedVehicle.Color,
+                Colors = Enum.GetValues<Color>()
+                                .Select(g => new SelectListItem
+                                {
+                                    Text = g.ToString(),
+                                    Value = g.ToString()
+                                })
+                                .ToList(),
                 Model = parkedVehicle.Model,
                 RegistrationNumber = parkedVehicle.RegistrationNumber,
                 Type = parkedVehicle.Type,
-                Types = Enum.GetNames<VehicleType>()
+                Types = Enum.GetValues<VehicleType>()
                                 .Select(g => new SelectListItem
                                 {
                                     Text = g.ToString(),
@@ -113,7 +119,17 @@ namespace MVCGarage.Controllers
             {
                 try
                 {
-                    _context.Update(parkedVehicle);
+                    var v = new ParkedVehicle()
+                    {
+                        Id = parkedVehicle.Id,
+                        Color = parkedVehicle.Color,
+                        Brand = parkedVehicle.Brand,
+                        Model = parkedVehicle.Model,
+                        RegistrationNumber = parkedVehicle.RegistrationNumber,
+                        Type = parkedVehicle.Type,
+                        WheelCount = parkedVehicle.WheelCount
+                    };
+                    _context.Update(v);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
