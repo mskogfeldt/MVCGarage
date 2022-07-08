@@ -15,5 +15,13 @@ namespace MVCGarage.Data
         }
 
         public DbSet<MVCGarage.Models.Entities.ParkedVehicle>? ParkedVehicle { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<ParkedVehicle>().HasData(
+                new ParkedVehicle {Id = 1, Brand = "Volvo", Color = Color.Yellow, Model = "240", RegistrationNumber = "ABC-123", Type = VehicleType.Car, WheelCount = 4, ArrivalTime = DateTime.Now }
+            );
+        }
     }
 }
