@@ -145,6 +145,7 @@ namespace MVCGarage.Controllers
                     ParkedVehicleOriginal.RegistrationNumber = cvm.RegistrationNumber;
                     ParkedVehicleOriginal.Brand = cvm.Brand;
                     ParkedVehicleOriginal.Color = cvm.Color;
+                    ParkedVehicleOriginal.Type = cvm.Type;
 
                     //TODO ModelState(ParkedVehicleOriginal).IsValid ???
 
