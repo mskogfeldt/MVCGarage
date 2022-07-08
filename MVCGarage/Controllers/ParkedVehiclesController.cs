@@ -42,7 +42,6 @@ namespace MVCGarage.Controllers
             {
                 return NotFound();
             }
-
             return View(parkedVehicle);
         }
 
@@ -81,14 +80,28 @@ namespace MVCGarage.Controllers
             {
                 return NotFound();
             }
-            var parkedVehicleVM = new Models.ViewModels.ChangeViewModel()
+            var parkedVehicleVM = new ChangeViewModel()
             {
                 Id = parkedVehicle.Id,
                 Brand = parkedVehicle.Brand,
                 Color = parkedVehicle.Color,
+                Colors = Enum.GetValues<Color>()
+                                .Select(g => new SelectListItem
+                                {
+                                    Text = g.ToString(),
+                                    Value = g.ToString()
+                                })
+                                .ToList(),
                 Model = parkedVehicle.Model,
                 RegistrationNumber = parkedVehicle.RegistrationNumber,
                 Type = parkedVehicle.Type,
+                Types = Enum.GetValues<VehicleType>()
+                                .Select(g => new SelectListItem
+                                {
+                                    Text = g.ToString(),
+                                    Value = g.ToString()
+                                })
+                                .ToList(),
                 WheelCount = parkedVehicle.WheelCount
 
             };
