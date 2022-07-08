@@ -18,11 +18,11 @@ Models
 Views
  ParkedVehicles
   Index
-  //Park (Create)
-  Checkout (Delete)
+  %%Park (Create) // Mats
+  Checkout
+   ++Receipt // Christian
   Details
-  //Change (Edit)
-  ++Receipt
+  %%Modify (Edit) // Johannes
   
 Controllers
  ParkedVehiclesController
