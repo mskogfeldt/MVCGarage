@@ -23,8 +23,6 @@ namespace MVCGarage.Models.ViewModels
         public string? Model { get; set; }
         [Range(0, int.MaxValue)]
         public int WheelCount { get; set; }
-        [Required]
-        public DateTime ArrivalTime { get; set; }
 
     }
 }

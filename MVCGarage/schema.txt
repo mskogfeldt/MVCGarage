@@ -7,11 +7,12 @@ Models
    VehicleType
    RegistrationNumber
    ArrivalTime
+  ParkedVehicleViewModel // Johannes
   DetailsViewModel (Detaljer för specifikt fordon) // Mats
    Alla props
   ReceiptViewModel (Kvitto för uthämtning) // Christian
    ArrivalTime
-  ChangeViewModel
+  ChangeViewModel // Johannes
    Alla props utom ankomsttid
    
 Views
