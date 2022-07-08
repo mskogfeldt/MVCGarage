@@ -80,7 +80,7 @@ namespace MVCGarage.Controllers
         }
 
         // GET: ParkedVehicles/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Modify(int? id)
         {
             if (id == null || _context.ParkedVehicle == null)
             {
@@ -125,7 +125,7 @@ namespace MVCGarage.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(ChangeViewModel cvm)
+        public async Task<IActionResult> Modify(ChangeViewModel cvm)
         {
             if (ModelState.IsValid)
             {

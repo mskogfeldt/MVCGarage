@@ -1,16 +1,16 @@
 ﻿@model MVCGarage.Models.ViewModels.ChangeViewModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Modify";
 }
 
-<h1>Edit</h1>
+<h1>Modify</h1>
 
 <h4>ParkedVehicle</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Modify">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
