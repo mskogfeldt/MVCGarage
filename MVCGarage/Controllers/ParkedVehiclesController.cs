@@ -80,7 +80,18 @@ namespace MVCGarage.Controllers
             {
                 return NotFound();
             }
-            return View(parkedVehicle);
+            var parkedVehicleVM = new Models.ViewModels.ChangeViewModel()
+            {
+                Id = parkedVehicle.Id,
+                Brand = parkedVehicle.Brand,
+                Color = parkedVehicle.Color,
+                Model = parkedVehicle.Model,
+                RegistrationNumber = parkedVehicle.RegistrationNumber,
+                Type = parkedVehicle.Type,
+                WheelCount = parkedVehicle.WheelCount
+
+            };
+            return View(parkedVehicleVM);
         }
 
         // POST: ParkedVehicles/Edit/5
