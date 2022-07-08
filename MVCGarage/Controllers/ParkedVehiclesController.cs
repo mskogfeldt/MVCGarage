@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MVCGarage.Data;
 using MVCGarage.Models.Entities;
+using MVCGarage.Models.ViewModels;
 
 namespace MVCGarage.Controllers
 {
@@ -80,7 +81,7 @@ namespace MVCGarage.Controllers
             {
                 return NotFound();
             }
-            var parkedVehicleVM = new Models.ViewModels.ChangeViewModel()
+            var parkedVehicleVM = new ChangeViewModel()
             {
                 Id = parkedVehicle.Id,
                 Brand = parkedVehicle.Brand,
@@ -88,6 +89,13 @@ namespace MVCGarage.Controllers
                 Model = parkedVehicle.Model,
                 RegistrationNumber = parkedVehicle.RegistrationNumber,
                 Type = parkedVehicle.Type,
+                Types = Enum.GetNames<VehicleType>()
+                                .Select(g => new SelectListItem
+                                {
+                                    Text = g.ToString(),
+                                    Value = g.ToString()
+                                })
+                                .ToList(),
                 WheelCount = parkedVehicle.WheelCount
 
             };
@@ -99,13 +107,8 @@ namespace MVCGarage.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Color,Type,RegistrationNumber,Brand,Model,WheelCount,ArrivalTime")] ParkedVehicle parkedVehicle)
+        public async Task<IActionResult> Edit(ChangeViewModel parkedVehicle)
         {
-            if (id != parkedVehicle.Id)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
                 try

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using MVCGarage.Models.Entities;
 using System.ComponentModel.DataAnnotations;
 
@@ -7,11 +8,13 @@ namespace MVCGarage.Models.ViewModels
     [Index(nameof(RegistrationNumber), IsUnique = true)]
     public class ChangeViewModel
     {
+        [Required]
         public int Id { get; set; }
         [Required]
         public Color Color { get; set; }
         [Required]
         public VehicleType Type { get; set; }
+        public IEnumerable<SelectListItem> Types { get; set; } = new List<SelectListItem>();
         [Required]
         [StringLength(40)]
         public string? RegistrationNumber { get; set; }
