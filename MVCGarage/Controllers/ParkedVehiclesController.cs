@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MVCGarage.Data;
 using MVCGarage.Models.Entities;
+using MVCGarage.Models.ViewModels;
 
 namespace MVCGarage.Controllers
 {
@@ -41,8 +42,19 @@ namespace MVCGarage.Controllers
             {
                 return NotFound();
             }
+            var model = new DetailsViewModel
+            {
+                ArrivalTime = parkedVehicle.ArrivalTime,
+                Brand = parkedVehicle.Brand,
+                Color = parkedVehicle.Color,
+                Id = parkedVehicle.Id,
+                Model = parkedVehicle.Model,
+                RegistrationNumber = parkedVehicle.RegistrationNumber,
+                Type = parkedVehicle.Type,
+                WheelCount = parkedVehicle.WheelCount
+            };
 
-            return View(parkedVehicle);
+            return View(model);
         }
 
         // GET: ParkedVehicles/Create
