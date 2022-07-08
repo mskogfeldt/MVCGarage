@@ -1,0 +1,29 @@
+Models
+ Entities
+  ParkedVehicle
+  
+ ViewModels
+  IndexViewModel (Översikt) // Johannes
+   VehicleType
+   RegistrationNumber
+   ArrivalTime
+  DetailsViewModel (Detaljer för specifikt fordon) // Mats
+   Alla props
+  ReceiptViewModel (Kvitto för uthämtning) // Christian
+   ArrivalTime
+  ChangeViewModel
+   Alla props utom ankomsttid
+   
+Views
+ ParkedVehicles
+  Index
+  //Park (Create)
+  Checkout (Delete)
+  Details
+  //Change (Edit)
+  ++Receipt
+  
+Controllers
+ ParkedVehiclesController
+  AddArrivalTime (metod, kanske blir en service)
+  Filter (sno från Dimitris)
