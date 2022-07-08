@@ -72,6 +72,7 @@ namespace MVCGarage.Controllers
         {
             if (ModelState.IsValid)
             {
+                //parkedVehicle.ArrivalTime = DateTime.Now;
                 _context.Add(parkedVehicle);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -80,7 +81,7 @@ namespace MVCGarage.Controllers
         }
 
         // GET: ParkedVehicles/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Modify(int? id)
         {
             if (id == null || _context.ParkedVehicle == null)
             {
@@ -97,27 +98,31 @@ namespace MVCGarage.Controllers
                 Id = parkedVehicle.Id,
                 Brand = parkedVehicle.Brand,
                 Color = parkedVehicle.Color,
-                Colors = Enum.GetValues<Color>()
-                                .Select(g => new SelectListItem
-                                {
-                                    Text = g.ToString(),
-                                    Value = g.ToString()
-                                })
-                                .ToList(),
+                //Colors = Enum.GetValues<Color>()
+                //                .Select(g => new SelectListItem
+                //                {
+                //                    Text = g.ToString(),
+                //                    Value = g.ToString()
+                //                })
+                //                .ToList(),
                 Model = parkedVehicle.Model,
                 RegistrationNumber = parkedVehicle.RegistrationNumber,
                 Type = parkedVehicle.Type,
-                Types = Enum.GetValues<VehicleType>()
-                                .Select(g => new SelectListItem
-                                {
-                                    Text = g.ToString(),
-                                    Value = g.ToString()
-                                })
-                                .ToList(),
                 WheelCount = parkedVehicle.WheelCount
 
             };
             return View(parkedVehicleVM);
+        }
+
+        private  List<SelectListItem> GetVehicleTypeSelectList()
+        {
+            return Enum.GetValues<VehicleType>()
+                                            .Select(g => new SelectListItem
+                                            {
+                                                Text = g.ToString(),
+                                                Value = g.ToString()
+                                            })
+                                            .ToList();
         }
 
         // POST: ParkedVehicles/Edit/5
@@ -125,7 +130,7 @@ namespace MVCGarage.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(ChangeViewModel cvm)
+        public async Task<IActionResult> Modify(ChangeViewModel cvm)
         {
             if (ModelState.IsValid)
             {
@@ -166,6 +171,7 @@ namespace MVCGarage.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
             return View(cvm);
         }
 
