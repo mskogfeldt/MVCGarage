@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MVCGarage.Data;
 using MVCGarage.Models.Entities;
+using MVCGarage.Models.ViewModels;
 
 namespace MVCGarage.Controllers
 {
@@ -99,34 +100,47 @@ namespace MVCGarage.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Color,Type,RegistrationNumber,Brand,Model,WheelCount,ArrivalTime")] ParkedVehicle parkedVehicle)
+        public async Task<IActionResult> Edit(ChangeViewModel cvm)
         {
-            if (id != parkedVehicle.Id)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(parkedVehicle);
+                    if (_context.ParkedVehicle == null)
+                        return NotFound();
+
+                    var ParkedVehicleOriginal = await _context.ParkedVehicle
+                        .FirstOrDefaultAsync(m => m.Id == cvm.Id);
+
+                    if (ParkedVehicleOriginal == null)
+                        return NotFound();
+
+                    ParkedVehicleOriginal.WheelCount = cvm.WheelCount;
+                    ParkedVehicleOriginal.Model = cvm.Model;
+                    ParkedVehicleOriginal.RegistrationNumber = cvm.RegistrationNumber;
+                    ParkedVehicleOriginal.Brand = cvm.Brand;
+                    ParkedVehicleOriginal.Color = cvm.Color;
+
+                    //TODO ModelState(ParkedVehicleOriginal).IsValid ???
+
+                    _context.ParkedVehicle.Attach(ParkedVehicleOriginal);
+                    //+_context.Entry(ParkedVehicleOriginal).Property(x => x.ArrivalTime).IsModified = false;
                     await _context.SaveChangesAsync();
-                }
+
+                    //_context.Update(parkedVehicle);
+                    //await _context.SaveChangesAsync();
+            }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ParkedVehicleExists(parkedVehicle.Id))
-                    {
+                    if (!ParkedVehicleExists(cvm.Id))
                         return NotFound();
-                    }
                     else
-                    {
                         throw;
-                    }
+
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(parkedVehicle);
+            return View(cvm);
         }
 
         // GET: ParkedVehicles/Checkout/5
