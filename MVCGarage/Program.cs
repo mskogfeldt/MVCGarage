@@ -1,4 +1,9 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using MVCGarage.Data;
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<MVCGarageContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("MVCGarageContext") ?? throw new InvalidOperationException("Connection string 'MVCGarageContext' not found.")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
