@@ -1,7 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace MVCGarage.Models.Entities
 {
+    [Index(nameof(RegistrationNumber), IsUnique = true)]
     public class ParkedVehicle
     {
         
