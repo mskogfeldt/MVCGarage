@@ -42,7 +42,19 @@ namespace MVCGarage.Controllers
             {
                 return NotFound();
             }
-            return View(parkedVehicle);
+            var model = new DetailsViewModel
+            {
+                ArrivalTime = parkedVehicle.ArrivalTime,
+                Brand = parkedVehicle.Brand,
+                Color = parkedVehicle.Color,
+                Id = parkedVehicle.Id,
+                Model = parkedVehicle.Model,
+                RegistrationNumber = parkedVehicle.RegistrationNumber,
+                Type = parkedVehicle.Type,
+                WheelCount = parkedVehicle.WheelCount
+            };
+
+            return View(model);
         }
 
         // GET: ParkedVehicles/Create
