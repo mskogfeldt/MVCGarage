@@ -184,7 +184,25 @@ namespace MVCGarage.Controllers
                 return NotFound();
             }
 
-            return View(parkedVehicle);
+            var totalParkedTimeSpan = DateTime.Now.Subtract(parkedVehicle.ArrivalTime);
+            //TODO decide what cost per minute is, hardcoded to 20kr per minute
+
+            var cvm = new CheckoutViewModel()
+            {
+                ArrivalTime = parkedVehicle.ArrivalTime,
+                Brand = parkedVehicle.Brand,
+                Color = parkedVehicle.Color,
+                CheckoutTime = DateTime.Now,
+                Id = parkedVehicle.Id,
+                Model = parkedVehicle.Model,
+                Price = (decimal)(totalParkedTimeSpan.TotalMinutes * 20),
+                TotalParkedTime = totalParkedTimeSpan.ToString(),
+                RegistrationNumber = parkedVehicle.RegistrationNumber,
+                Type = parkedVehicle.Type,
+                WheelCount = parkedVehicle.WheelCount                
+            };
+
+            return View(cvm);
         }
 
         // POST: ParkedVehicles/Checkout/5
@@ -196,14 +214,37 @@ namespace MVCGarage.Controllers
             {
                 return Problem("Entity set 'MVCGarageContext.ParkedVehicle'  is null.");
             }
+
+            ReceiptViewModel rvm = new ReceiptViewModel();
             var parkedVehicle = await _context.ParkedVehicle.FindAsync(id);
             if (parkedVehicle != null)
             {
                 _context.ParkedVehicle.Remove(parkedVehicle);
+
+                var totalParkedTimeSpan = DateTime.Now.Subtract(parkedVehicle.ArrivalTime);
+                //TODO decide what cost per minute is, hardcoded to 20kr per minute
+
+                rvm = new ReceiptViewModel()
+                {
+                    ArrivalTime = parkedVehicle.ArrivalTime,
+                    Brand = parkedVehicle.Brand,
+                    Color = parkedVehicle.Color,
+                    CheckoutTime = DateTime.Now,
+                    Model = parkedVehicle.Model,
+                    Price = (decimal)(totalParkedTimeSpan.TotalMinutes * 20),
+                    TotalParkedTime = totalParkedTimeSpan.ToString(),
+                    RegistrationNumber = parkedVehicle.RegistrationNumber,
+                    Type = parkedVehicle.Type
+                };
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Receipt), rvm);
+        }
+
+        public IActionResult Receipt(ReceiptViewModel rvm)
+        {
+            return View(rvm);
         }
 
         private bool ParkedVehicleExists(int id)
