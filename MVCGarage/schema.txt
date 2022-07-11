@@ -26,5 +26,13 @@ Views
   
 Controllers
  ParkedVehiclesController
-  AddArrivalTime (metod, kanske blir en service)
-  Filter (sno från Dimitris)
+  Filter
+
+///
+
+Index använder nu @model IEnumerable<ParkedVehicle>, skapa vymodell
+Filter
+Vyer / design
+ Gemensam CSS
+ Finslip per sida
+ Speciell design för kvitto / utskrivbar
