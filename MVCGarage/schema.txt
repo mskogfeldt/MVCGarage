@@ -28,3 +28,17 @@ Controllers
  ParkedVehiclesController
   AddArrivalTime (metod, kanske blir en service)
   Filter (sno från Dimitris)
+
+
+
+
+
+
+
+
+
+Bestämma pris
+Skriva ut pris på Park-sidan
+Ändra pris i checkout och kvitto till det vi bestämt
+Snygga till Total Parked Time
+Mellanslag på några ställen Wheel Count istället för WheelCount (Parked Vehicle / ParkedVehicle)
