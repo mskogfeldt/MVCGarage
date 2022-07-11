@@ -27,23 +27,14 @@ namespace MVCGarage.Controllers
         //    return DateTime.Now.Subtract(arrivalTime).ToString();
         //}
 
-        //public bool stringStartsWith(string? a, string b)
-        //{
-        //    if(a == null)
-        //        return false;
-        //    else
-        //        return a.StartsWith(b.Trim());
-        //}
-
         // GET: ParkedVehicles
-        //.WhereIf(lwmPost.RegistrationNumber != null, x => stringStartsWith(x.RegistrationNumber, lwmPost.RegistrationNumber!)) 
         public async Task<IActionResult> Index(ListViewModel lwmPost)
         {
             if (_context.ParkedVehicle != null)
             {
                 var lwm = new ListViewModel();
                 lwm.VehicleList = await _context.ParkedVehicle
-                    .WhereIf(lwmPost.RegistrationNumber != null, x => x.RegistrationNumber!.StartsWith(lwmPost.RegistrationNumber!.Trim()))
+                    .WhereIf(lwmPost.RegistrationNumber != null, x => x.RegistrationNumber != null && x.RegistrationNumber.StartsWith(lwmPost.RegistrationNumber!.Trim()))
                     .Select(v => new IndexParkedVehicleViewModel()
                 {
                     Id = v.Id,
