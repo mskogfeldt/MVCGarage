@@ -28,7 +28,15 @@ Controllers
  ParkedVehiclesController
   Filter
 
+
+
 ///
+
+Bestämma pris
+Skriva ut pris på Park-sidan
+Ändra pris i checkout och kvitto till det vi bestämt
+Snygga till Total Parked Time
+Mellanslag på några ställen Wheel Count istället för WheelCount (Parked Vehicle / ParkedVehicle)
 
 Index använder nu @model IEnumerable<ParkedVehicle>, skapa vymodell
 Filter
