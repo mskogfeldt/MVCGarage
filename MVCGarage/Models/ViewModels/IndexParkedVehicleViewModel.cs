@@ -12,6 +12,7 @@ namespace MVCGarage.Models.ViewModels
         [Display(Name = "Arrival Time")]
         public DateTime ArrivalTime { get; set; }
         [Display(Name = "Parked Time")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:d\\d\\ hh\\h\\ mm\\m}")]
         public TimeSpan ParkedTime { get; set; }
 
     }

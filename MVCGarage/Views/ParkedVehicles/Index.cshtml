@@ -12,24 +12,12 @@
 <table class="table">
     <thead>
         <tr>
-@*            <th>
-                @Html.DisplayNameFor(model => model.Color)
-            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.Type)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.RegistrationNumber)
             </th>
-@*            <th>
-                @Html.DisplayNameFor(model => model.Brand)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Model)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.WheelCount)
-            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.ArrivalTime)
             </th>
@@ -42,29 +30,25 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-@*            <td>
-                @Html.DisplayFor(modelItem => item.Color)
-            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.Type)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.RegistrationNumber)
             </td>
- @*           <td>
-                @Html.DisplayFor(modelItem => item.Brand)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Model)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.WheelCount)
-            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.ArrivalTime)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ParkedTime)
+@*                @{
+                    var parkedTime = 
+                          $"{item.ParkedTime.Days}d "
+                        + $"{item.ParkedTime.Hours}h "
+                        + $"{item.ParkedTime.Minutes}m";
+
+                            @Html.DisplayFor(modelItem => parkedTime);
+                }*@
             </td>
             <td>
                 <a asp-action="Modify" asp-route-id="@item.Id">Modify</a> |

@@ -20,6 +20,11 @@ namespace MVCGarage.Controllers
             _context = context;
         }
 
+        //public string ParkedTime(DateTime arrivalTime)
+        //{
+        //    return DateTime.Now.Subtract(arrivalTime).ToString();
+        //}
+
         // GET: ParkedVehicles
         public async Task<IActionResult> Index()
         {
@@ -31,6 +36,8 @@ namespace MVCGarage.Controllers
                     RegistrationNumber = v.RegistrationNumber,
                     Type = v.Type,
                     ArrivalTime = v.ArrivalTime,
+                    //ParkedTime = ParkedTime(arrivalTime)
+                    //ParkedTime = DateTime.Now.Subtract(v.ArrivalTime).ToString()
                     ParkedTime = DateTime.Now.Subtract(v.ArrivalTime)
                 }).ToListAsync();
                 return View(ipvvmList);
