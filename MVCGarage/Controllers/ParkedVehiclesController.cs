@@ -69,7 +69,8 @@ namespace MVCGarage.Controllers
                 Model = parkedVehicle.Model,
                 RegistrationNumber = parkedVehicle.RegistrationNumber,
                 Type = parkedVehicle.Type,
-                WheelCount = parkedVehicle.WheelCount
+                WheelCount = parkedVehicle.WheelCount,
+                ParkedTime = DateTime.Now.Subtract(parkedVehicle.ArrivalTime)
             };
 
             return View(model);
@@ -208,7 +209,7 @@ namespace MVCGarage.Controllers
                 return NotFound();
             }
 
-            var totalParkedTimeSpan = DateTime.Now.Subtract(parkedVehicle.ArrivalTime);
+            var parkedTime = DateTime.Now.Subtract(parkedVehicle.ArrivalTime);
             //TODO decide what cost per minute is, hardcoded to 20kr per minute
 
             var cvm = new CheckoutViewModel()
@@ -219,8 +220,8 @@ namespace MVCGarage.Controllers
                 CheckoutTime = DateTime.Now,
                 Id = parkedVehicle.Id,
                 Model = parkedVehicle.Model,
-                Price = (decimal)(totalParkedTimeSpan.TotalMinutes * 20),
-                TotalParkedTime = totalParkedTimeSpan.ToString(),
+                Price = (decimal)(parkedTime.TotalMinutes * 20),
+                ParkedTime = parkedTime,
                 RegistrationNumber = parkedVehicle.RegistrationNumber,
                 Type = parkedVehicle.Type,
                 WheelCount = parkedVehicle.WheelCount
@@ -245,7 +246,7 @@ namespace MVCGarage.Controllers
             {
                 _context.ParkedVehicle.Remove(parkedVehicle);
 
-                var totalParkedTimeSpan = DateTime.Now.Subtract(parkedVehicle.ArrivalTime);
+                var parkedTime = DateTime.Now.Subtract(parkedVehicle.ArrivalTime);
                 //TODO decide what cost per minute is, hardcoded to 20kr per minute
 
                 rvm = new ReceiptViewModel()
@@ -255,8 +256,8 @@ namespace MVCGarage.Controllers
                     Color = parkedVehicle.Color,
                     CheckoutTime = DateTime.Now,
                     Model = parkedVehicle.Model,
-                    Price = (decimal)(totalParkedTimeSpan.TotalMinutes * 20),
-                    TotalParkedTime = totalParkedTimeSpan.ToString(),
+                    Price = (decimal)(parkedTime.TotalMinutes * 20),
+                    ParkedTime = parkedTime,
                     RegistrationNumber = parkedVehicle.RegistrationNumber,
                     Type = parkedVehicle.Type
                 };
