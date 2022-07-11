@@ -1,4 +1,4 @@
-﻿using MVCGarage.Models.Entities;
+﻿    using MVCGarage.Models.Entities;
 using System.ComponentModel.DataAnnotations;
 
 namespace MVCGarage.Models.ViewModels

@@ -28,11 +28,14 @@ namespace MVCGarage.Controllers
         //}
 
         // GET: ParkedVehicles
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(ListViewModel lwmPost)
         {
             if (_context.ParkedVehicle != null)
             {
-                var ipvvmList = await _context.ParkedVehicle.Select(v => new IndexParkedVehicleViewModel()
+                var lwm = new ListViewModel();
+                lwm.VehicleList = await _context.ParkedVehicle
+                        .WhereIf(lwmPost.RegistrationNumber != null, x => x.RegistrationNumber == lwmPost.RegistrationNumber)
+                        .Select(v => new IndexParkedVehicleViewModel()
                 {
                     Id = v.Id,
                     RegistrationNumber = v.RegistrationNumber,
@@ -42,7 +45,8 @@ namespace MVCGarage.Controllers
                     //ParkedTime = DateTime.Now.Subtract(v.ArrivalTime).ToString()
                     ParkedTime = DateTime.Now.Subtract(v.ArrivalTime)
                 }).ToListAsync();
-                return View(ipvvmList);
+                
+                return View(lwm);
             }
             else return Problem("Entity set 'MVCGarageContext.ParkedVehicle'  is null.");
         }

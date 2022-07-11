@@ -1,0 +1,57 @@
+﻿@model IEnumerable<IndexParkedVehicleViewModel>
+
+<h1>Parked Vehicles</h1>
+
+<p>
+    <a asp-action="Park">Park Vehicle</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RegistrationNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ArrivalTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ParkedTime)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RegistrationNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ArrivalTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ParkedTime)
+@*                @{
+                    var parkedTime = 
+                          $"{item.ParkedTime.Days}d "
+                        + $"{item.ParkedTime.Hours}h "
+                        + $"{item.ParkedTime.Minutes}m";
+
+                            @Html.DisplayFor(modelItem => parkedTime);
+                }*@
+            </td>
+            <td>
+                <a asp-action="Modify" asp-route-id="@item.Id">Modify</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Checkout" asp-route-id="@item.Id">Checkout</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
