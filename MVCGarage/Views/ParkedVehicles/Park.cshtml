@@ -4,11 +4,17 @@
     ViewData["Title"] = "Park";
 }
 
-<h1>Park</h1>
-
-<h4>ParkedVehicle</h4>
-<hr />
 <div class="row">
+    <div class="col-md-4">
+        <h1>Park</h1>
+        <h4>ParkedVehicle</h4>
+    </div>
+    <div class="col-md-4">
+        <p class="border border-primary p-4">Parking price @Model.Price kr /hour</p>
+    </div>
+</div>
+<hr />
+<div class="row print">
     <div class="col-md-4">
         <form asp-action="Park">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>

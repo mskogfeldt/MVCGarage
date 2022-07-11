@@ -24,5 +24,7 @@ namespace MVCGarage.Models.ViewModels
         [Range(0, int.MaxValue)]
         public int WheelCount { get; set; }
 
+        public int Price { get; set; }
+
     }
 }
