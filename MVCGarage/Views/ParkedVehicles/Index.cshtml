@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ParkedVehicle>
+﻿@model IEnumerable<IndexParkedVehicleViewModel>
 
 @{
     ViewData["Title"] = "Parked Vehicles";
@@ -12,16 +12,16 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
+@*            <th>
                 @Html.DisplayNameFor(model => model.Color)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.Type)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.RegistrationNumber)
             </th>
-            <th>
+@*            <th>
                 @Html.DisplayNameFor(model => model.Brand)
             </th>
             <th>
@@ -29,9 +29,12 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.WheelCount)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.ArrivalTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ParkedTime)
             </th>
             <th></th>
         </tr>
@@ -39,16 +42,16 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
+@*            <td>
                 @Html.DisplayFor(modelItem => item.Color)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.Type)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.RegistrationNumber)
             </td>
-            <td>
+ @*           <td>
                 @Html.DisplayFor(modelItem => item.Brand)
             </td>
             <td>
@@ -56,9 +59,12 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.WheelCount)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.ArrivalTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ParkedTime)
             </td>
             <td>
                 <a asp-action="Modify" asp-route-id="@item.Id">Modify</a> |

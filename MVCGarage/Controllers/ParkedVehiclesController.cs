@@ -23,9 +23,19 @@ namespace MVCGarage.Controllers
         // GET: ParkedVehicles
         public async Task<IActionResult> Index()
         {
-            return _context.ParkedVehicle != null ?
-                        View(await _context.ParkedVehicle.ToListAsync()) :
-                        Problem("Entity set 'MVCGarageContext.ParkedVehicle'  is null.");
+            if (_context.ParkedVehicle != null)
+            {
+                var ipvvmList = await _context.ParkedVehicle.Select(v => new IndexParkedVehicleViewModel()
+                {
+                    Id = v.Id,
+                    RegistrationNumber = v.RegistrationNumber,
+                    Type = v.Type,
+                    ArrivalTime = v.ArrivalTime,
+                    ParkedTime = DateTime.Now.Subtract(v.ArrivalTime)
+                }).ToListAsync();
+                return View(ipvvmList);
+            }
+            else return Problem("Entity set 'MVCGarageContext.ParkedVehicle'  is null.");
         }
 
         // GET: ParkedVehicles/Details/5
@@ -124,17 +134,6 @@ namespace MVCGarage.Controllers
 
             };
             return View(parkedVehicleVM);
-        }
-
-        private List<SelectListItem> GetVehicleTypeSelectList()
-        {
-            return Enum.GetValues<VehicleType>()
-                                            .Select(g => new SelectListItem
-                                            {
-                                                Text = g.ToString(),
-                                                Value = g.ToString()
-                                            })
-                                            .ToList();
         }
 
         // POST: ParkedVehicles/Edit/5
