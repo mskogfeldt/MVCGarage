@@ -14,10 +14,12 @@ namespace MVCGarage.Controllers
     public class ParkedVehiclesController : Controller
     {
         private readonly MVCGarageContext _context;
+        private IConfiguration _configuration;
 
-        public ParkedVehiclesController(MVCGarageContext context)
+        public ParkedVehiclesController(MVCGarageContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
 
         //public string ParkedTime(DateTime arrivalTime)
@@ -79,7 +81,9 @@ namespace MVCGarage.Controllers
         // GET: ParkedVehicles/Create
         public IActionResult Park()
         {
-            return View();
+            var pvm = new ParkViewModel();
+            pvm.Price = int.Parse(_configuration["Price:HourPrice"]);
+            return View(pvm);
         }
 
         // POST: ParkedVehicles/Create
@@ -210,7 +214,6 @@ namespace MVCGarage.Controllers
             }
 
             var parkedTime = DateTime.Now.Subtract(parkedVehicle.ArrivalTime);
-            //TODO decide what cost per minute is, hardcoded to 20kr per minute
 
             var cvm = new CheckoutViewModel()
             {
@@ -220,7 +223,7 @@ namespace MVCGarage.Controllers
                 CheckoutTime = DateTime.Now,
                 Id = parkedVehicle.Id,
                 Model = parkedVehicle.Model,
-                Price = (decimal)(parkedTime.TotalMinutes * 20),
+                Price = calculatePrice(parkedTime.TotalHours),
                 ParkedTime = parkedTime,
                 RegistrationNumber = parkedVehicle.RegistrationNumber,
                 Type = parkedVehicle.Type,
@@ -228,6 +231,12 @@ namespace MVCGarage.Controllers
             };
 
             return View(cvm);
+        }
+
+        private decimal calculatePrice(double totalHour)
+        {
+            int iHourPrice = int.Parse(_configuration["Price:HourPrice"]);
+            return (decimal)(totalHour * iHourPrice);
         }
 
         // POST: ParkedVehicles/Checkout/5
@@ -256,14 +265,14 @@ namespace MVCGarage.Controllers
                     Color = parkedVehicle.Color,
                     CheckoutTime = DateTime.Now,
                     Model = parkedVehicle.Model,
-                    Price = (decimal)(parkedTime.TotalMinutes * 20),
+                    Price = calculatePrice(parkedTime.TotalHours),
                     ParkedTime = parkedTime,
                     RegistrationNumber = parkedVehicle.RegistrationNumber,
                     Type = parkedVehicle.Type
                 };
             }
 
-            await _context.SaveChangesAsync();
+            //await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Receipt), rvm);
         }
 

@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/MVCGarage.styles.css" asp-append-version="true" />
+    @if((bool)(ViewData["useLinkTag"] ?? false)) { @Html.Raw($"<link rel=\"stylesheet\" href=\"/css/{ViewData["LinkCSSName"]}\" />"); }
 </head>
 <body>
     <header>

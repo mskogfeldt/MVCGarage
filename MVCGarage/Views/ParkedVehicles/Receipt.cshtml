@@ -1,10 +1,84 @@
 ﻿@model ReceiptViewModel
 
 @{
-    ViewData["Title"] = "Receipt";
+    Layout = "";
 }
 
+@*@{
+    ViewData["useLinkTag"] = true;
+    ViewData["LinkCSSName"] = "Receipt.css";
+}*@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Receipt - MVCGarage</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/MVCGarage.styles.css" asp-append-version="true" />
+</head>
+<body>
 <h1>Receipt</h1>
+    <div>
+        <dl class="row">
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.Color)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.Color)
+            </dd>
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.Type)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.Type)
+            </dd>
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.RegistrationNumber)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.RegistrationNumber)
+            </dd>
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.Brand)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.Brand)
+            </dd>
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.Model)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.Model)
+            </dd>
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.ArrivalTime)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.ArrivalTime)
+            </dd>
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.CheckoutTime)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.CheckoutTime)
+            </dd>
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.ParkedTime)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.ParkedTime)
+            </dd>
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.Price)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.Price)kr
+            </dd>
+        </dl>
+  </div>
 
 <div>
     <dl class="row">
@@ -64,7 +138,9 @@
         </dd>
     </dl>
     
-    <form asp-action="Checkout">
-        <a asp-action="Index">Back to List</a>
-    </form>
-</div>
+        <form asp-action="Checkout" class="d-print-none">
+            <a asp-action="Index">Back to List</a>
+        </form>
+    </div>
+</body>
+</html>
