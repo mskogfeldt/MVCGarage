@@ -6,8 +6,11 @@ namespace MVCGarage.Models.ViewModels
     public class ReceiptViewModel
     {
         public VehicleType Type { get; set; }
+        [Display(Name = "Registration Number")]
         public string? RegistrationNumber { get; set; }
+        [Display(Name = "Arrival Time")]
         public DateTime ArrivalTime { get; set; }
+        [Display(Name = "Checkout Time")]
         public DateTime CheckoutTime { get; set; }
         [Display(Name = "Parked Time")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:d\\d\\ hh\\h\\ mm\\m}")]

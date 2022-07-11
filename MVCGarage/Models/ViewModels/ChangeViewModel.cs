@@ -16,6 +16,7 @@ namespace MVCGarage.Models.ViewModels
         public VehicleType Type { get; set; }
         [Required]
         [StringLength(40)]
+        [Display(Name = "Registration Number")]
         public string? RegistrationNumber { get; set; }
         [Required]
         [StringLength(40)]
@@ -24,6 +25,7 @@ namespace MVCGarage.Models.ViewModels
         [StringLength(40)]
         public string? Model { get; set; }
         [Range(0, int.MaxValue)]
+        [Display(Name = "Wheel Count")]
         public int WheelCount { get; set; }
 
     }
