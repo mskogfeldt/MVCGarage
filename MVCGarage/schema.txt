@@ -32,14 +32,19 @@ Controllers
 
 ///
 
-Bestämma pris
-Skriva ut pris på Park-sidan
-Ändra pris i checkout och kvitto till det vi bestämt
-Snygga till Total Parked Time
-Mellanslag på några ställen Wheel Count istället för WheelCount (Parked Vehicle / ParkedVehicle)
+Pris
+ Bestämma pris
+ Skriva ut pris på Park-sidan
+ Ändra pris i checkout och kvitto till det vi bestämt
+ (avvakta) Möjligen ladda in pris från config-fil eller CLI argument
 
-Index använder nu @model IEnumerable<ParkedVehicle>, skapa vymodell
+Snygga till Total Parked Time (checkout)
+Mellanslag på några ställen Wheel Count istället för WheelCount (Parked Vehicle / ParkedVehicle) (attribut: [DisplayName("blabla")]  )
+
+Index använder nu @model IEnumerable<ParkedVehicle>
+
 Filter
+
 Vyer / design
  Gemensam CSS
  Finslip per sida
