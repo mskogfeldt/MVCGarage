@@ -34,7 +34,11 @@ namespace MVCGarage.Controllers
             {
                 var lwm = new ListViewModel();
                 lwm.VehicleList = await _context.ParkedVehicle
-                    .WhereIf(lwmPost.RegistrationNumber != null, x => x.RegistrationNumber != null && x.RegistrationNumber.StartsWith(lwmPost.RegistrationNumber!.Trim()))
+                    .WhereIf(lwmPost.searchRegistrationNumber != null, x => x.RegistrationNumber != null && x.RegistrationNumber.StartsWith(lwmPost.searchRegistrationNumber!.Trim()))
+                    .WhereIf(lwmPost.searchBrand != null, x => x.Brand != null && x.Brand.StartsWith(lwmPost.searchBrand!.Trim()))
+                    .WhereIf(lwmPost.searchWheelCount != null, x => x.WheelCount == lwmPost.searchWheelCount)
+                    .WhereIf(lwmPost.searchModel != null, x => x.Model != null && x.Model.StartsWith(lwmPost.searchModel!.Trim()))
+                    .WhereIf(lwmPost.searchType != null, x => x.Type == lwmPost.searchType)
                     .Select(v => new IndexParkedVehicleViewModel()
                 {
                     Id = v.Id,
