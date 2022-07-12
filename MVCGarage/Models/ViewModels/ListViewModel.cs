@@ -8,14 +8,23 @@ namespace MVCGarage.Models.ViewModels
         public IEnumerable<IndexParkedVehicleViewModel>? VehicleList { get; set; }
         [MaxLength(50)]
         [Display(Name = "Registration Number")]
-        public string? searchRegistrationNumber { get; set; }
+        public string? SearchRegistrationNumber { get; set; }
         [Display(Name = "Brand")]
-        public string? searchBrand { get; set; }
+        public string? SearchBrand { get; set; }
         [Display(Name = "Model")]
-        public string? searchModel { get; set; }
+        public string? SearchModel { get; set; }
         [Display(Name = "Wheel Count")]
-        public int? searchWheelCount { get; set; }
+        public int? SearchWheelCount { get; set; }
         [Display(Name = "Type")]
-        public VehicleType? searchType { get; set; }      
+        public VehicleType? SearchType { get; set; }
+        public Enum? Order { get; set; }
+    }
+
+    public enum Order
+    {
+        ArrivalTime,
+        RegistrationNumber,
+        Type,
+        ParkedTime
     }
 }

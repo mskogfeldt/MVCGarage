@@ -34,21 +34,21 @@ namespace MVCGarage.Controllers
             {
                 var lwm = new ListViewModel();
                 lwm.VehicleList = await _context.ParkedVehicle
-                    .WhereIf(lwmPost.searchRegistrationNumber != null, x => x.RegistrationNumber != null && x.RegistrationNumber.StartsWith(lwmPost.searchRegistrationNumber!.Trim()))
-                    .WhereIf(lwmPost.searchBrand != null, x => x.Brand != null && x.Brand.StartsWith(lwmPost.searchBrand!.Trim()))
-                    .WhereIf(lwmPost.searchWheelCount != null, x => x.WheelCount == lwmPost.searchWheelCount)
-                    .WhereIf(lwmPost.searchModel != null, x => x.Model != null && x.Model.StartsWith(lwmPost.searchModel!.Trim()))
-                    .WhereIf(lwmPost.searchType != null, x => x.Type == lwmPost.searchType)
+                    .WhereIf(lwmPost.SearchRegistrationNumber != null, x => x.RegistrationNumber != null && x.RegistrationNumber.StartsWith(lwmPost.SearchRegistrationNumber!.Trim()))
+                    .WhereIf(lwmPost.SearchBrand != null, x => x.Brand != null && x.Brand.StartsWith(lwmPost.SearchBrand!.Trim()))
+                    .WhereIf(lwmPost.SearchWheelCount != null, x => x.WheelCount == lwmPost.SearchWheelCount)
+                    .WhereIf(lwmPost.SearchModel != null, x => x.Model != null && x.Model.StartsWith(lwmPost.SearchModel!.Trim()))
+                    .WhereIf(lwmPost.SearchType != null, x => x.Type == lwmPost.SearchType)
                     .Select(v => new IndexParkedVehicleViewModel()
-                {
-                    Id = v.Id,
-                    RegistrationNumber = v.RegistrationNumber,
-                    Type = v.Type,
-                    ArrivalTime = v.ArrivalTime,
-                    //ParkedTime = ParkedTime(arrivalTime)
-                    //ParkedTime = DateTime.Now.Subtract(v.ArrivalTime).ToString()
-                    ParkedTime = DateTime.Now.Subtract(v.ArrivalTime)
-                }).ToListAsync();
+                    {
+                        Id = v.Id,
+                        RegistrationNumber = v.RegistrationNumber,
+                        Type = v.Type,
+                        ArrivalTime = v.ArrivalTime,
+                        //ParkedTime = ParkedTime(arrivalTime)
+                        //ParkedTime = DateTime.Now.Subtract(v.ArrivalTime).ToString()
+                        ParkedTime = DateTime.Now.Subtract(v.ArrivalTime)
+                    }).ToListAsync();
                 
                 return View(lwm);
             }
@@ -194,29 +194,21 @@ namespace MVCGarage.Controllers
                     if (_context.ParkedVehicle == null)
                         return NotFound();
 
-                    var ParkedVehicleOriginal = await _context.ParkedVehicle
-                        .FirstOrDefaultAsync(m => m.Id == cvm.Id);
+                    var parkedVehicle = new ParkedVehicle()
+                    {
+                        Id = cvm.Id,
+                        WheelCount = cvm.WheelCount,
+                        Model = cvm.Model,
+                        RegistrationNumber = cvm.RegistrationNumber!.ToUpper(),
+                        Brand = cvm.Brand,
+                        Color = cvm.Color,
+                        Type = cvm.Type
+                    };
 
-                    if (ParkedVehicleOriginal == null)
-                        return NotFound();
+                    _context.Update(parkedVehicle);
+                    _context.Entry(parkedVehicle).Property(x => x.ArrivalTime).IsModified = false;
 
-                    cvm.RegistrationNumber = cvm.RegistrationNumber!.ToUpper();
-
-                    ParkedVehicleOriginal.WheelCount = cvm.WheelCount;
-                    ParkedVehicleOriginal.Model = cvm.Model;
-                    ParkedVehicleOriginal.RegistrationNumber = cvm.RegistrationNumber;
-                    ParkedVehicleOriginal.Brand = cvm.Brand;
-                    ParkedVehicleOriginal.Color = cvm.Color;
-                    ParkedVehicleOriginal.Type = cvm.Type;
-
-                    //TODO ModelState(ParkedVehicleOriginal).IsValid ???
-
-                    _context.ParkedVehicle.Attach(ParkedVehicleOriginal);
-                    //+_context.Entry(ParkedVehicleOriginal).Property(x => x.ArrivalTime).IsModified = false;
                     await _context.SaveChangesAsync();
-
-                    //_context.Update(parkedVehicle);
-                    //await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {

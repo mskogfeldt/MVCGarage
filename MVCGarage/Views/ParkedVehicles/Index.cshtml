@@ -10,10 +10,10 @@
 <div class="accordion bg-secondary bg-opacity-10 rounded shadow p-2">
     <h3>Search</h3>
     <form asp-action="Index">
-        <label asp-for="searchRegistrationNumber" class="control-label"></label>
-        <input type="text" asp-for="searchRegistrationNumber" class="form-control" name="searchRegistrationNumber" />
+        <label asp-for="SearchRegistrationNumber" class="control-label"></label>
+        <input type="text" asp-for="SearchRegistrationNumber" class="form-control" name="searchRegistrationNumber" />
 
-    <div class="accordion-item alert alert-light p-0 mt-2">
+    <div class="accordion-item alert alert-primary p-0 mt-2">
         <h5 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
             More search options...
@@ -21,17 +21,17 @@
         </h5>
         <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
             <div class="accordion-body">
-                <label asp-for="searchBrand" class="control-label"></label>
-                <input type="text" asp-for="searchBrand" class="form-control" name="searchBrand" />
+                <label asp-for="SearchBrand" class="control-label"></label>
+                <input type="text" asp-for="SearchBrand" class="form-control" name="searchBrand" />
 
-                <label asp-for="searchModel" class="control-label"></label>
-                <input type="text" asp-for="searchModel" class="form-control" name="searchModel" />
+                <label asp-for="SearchModel" class="control-label"></label>
+                <input type="text" asp-for="SearchModel" class="form-control" name="searchModel" />
 
-                <label asp-for="searchWheelCount" class="control-label"></label>
-                <input type="text" asp-for="searchWheelCount" class="form-control" name="searchWheelCount" />
+                <label asp-for="SearchWheelCount" class="control-label"></label>
+                <input type="text" asp-for="SearchWheelCount" class="form-control" name="searchWheelCount" />
         
-                <label asp-for="searchType" class="control-label"></label>
-                <select asp-for="searchType" class="form-control" asp-items="@Html.GetEnumSelectList<VehicleType>()">
+                <label asp-for="SearchType" class="control-label"></label>
+                <select asp-for="SearchType" class="form-control" asp-items="@Html.GetEnumSelectList<VehicleType>()">
                     <option>- select vehicle type -</option>
                 </select>
              </div>
