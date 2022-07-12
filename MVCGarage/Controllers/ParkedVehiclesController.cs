@@ -103,6 +103,7 @@ namespace MVCGarage.Controllers
         {
             if (ModelState.IsValid)
             {
+                pvm.Error = "";
                 var parkedVehicle = new ParkedVehicle
                 {
                     Brand = pvm.Brand,
@@ -116,7 +117,28 @@ namespace MVCGarage.Controllers
                 };
 
                 _context.Add(parkedVehicle);
-                await _context.SaveChangesAsync();
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch(Microsoft.EntityFrameworkCore.DbUpdateException e)
+                {
+                    if(e.InnerException.Message.StartsWith("Cannot insert duplicate"))
+                        pvm.Error = "The RegistrationNumber does already excist, Your vehicle is already parked. Try modifying the vehicle instead.";
+                    else
+                    {
+                        //TODO: Log the error somewhere
+                        pvm.Error = "Your vehicle was not Parked due to an error";
+                        
+                    }
+                    return View(pvm);
+                }
+                catch
+                {
+                    //TODO: Log the error somewhere
+                    pvm.Error = "Your vehicle was not Parked due to an error";
+                    return View(pvm);
+                }
                 return RedirectToAction(nameof(Index));
             }
             return View(pvm);
