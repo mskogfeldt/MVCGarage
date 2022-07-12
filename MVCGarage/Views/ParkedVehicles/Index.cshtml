@@ -4,26 +4,51 @@
     ViewData["Title"] = "Parked Vehicles";
 }
 
-<form asp-action="Index">
+<div class="accordion">
+    <form asp-action="Index">
         <label for="searchRegistrationNumber" class="control-label"></label>
         <label asp-for="searchRegistrationNumber" class="control-label"></label>
         <input type="text" asp-for="searchRegistrationNumber" class="form-control" name="searchRegistrationNumber" />
 
-        <label asp-for="searchBrand" class="control-label"></label>
-        <input type="text" asp-for="searchBrand" class="form-control" name="searchBrand" />
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+            More search options...
+            </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                <label asp-for="searchBrand" class="control-label"></label>
+                <input type="text" asp-for="searchBrand" class="form-control" name="searchBrand" />
 
-        <label asp-for="searchModel" class="control-label"></label>
-        <input type="text" asp-for="searchModel" class="form-control" name="searchModel" />
+                <label asp-for="searchModel" class="control-label"></label>
+                <input type="text" asp-for="searchModel" class="form-control" name="searchModel" />
 
-        <label asp-for="searchWheelCount" class="control-label"></label>
-        <input type="text" asp-for="searchWheelCount" class="form-control" name="searchWheelCount" />
+                <label asp-for="searchWheelCount" class="control-label"></label>
+                <input type="text" asp-for="searchWheelCount" class="form-control" name="searchWheelCount" />
         
-        <label asp-for="searchType" class="control-label"></label>
-        <select asp-for="searchType" class="form-control" asp-items="@Html.GetEnumSelectList<VehicleType>()">
-            <option>- select vehicle type -</option>
-        </select>
+                <label asp-for="searchType" class="control-label"></label>
+                <select asp-for="searchType" class="form-control" asp-items="@Html.GetEnumSelectList<VehicleType>()">
+                    <option>- select vehicle type -</option>
+                </select>
+             </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <input type="submit" class="btn btn-primary mt-2 mb-2" value="Search"/>
+        </div>
+        <div class="col text-end">
+            <a href="/" class="btn btn-danger mt-2 mb-2" role="button">Reset Search</a>
+        </div>
+    </div>
+    </form>
+</div>
 
-        <input type="submit" class="btn btn-primary mt-2 mb-2" value="Search"/>
-</form>
+<h1>Parked Vehicles</h1>
 
 <partial name="VehicleListPartial" model="@Model.VehicleList" />
+
+<p>
+    <a asp-action="Park" class="btn btn-success mt-2 mb-2" role="button">Park Vehicle</a>
+</p>
