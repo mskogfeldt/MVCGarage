@@ -62,6 +62,7 @@ namespace MVCGarage.Controllers
                   : dbParkedVehicles.OrderBy(v => v.ArrivalTime);
 
                 lvm.VehicleList = orderedParkedVehicles.ToList();
+                lvm.Desc = lwmPost.Desc;
 
                 return View(lvm);
             }
