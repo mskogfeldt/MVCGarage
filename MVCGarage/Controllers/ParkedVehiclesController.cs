@@ -47,19 +47,13 @@ namespace MVCGarage.Controllers
                         ArrivalTime = v.ArrivalTime,
                         ParkedTime = DateTime.Now.Subtract(v.ArrivalTime)
                     }).ToListAsync();
-
+                
+                bool useDesc = lwmPost.Desc;
                 var orderedParkedVehicles =
-                    lwmPost.Order == Order.RegistrationNumber ? lwmPost.Desc ?
-                        dbParkedVehicles.OrderByDescending(v => v.RegistrationNumber) 
-                      : dbParkedVehicles.OrderBy(v => v.RegistrationNumber)
-                  : lwmPost.Order == Order.Type ? lwmPost.Desc ? 
-                        dbParkedVehicles.OrderByDescending(v => v.Type)
-                      : dbParkedVehicles.OrderBy(v => v.Type)
-                  : lwmPost.Order == Order.ParkedTime ? lwmPost.Desc ? 
-                        dbParkedVehicles.OrderByDescending(v => v.ParkedTime)
-                      : dbParkedVehicles.OrderBy(v => v.ParkedTime)
-                  : lwmPost.Desc ? dbParkedVehicles.OrderByDescending(v => v.ArrivalTime)
-                  : dbParkedVehicles.OrderBy(v => v.ArrivalTime);
+                    lwmPost.Order == Order.RegistrationNumber ? dbParkedVehicles.OrderAscOrDesc(useDesc, v => v.RegistrationNumber)
+                  : lwmPost.Order == Order.Type ? dbParkedVehicles.OrderAscOrDesc(useDesc, v => v.Type)
+                  : lwmPost.Order == Order.ParkedTime ? dbParkedVehicles.OrderAscOrDesc(useDesc, v => v.ParkedTime)
+                  : dbParkedVehicles.OrderAscOrDesc(useDesc, v => v.ArrivalTime);
 
                 lvm.VehicleList = orderedParkedVehicles.ToList();
                 lvm.Desc = lwmPost.Desc;
