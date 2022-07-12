@@ -34,7 +34,11 @@ namespace MVCGarage.Controllers
             {
                 var lwm = new ListViewModel();
                 lwm.VehicleList = await _context.ParkedVehicle
-                    .WhereIf(lwmPost.RegistrationNumber != null, x => x.RegistrationNumber != null && x.RegistrationNumber.StartsWith(lwmPost.RegistrationNumber!.Trim()))
+                    .WhereIf(lwmPost.searchRegistrationNumber != null, x => x.RegistrationNumber != null && x.RegistrationNumber.StartsWith(lwmPost.searchRegistrationNumber!.Trim()))
+                    .WhereIf(lwmPost.searchBrand != null, x => x.Brand != null && x.Brand.StartsWith(lwmPost.searchBrand!.Trim()))
+                    .WhereIf(lwmPost.searchWheelCount != null, x => x.WheelCount == lwmPost.searchWheelCount)
+                    .WhereIf(lwmPost.searchModel != null, x => x.Model != null && x.Model.StartsWith(lwmPost.searchModel!.Trim()))
+                    .WhereIf(lwmPost.searchType != null, x => x.Type == lwmPost.searchType)
                     .Select(v => new IndexParkedVehicleViewModel()
                 {
                     Id = v.Id,
@@ -99,6 +103,7 @@ namespace MVCGarage.Controllers
         {
             if (ModelState.IsValid)
             {
+                pvm.Error = "";
                 var parkedVehicle = new ParkedVehicle
                 {
                     Brand = pvm.Brand,
@@ -112,7 +117,28 @@ namespace MVCGarage.Controllers
                 };
 
                 _context.Add(parkedVehicle);
-                await _context.SaveChangesAsync();
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch(Microsoft.EntityFrameworkCore.DbUpdateException e)
+                {
+                    if(e.InnerException.Message.StartsWith("Cannot insert duplicate"))
+                        pvm.Error = "The RegistrationNumber does already excist, Your vehicle is already parked. Try modifying the vehicle instead.";
+                    else
+                    {
+                        //TODO: Log the error somewhere
+                        pvm.Error = "Your vehicle was not Parked due to an error";
+                        
+                    }
+                    return View(pvm);
+                }
+                catch
+                {
+                    //TODO: Log the error somewhere
+                    pvm.Error = "Your vehicle was not Parked due to an error";
+                    return View(pvm);
+                }
                 return RedirectToAction(nameof(Index));
             }
             return View(pvm);

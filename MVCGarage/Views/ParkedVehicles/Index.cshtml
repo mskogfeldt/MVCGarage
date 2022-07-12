@@ -5,10 +5,25 @@
 }
 
 <form asp-action="Index">
-        <label for="RegistrationNumber" class="control-label"></label>
-        <label asp-for="RegistrationNumber" class="control-label"></label>
-        <input type="text" asp-for="RegistrationNumber" class="form-control" name="RegistrationNumber" />
-        <input type="submit" class="btn btn-primary mt-2 mb-2" value="Search"/>            
+        <label for="searchRegistrationNumber" class="control-label"></label>
+        <label asp-for="searchRegistrationNumber" class="control-label"></label>
+        <input type="text" asp-for="searchRegistrationNumber" class="form-control" name="searchRegistrationNumber" />
+
+        <label asp-for="searchBrand" class="control-label"></label>
+        <input type="text" asp-for="searchBrand" class="form-control" name="searchBrand" />
+
+        <label asp-for="searchModel" class="control-label"></label>
+        <input type="text" asp-for="searchModel" class="form-control" name="searchModel" />
+
+        <label asp-for="searchWheelCount" class="control-label"></label>
+        <input type="text" asp-for="searchWheelCount" class="form-control" name="searchWheelCount" />
+        
+        <label asp-for="searchType" class="control-label"></label>
+        <select asp-for="searchType" class="form-control" asp-items="@Html.GetEnumSelectList<VehicleType>()">
+            <option>- select vehicle type -</option>
+        </select>
+
+        <input type="submit" class="btn btn-primary mt-2 mb-2" value="Search"/>
 </form>
 
 <partial name="VehicleListPartial" model="@Model.VehicleList" />
