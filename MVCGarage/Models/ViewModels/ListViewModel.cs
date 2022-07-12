@@ -17,7 +17,9 @@ namespace MVCGarage.Models.ViewModels
         public int? SearchWheelCount { get; set; }
         [Display(Name = "Type")]
         public VehicleType? SearchType { get; set; }
-        public Enum? Order { get; set; }
+        public Order? Order { get; set; }
+
+        public bool Desc { get; set; } = false;
     }
 
     public enum Order

@@ -32,8 +32,8 @@ namespace MVCGarage.Controllers
         {
             if (_context.ParkedVehicle != null)
             {
-                var lwm = new ListViewModel();
-                lwm.VehicleList = await _context.ParkedVehicle
+                var lvm = new ListViewModel();
+                var dbParkedVehicles = await _context.ParkedVehicle
                     .WhereIf(lwmPost.SearchRegistrationNumber != null, x => x.RegistrationNumber != null && x.RegistrationNumber.StartsWith(lwmPost.SearchRegistrationNumber!.Trim()))
                     .WhereIf(lwmPost.SearchBrand != null, x => x.Brand != null && x.Brand.StartsWith(lwmPost.SearchBrand!.Trim()))
                     .WhereIf(lwmPost.SearchWheelCount != null, x => x.WheelCount == lwmPost.SearchWheelCount)
@@ -45,12 +45,25 @@ namespace MVCGarage.Controllers
                         RegistrationNumber = v.RegistrationNumber,
                         Type = v.Type,
                         ArrivalTime = v.ArrivalTime,
-                        //ParkedTime = ParkedTime(arrivalTime)
-                        //ParkedTime = DateTime.Now.Subtract(v.ArrivalTime).ToString()
                         ParkedTime = DateTime.Now.Subtract(v.ArrivalTime)
                     }).ToListAsync();
-                
-                return View(lwm);
+
+                var orderedParkedVehicles =
+                    lwmPost.Order == Order.RegistrationNumber ? lwmPost.Desc ?
+                        dbParkedVehicles.OrderByDescending(v => v.RegistrationNumber) 
+                      : dbParkedVehicles.OrderBy(v => v.RegistrationNumber)
+                  : lwmPost.Order == Order.Type ? lwmPost.Desc ? 
+                        dbParkedVehicles.OrderByDescending(v => v.Type)
+                      : dbParkedVehicles.OrderBy(v => v.Type)
+                  : lwmPost.Order == Order.ParkedTime ? lwmPost.Desc ? 
+                        dbParkedVehicles.OrderByDescending(v => v.ParkedTime)
+                      : dbParkedVehicles.OrderBy(v => v.ParkedTime)
+                  : lwmPost.Desc ? dbParkedVehicles.OrderByDescending(v => v.ArrivalTime)
+                  : dbParkedVehicles.OrderBy(v => v.ArrivalTime);
+
+                lvm.VehicleList = orderedParkedVehicles.ToList();
+
+                return View(lvm);
             }
             else return Problem("Entity set 'MVCGarageContext.ParkedVehicle'  is null.");
         }

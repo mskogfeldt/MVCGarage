@@ -52,6 +52,64 @@
 
 <h1 class="mt-4">Parked Vehicles</h1>
 
-<partial name="VehicleListPartial" model="@Model.VehicleList" />
+@*<partial name="VehicleListPartial" model="@Model.VehicleList" />*@
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                    @if (@Model.Order == Order.Type && !@Model.Desc)
+                    {
+                        <a asp-action="Index" asp-route-Order="@Order.Type">Type</a>
+                    }
+                    else
+                    {
+                        <a asp-action="Index" asp-route-Desc="true" asp-route-Order="@Order.Type">Type</a>
+                    }
+                </th>
+            <th>
+                <a asp-action="Index" asp-route-Order="@Order.RegistrationNumber">Registration Number</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-Order="@Order.ArrivalTime">Arrival Time</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-Order="@Order.ParkedTime">Parked Time</a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.VehicleList) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RegistrationNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ArrivalTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ParkedTime)
+@*                @{
+                    var parkedTime = 
+                          $"{item.ParkedTime.Days}d "
+                        + $"{item.ParkedTime.Hours}h "
+                        + $"{item.ParkedTime.Minutes}m";
+
+                            @Html.DisplayFor(modelItem => parkedTime);
+                }*@
+            </td>
+            <td>
+                <a asp-action="Modify" asp-route-id="@item.Id">Modify</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Checkout" asp-route-id="@item.Id">Checkout</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
 
 </div>
