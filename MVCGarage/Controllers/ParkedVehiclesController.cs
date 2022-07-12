@@ -103,6 +103,7 @@ namespace MVCGarage.Controllers
         {
             if (ModelState.IsValid)
             {
+                pvm.RegistrationNumber = pvm.RegistrationNumber!.ToUpper();
                 pvm.Error = "";
                 var parkedVehicle = new ParkedVehicle
                 {
@@ -117,6 +118,7 @@ namespace MVCGarage.Controllers
                 };
 
                 _context.Add(parkedVehicle);
+                bool bParkSuccess = true;
                 try
                 {
                     await _context.SaveChangesAsync();
@@ -131,16 +133,16 @@ namespace MVCGarage.Controllers
                         pvm.Error = "Your vehicle was not Parked due to an error";
                         
                     }
-                    return View(pvm);
+                    bParkSuccess = false;
                 }
                 catch
                 {
                     //TODO: Log the error somewhere
                     pvm.Error = "Your vehicle was not Parked due to an error";
-                    return View(pvm);
+                    bParkSuccess = false;
                 }
-                return RedirectToAction(nameof(Index));
-            }
+                pvm.ParkSuccess = bParkSuccess;
+            }            
             return View(pvm);
         }
 
@@ -197,6 +199,8 @@ namespace MVCGarage.Controllers
 
                     if (ParkedVehicleOriginal == null)
                         return NotFound();
+
+                    cvm.RegistrationNumber = cvm.RegistrationNumber!.ToUpper();
 
                     ParkedVehicleOriginal.WheelCount = cvm.WheelCount;
                     ParkedVehicleOriginal.Model = cvm.Model;
