@@ -3,15 +3,16 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - MVCGarage</title>
+    <title>@ViewData["Title"] - MVC Garage</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/MVCGarage.styles.css" asp-append-version="true" />
     @if((bool)(ViewData["useLinkTag"] ?? false)) { @Html.Raw($"<link rel=\"stylesheet\" href=\"/css/{ViewData["LinkCSSName"]}\" />"); }
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <div class="container-fluid bg-dark text-center p-2">
+        <a class="nav-link link-light" asp-area="" asp-controller="ParkedVehicles" asp-action="Index"><h5>MVC Garage</h5></a>
+@*        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="ParkedVehicles" asp-action="Index">MVC Garage</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -26,17 +27,17 @@
                     </ul>
                 </div>
             </div>
-        </nav>
-    </header>
-    <div class="container">
+        </nav>*@
+    </div>
+    <div class="container mt-3">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted text-center">
         <div class="container">
-            &copy; 2022 - MVCGarage - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2022 - MVC Garage - <a href="https://github.com/mskogfeldt/MVCGarage">View at GitHub</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
