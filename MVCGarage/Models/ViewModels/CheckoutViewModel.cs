@@ -6,6 +6,7 @@ namespace MVCGarage.Models.ViewModels
     public class CheckoutViewModel
     {
         public int Id { get; set; }
+        [Display(Name = "Type of Vehicle")]
         public VehicleType Type { get; set; }
         [Display(Name = "Parked Time")]
         public string? RegistrationNumber { get; set; }
@@ -18,7 +19,7 @@ namespace MVCGarage.Models.ViewModels
         public TimeSpan ParkedTime { get; set; }
         public decimal Price { get; set; }
         public string? Brand { get; set; }
-        [Display(Name = "Wheel Count")]
+        [Display(Name = "Number of Wheels")]
         public int WheelCount { get; set; }
         public string? Model { get; set; }
         public Color Color { get; set; }

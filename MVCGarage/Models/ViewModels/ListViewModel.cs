@@ -13,9 +13,9 @@ namespace MVCGarage.Models.ViewModels
         public string? SearchBrand { get; set; }
         [Display(Name = "Model")]
         public string? SearchModel { get; set; }
-        [Display(Name = "Wheel Count")]
+        [Display(Name = "Number of Wheels")]
         public int? SearchWheelCount { get; set; }
-        [Display(Name = "Type")]
+        [Display(Name = "Type of Vehicle")]
         public VehicleType? SearchType { get; set; }
         public Order? Order { get; set; }
 

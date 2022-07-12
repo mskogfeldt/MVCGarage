@@ -6,6 +6,7 @@ namespace MVCGarage.Models.ViewModels
     public class IndexParkedVehicleViewModel
     {
         public int Id { get; set; }
+        [Display(Name = "Type of Vehicle")]
         public VehicleType Type { get; set; }
         [Display(Name = "Registration Number")]
         public string? RegistrationNumber { get; set; }
