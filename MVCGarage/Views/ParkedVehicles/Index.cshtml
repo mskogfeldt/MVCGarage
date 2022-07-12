@@ -58,23 +58,16 @@
     <thead>
         <tr>
             <th>
-                    @if (@Model.Order == Order.Type && !@Model.Desc)
-                    {
-                        <a asp-action="Index" asp-route-Order="@Order.Type">Type</a>
-                    }
-                    else
-                    {
-                        <a asp-action="Index" asp-route-Desc="true" asp-route-Order="@Order.Type">Type</a>
-                    }
-                </th>
-            <th>
-                <a asp-action="Index" asp-route-Order="@Order.RegistrationNumber">Registration Number</a>
+                <a asp-action="Index" asp-route-Desc="@Html.Raw(!Model.Desc)" asp-route-Order="@Order.Type">Type</a>
             </th>
             <th>
-                <a asp-action="Index" asp-route-Order="@Order.ArrivalTime">Arrival Time</a>
+                <a asp-action="Index" asp-route-Desc="@Html.Raw(!Model.Desc)" asp-route-Order="@Order.RegistrationNumber">Registration Number</a>
             </th>
             <th>
-                <a asp-action="Index" asp-route-Order="@Order.ParkedTime">Parked Time</a>
+                <a asp-action="Index" asp-route-Desc="@Html.Raw(!Model.Desc)" asp-route-Order="@Order.ArrivalTime">Arrival Time</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-Desc="@Html.Raw(!Model.Desc)" asp-route-Order="@Order.ParkedTime">Parked Time</a>
             </th>
             <th></th>
         </tr>
