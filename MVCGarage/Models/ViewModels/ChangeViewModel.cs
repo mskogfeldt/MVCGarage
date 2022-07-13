@@ -29,5 +29,8 @@ namespace MVCGarage.Models.ViewModels
         [Display(Name = "Number of Wheels")]
         public int WheelCount { get; set; }
 
+        public bool ModifySuccess { get; set; } = false;
+
+        public string? Error { get; set; }
     }
 }
