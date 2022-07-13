@@ -3,6 +3,11 @@
 @{
     ViewData["Title"] = "Modify";
 }
+
+<div class="m-2">
+    <a asp-action="Index">Back to Garage</a>
+</div>
+
 @if(@Model.ModifySuccess) {
 <!-- Button trigger modal -->
 <button type="button" id="clickable" class="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
@@ -79,10 +84,6 @@
         <input type="submit" value="Save" class="btn btn-primary" />
     </div>
 </form>
-
-<div class="mt-2">
-    <a asp-action="Index">Back to List</a>
-</div>
 
 
 
