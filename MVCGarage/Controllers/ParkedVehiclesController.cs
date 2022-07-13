@@ -26,16 +26,22 @@ namespace MVCGarage.Controllers
         {
             if (_context.ParkedVehicle != null)
             {
+                //if ((lvm.SearchType != null) 
+                //    || !string.IsNullOrEmpty(lvm.SearchBrand) 
+                //    || !string.IsNullOrEmpty(lvm.SearchModel) 
+                //    || (lvm.SearchWheelCount != null))
+                //    lvm.HasSearchItem = true;
+
                 lvm.HasSearchItem = 
                     lvm.SearchType != null || lvm.SearchWheelCount != null ||
                     !string.IsNullOrEmpty(lvm.SearchBrand) || !string.IsNullOrEmpty(lvm.SearchModel);
 
                 var dbParkedVehicles = await _context.ParkedVehicle
-                    .Where(x => (lvm.SearchRegistrationNumber != null) ? x.RegistrationNumber != null && x.RegistrationNumber.StartsWith(lvm.SearchRegistrationNumber!.Trim()) : true)
-                    .Where(x => (lvm.SearchBrand != null) ? x.Brand != null && x.Brand.StartsWith(lvm.SearchBrand!.Trim()) : true)
-                    .Where(x => (lvm.SearchWheelCount != null) ? x.WheelCount == lvm.SearchWheelCount : true)
-                    .Where(x => (lvm.SearchModel != null) ? x.Model != null && x.Model.StartsWith(lvm.SearchModel!.Trim()) : true)
-                    .Where(x => (lvm.SearchType != null) ? x.Type == lvm.SearchType : true)
+                    .WhereIf(lvm.SearchRegistrationNumber != null, x => x.RegistrationNumber != null && x.RegistrationNumber.StartsWith(lvm.SearchRegistrationNumber!.Trim()))
+                    .WhereIf(lvm.SearchBrand != null, x => x.Brand != null && x.Brand.StartsWith(lvm.SearchBrand!.Trim()))
+                    .WhereIf(lvm.SearchWheelCount != null, x => x.WheelCount == lvm.SearchWheelCount)
+                    .WhereIf(lvm.SearchModel != null, x => x.Model != null && x.Model.StartsWith(lvm.SearchModel!.Trim()))
+                    .WhereIf(lvm.SearchType != null, x => x.Type == lvm.SearchType)
                     .Select(v => new IndexParkedVehicleViewModel()
                     {
                         Id = v.Id,
