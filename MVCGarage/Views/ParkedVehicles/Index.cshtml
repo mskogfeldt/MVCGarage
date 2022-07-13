@@ -12,112 +12,107 @@
     <a asp-action="Park" class="btn btn-primary mt-2 mb-2" role="button">Park Vehicle</a>
 </p>
 
-<div class="accordion bg-secondary bg-opacity-10 p-2 rounded shadow">
-    <h3>Search</h3>
-    <form asp-action="Index">
-        <div class="form-floating">
-            <input type="text" asp-for="SearchRegistrationNumber" class="form-control" name="searchRegistrationNumber" />
-            <label asp-for="SearchRegistrationNumber" class="form-label"></label>
-        </div>
+<div class="row">
 
-    <div class="accordion-item p-0 mt-2 border-0">
-        <h5 class="accordion-header">
-            <button class="accordion-button alert-primary @if(!searchBool) @Html.Raw("collapsed")" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="@Html.Raw(Model.HasSearchItem)" aria-controls="collapseOne">
-            More search options...
-            </button>
-        </h5>
-        <div id="collapseOne" class="accordion-collapse collapse @if(searchBool) @Html.Raw("show")" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-            <div class="accordion-body text-dark bg-primary bg-opacity-10">
+    <div class="col-lg-4 order-lg-last mb-4">
+        <div class="accordion bg-secondary bg-opacity-10 p-2 rounded shadow">
+            <h3>Search</h3>
+            <form asp-action="Index">
                 <div class="form-floating">
-                    <select asp-for="SearchType" class="form-control" asp-items="@Html.GetEnumSelectList<VehicleType>()">
-                        <option>All</option>
-                    </select>
-                    <label asp-for="SearchType" class="control-label"></label>
+                    <input type="text" asp-for="SearchRegistrationNumber" class="form-control" name="searchRegistrationNumber" />
+                    <label asp-for="SearchRegistrationNumber" class="form-label"></label>
                 </div>
 
-                <div class="form-floating">
-                    <input type="text" asp-for="SearchBrand" class="form-control" name="searchBrand" />
-                    <label asp-for="SearchBrand" class="form-label"></label>
-                </div>
+            <div class="accordion-item p-0 mt-2 border-0">
+                <h5 class="accordion-header">
+                    <button class="accordion-button alert-primary @if(!searchBool) @Html.Raw("collapsed")" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="@Html.Raw(Model.HasSearchItem)" aria-controls="collapseOne">
+                    More search options...
+                    </button>
+                </h5>
+                <div id="collapseOne" class="accordion-collapse collapse @if(searchBool) @Html.Raw("show")" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <div class="accordion-body text-dark bg-primary bg-opacity-10">
+                        <div class="form-floating">
+                            <select asp-for="SearchType" class="form-control" asp-items="@Html.GetEnumSelectList<VehicleType>()">
+                                <option>All</option>
+                            </select>
+                            <label asp-for="SearchType" class="control-label"></label>
+                        </div>
+
+                        <div class="form-floating">
+                            <input type="text" asp-for="SearchBrand" class="form-control" name="searchBrand" />
+                            <label asp-for="SearchBrand" class="form-label"></label>
+                        </div>
                 
-                <div class="form-floating">
-                    <input type="text" asp-for="SearchModel" class="form-control" name="searchModel" />
-                    <label asp-for="SearchModel" class="form-label"></label>
-                </div>
+                        <div class="form-floating">
+                            <input type="text" asp-for="SearchModel" class="form-control" name="searchModel" />
+                            <label asp-for="SearchModel" class="form-label"></label>
+                        </div>
                 
-                <div class="form-floating">
-                    <input type="text" asp-for="SearchWheelCount" class="form-control" name="searchWheelCount" />
-                    <label asp-for="SearchWheelCount" class="form-label"></label>
+                        <div class="form-floating">
+                            <input type="text" asp-for="SearchWheelCount" class="form-control" name="searchWheelCount" />
+                            <label asp-for="SearchWheelCount" class="form-label"></label>
+                        </div>
+                    </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col">
+                    <input type="submit" class="btn btn-dark mt-2 mb-2" value="Search"/>
+                </div>
+                <div class="col text-end">
+                    <a href="/" class="btn btn-outline-dark mt-2 mb-2" role="button">Reset Search</a>
+                </div>
+            </div>
+            </form>
         </div>
     </div>
-    <div class="row">
-        <div class="col">
-            <input type="submit" class="btn btn-dark mt-2 mb-2" value="Search"/>
-        </div>
-        <div class="col text-end">
-            <a href="/" class="btn btn-outline-dark mt-2 mb-2" role="button">Reset Search</a>
+    
+    <div class="col-lg-8 order-lg-first">
+        <div class="container bg-light rounded shadow p-2">
+            <h3>Parked Vehicles</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            <a asp-action="Index" asp-route-Desc="@Html.Raw(!Model.Desc)" asp-route-Order="@Order.Type">Vehicle Type</a>
+                        </th>
+                        <th>
+                            <a asp-action="Index" asp-route-Desc="@Html.Raw(!Model.Desc)" asp-route-Order="@Order.RegistrationNumber">Registration Number</a>
+                        </th>
+                        <th>
+                            <a asp-action="Index" asp-route-Desc="@Html.Raw(!Model.Desc)" asp-route-Order="@Order.ArrivalTime">Arrival Time</a>
+                        </th>
+                        <th>
+                            <a asp-action="Index" asp-route-Desc="@Html.Raw(!Model.Desc)" asp-route-Order="@Order.ParkedTime">Parked Time</a>
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.VehicleList) {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Type)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RegistrationNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ArrivalTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ParkedTime)
+                        </td>
+                        <td>
+                            <a asp-action="Modify" asp-route-id="@item.Id">Modify</a> |
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                            <a asp-action="Checkout" asp-route-id="@item.Id">Checkout</a>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
         </div>
     </div>
-    </form>
-</div>
-
-<div class="container bg-light rounded shadow mt-4 p-2">
-
-<h3>Parked Vehicles</h3>
-
-@*<partial name="VehicleListPartial" model="@Model.VehicleList" />*@
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                <a asp-action="Index" asp-route-Desc="@Html.Raw(!Model.Desc)" asp-route-Order="@Order.Type">Vehicle Type</a>
-            </th>
-            <th>
-                <a asp-action="Index" asp-route-Desc="@Html.Raw(!Model.Desc)" asp-route-Order="@Order.RegistrationNumber">Registration Number</a>
-            </th>
-            <th>
-                <a asp-action="Index" asp-route-Desc="@Html.Raw(!Model.Desc)" asp-route-Order="@Order.ArrivalTime">Arrival Time</a>
-            </th>
-            <th>
-                <a asp-action="Index" asp-route-Desc="@Html.Raw(!Model.Desc)" asp-route-Order="@Order.ParkedTime">Parked Time</a>
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.VehicleList) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Type)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RegistrationNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ArrivalTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ParkedTime)
-@*                @{
-                    var parkedTime = 
-                          $"{item.ParkedTime.Days}d "
-                        + $"{item.ParkedTime.Hours}h "
-                        + $"{item.ParkedTime.Minutes}m";
-
-                            @Html.DisplayFor(modelItem => parkedTime);
-                }*@
-            </td>
-            <td>
-                <a asp-action="Modify" asp-route-id="@item.Id">Modify</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Checkout" asp-route-id="@item.Id">Checkout</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
 
 </div>
