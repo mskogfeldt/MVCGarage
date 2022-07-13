@@ -33,7 +33,7 @@ namespace MVCGarage.Controllers
             if (_context.ParkedVehicle != null)
             {
                 var lvm = new ListViewModel();
-                if (!string.IsNullOrEmpty(lwmPost.SearchBrand) || !string.IsNullOrEmpty(lwmPost.SearchModel) || !string.IsNullOrEmpty(lwmPost.SearchRegistrationNumber) || !(lwmPost.SearchWheelCount == null))
+                if (!(lwmPost.SearchType == null) || !string.IsNullOrEmpty(lwmPost.SearchBrand) || !string.IsNullOrEmpty(lwmPost.SearchModel) || !(lwmPost.SearchWheelCount == null))
                     lvm.HasSearchItem = true;
 
                 var dbParkedVehicles = await _context.ParkedVehicle
