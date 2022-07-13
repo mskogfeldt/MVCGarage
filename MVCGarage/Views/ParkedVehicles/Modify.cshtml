@@ -5,7 +5,7 @@
 }
 @if(@Model.ModifySuccess) {
 <!-- Button trigger modal -->
-<button type="button" id="btestar" class="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+<button type="button" id="clickable" class="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
   Launch static backdrop modal
 </button>
 
@@ -26,11 +26,7 @@
     </div>
   </div>
 </div>
-<script>
-    document.addEventListener("DOMContentLoaded", function(event) { 
-        document.getElementById('btestar').click();
-});
-</script>
+<script src="/js/clickable.js"></script>
 }
 <h2>Modify</h2>
 
@@ -87,6 +83,8 @@
 <div class="mt-2">
     <a asp-action="Index">Back to List</a>
 </div>
+
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

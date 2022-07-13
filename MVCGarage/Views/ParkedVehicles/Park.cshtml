@@ -6,7 +6,7 @@
 
 @if(@Model.ParkSuccess) {
 <!-- Button trigger modal -->
-<button type="button" id="btestar" class="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+<button type="button" id="clickable" class="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
   Launch static backdrop modal
 </button>
 
@@ -27,11 +27,7 @@
     </div>
   </div>
 </div>
-<script>
-    document.addEventListener("DOMContentLoaded", function(event) { 
-        document.getElementById('btestar').click();
-});
-</script>
+<script src="/js/clickable.js"></script>
 }
 <div class="row">
     <div class="col-md-6">
