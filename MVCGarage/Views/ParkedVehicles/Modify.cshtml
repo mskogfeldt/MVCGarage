@@ -3,7 +3,35 @@
 @{
     ViewData["Title"] = "Modify";
 }
+@if(@Model.ModifySuccess) {
+<!-- Button trigger modal -->
+<button type="button" id="btestar" class="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+  Launch static backdrop modal
+</button>
 
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Your vehicle has now been modified</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        When you no longer want to stay parked. Choose Checkout in the Parked Vehicles List.
+      </div>
+      <div class="modal-footer">
+        <a asp-action="Index" class="btn btn-primary">To Parked Vehicles List</a>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function(event) { 
+        document.getElementById('btestar').click();
+});
+</script>
+}
 <h1>Modify</h1>
 
 <h4>Parked Vehicle</h4>
@@ -42,6 +70,9 @@
                 <label asp-for="WheelCount" class="control-label"></label>
                 <input asp-for="WheelCount" class="form-control" />
                 <span asp-validation-for="WheelCount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <span class="text-danger">@Model.Error</span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

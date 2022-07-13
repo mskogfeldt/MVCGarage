@@ -197,11 +197,14 @@ namespace MVCGarage.Controllers
         {
             if (ModelState.IsValid)
             {
+                bool bModifySuccess = true;
                 try
                 {
                     if (_context.ParkedVehicle == null)
                         return NotFound();
 
+                    cvm.RegistrationNumber = cvm.RegistrationNumber!.ToUpper();
+                    cvm.Error = "";
                     var parkedVehicle = new ParkedVehicle()
                     {
                         Id = cvm.Id,
@@ -215,20 +218,44 @@ namespace MVCGarage.Controllers
 
                     _context.Update(parkedVehicle);
                     _context.Entry(parkedVehicle).Property(x => x.ArrivalTime).IsModified = false;
+                    
+                    try
+                    {
+                        await _context.SaveChangesAsync();
+                    }
+                    catch (Microsoft.EntityFrameworkCore.DbUpdateException e)
+                    {
+                        if (e.InnerException.Message.StartsWith("Cannot insert duplicate"))
+                            cvm.Error = "The RegistrationNumber does already excist on another car that is also already parked. Checkout that vehicle first.";
+                        else
+                        {
+                            //TODO: Log the error somewhere
+                            cvm.Error = "Your vehicle was not modified due to an error";
 
-                    await _context.SaveChangesAsync();
+                        }
+                        bModifySuccess = false;
+                    }
+                    catch
+                    {
+                        //TODO: Log the error somewhere
+                        cvm.Error = "Your vehicle was not modified due to an error";
+                        bModifySuccess = false;
+                    }
+                    
                 }
                 catch (DbUpdateConcurrencyException)
                 {
+                    bModifySuccess = false;
                     if (!ParkedVehicleExists(cvm.Id))
                         return NotFound();
                     else
-                        throw;
+                        cvm.Error = "Your vehicle was not modified due to an error";
 
                 }
-                return RedirectToAction(nameof(Index));
+                cvm.ModifySuccess = bModifySuccess;
+                return View(cvm);
             }
-
+            
             return View(cvm);
         }
 
