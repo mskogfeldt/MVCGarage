@@ -18,8 +18,8 @@ namespace MVCGarage.Models.ViewModels
         [Display(Name = "Type of Vehicle")]
         public VehicleType? SearchType { get; set; }
         public Order? Order { get; set; }
-
         public bool Desc { get; set; } = false;
+        public bool HasSearchItem { get; set; } = false;
     }
 
     public enum Order
