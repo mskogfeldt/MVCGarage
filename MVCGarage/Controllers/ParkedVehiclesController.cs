@@ -14,7 +14,7 @@ namespace MVCGarage.Controllers
     public class ParkedVehiclesController : Controller
     {
         private readonly MVCGarageContext _context;
-        private IConfiguration _configuration;
+        private readonly IConfiguration _configuration;
 
         public ParkedVehiclesController(MVCGarageContext context, IConfiguration configuration)
         {
@@ -22,26 +22,26 @@ namespace MVCGarage.Controllers
             _configuration = configuration;
         }
 
-        //public string ParkedTime(DateTime arrivalTime)
-        //{
-        //    return DateTime.Now.Subtract(arrivalTime).ToString();
-        //}
-
-        // GET: ParkedVehicles
-        public async Task<IActionResult> Index(ListViewModel lwmPost)
+        public async Task<IActionResult> Index(ListViewModel lvm)
         {
             if (_context.ParkedVehicle != null)
             {
-                var lvm = new ListViewModel();
-                if (!(lwmPost.SearchType == null) || !string.IsNullOrEmpty(lwmPost.SearchBrand) || !string.IsNullOrEmpty(lwmPost.SearchModel) || !(lwmPost.SearchWheelCount == null))
-                    lvm.HasSearchItem = true;
+                //if ((lvm.SearchType != null) 
+                //    || !string.IsNullOrEmpty(lvm.SearchBrand) 
+                //    || !string.IsNullOrEmpty(lvm.SearchModel) 
+                //    || (lvm.SearchWheelCount != null))
+                //    lvm.HasSearchItem = true;
+
+                lvm.HasSearchItem = 
+                    lvm.SearchType != null || lvm.SearchWheelCount != null ||
+                    !string.IsNullOrEmpty(lvm.SearchBrand) || !string.IsNullOrEmpty(lvm.SearchModel);
 
                 var dbParkedVehicles = await _context.ParkedVehicle
-                    .WhereIf(lwmPost.SearchRegistrationNumber != null, x => x.RegistrationNumber != null && x.RegistrationNumber.StartsWith(lwmPost.SearchRegistrationNumber!.Trim()))
-                    .WhereIf(lwmPost.SearchBrand != null, x => x.Brand != null && x.Brand.StartsWith(lwmPost.SearchBrand!.Trim()))
-                    .WhereIf(lwmPost.SearchWheelCount != null, x => x.WheelCount == lwmPost.SearchWheelCount)
-                    .WhereIf(lwmPost.SearchModel != null, x => x.Model != null && x.Model.StartsWith(lwmPost.SearchModel!.Trim()))
-                    .WhereIf(lwmPost.SearchType != null, x => x.Type == lwmPost.SearchType)
+                    .WhereIf(lvm.SearchRegistrationNumber != null, x => x.RegistrationNumber != null && x.RegistrationNumber.StartsWith(lvm.SearchRegistrationNumber!.Trim()))
+                    .WhereIf(lvm.SearchBrand != null, x => x.Brand != null && x.Brand.StartsWith(lvm.SearchBrand!.Trim()))
+                    .WhereIf(lvm.SearchWheelCount != null, x => x.WheelCount == lvm.SearchWheelCount)
+                    .WhereIf(lvm.SearchModel != null, x => x.Model != null && x.Model.StartsWith(lvm.SearchModel!.Trim()))
+                    .WhereIf(lvm.SearchType != null, x => x.Type == lvm.SearchType)
                     .Select(v => new IndexParkedVehicleViewModel()
                     {
                         Id = v.Id,
@@ -51,15 +51,13 @@ namespace MVCGarage.Controllers
                         ParkedTime = DateTime.Now.Subtract(v.ArrivalTime)
                     }).ToListAsync();
                 
-                bool useDesc = lwmPost.Desc;
                 var orderedParkedVehicles =
-                    lwmPost.Order == Order.RegistrationNumber ? dbParkedVehicles.OrderAscOrDesc(useDesc, v => v.RegistrationNumber)
-                  : lwmPost.Order == Order.Type ? dbParkedVehicles.OrderAscOrDesc(useDesc, v => v.Type)
-                  : lwmPost.Order == Order.ParkedTime ? dbParkedVehicles.OrderAscOrDesc(useDesc, v => v.ParkedTime)
-                  : dbParkedVehicles.OrderAscOrDesc(useDesc, v => v.ArrivalTime);
+                    lvm.Order == Order.RegistrationNumber ? dbParkedVehicles.OrderAscOrDesc(lvm.Desc, v => v.RegistrationNumber)
+                  : lvm.Order == Order.Type ? dbParkedVehicles.OrderAscOrDesc(lvm.Desc, v => v.Type)
+                  : lvm.Order == Order.ParkedTime ? dbParkedVehicles.OrderAscOrDesc(lvm.Desc, v => v.ParkedTime)
+                  : dbParkedVehicles.OrderAscOrDesc(lvm.Desc, v => v.ArrivalTime);
 
                 lvm.VehicleList = orderedParkedVehicles.ToList();
-                lvm.Desc = lwmPost.Desc;
 
                 return View(lvm);
             }

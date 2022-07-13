@@ -5,7 +5,7 @@ namespace MVCGarage.Models.ViewModels
 {
     public class ListViewModel
     {
-        public IEnumerable<IndexParkedVehicleViewModel>? VehicleList { get; set; }
+        public IEnumerable<IndexParkedVehicleViewModel> VehicleList { get; set; } = new List<IndexParkedVehicleViewModel>();
         [MaxLength(50)]
         [Display(Name = "Registration Number")]
         public string? SearchRegistrationNumber { get; set; }
