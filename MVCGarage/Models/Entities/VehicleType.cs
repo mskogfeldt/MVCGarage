@@ -6,7 +6,7 @@
         Motorcycle,
         Truck,
         Boat,
-        AirPlane,
+        Airplane,
         Other
     }
 }
