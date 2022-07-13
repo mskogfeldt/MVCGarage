@@ -3,11 +3,12 @@
 @{
     ViewData["Title"] = "Parked Vehicles";
 }
+
 <p>
     <a asp-action="Park" class="btn btn-primary mt-2 mb-2" role="button">Park Vehicle</a>
 </p>
 
-<div class="accordion bg-secondary bg-opacity-10 rounded shadow p-2">
+<div class="accordion bg-secondary bg-opacity-10 p-2 rounded shadow">
     <h3>Search</h3>
     <form asp-action="Index">
         <div class="form-floating">
@@ -15,14 +16,21 @@
             <label asp-for="SearchRegistrationNumber" class="form-label"></label>
         </div>
 
-    <div class="accordion-item alert alert-primary p-0 mt-2">
+    <div class="accordion-item p-0 mt-2 border-0">
         <h5 class="accordion-header">
-            <button class="accordion-button collapsed list-group-item-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+            <button class="accordion-button collapsed alert-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
             More search options...
             </button>
         </h5>
         <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-            <div class="accordion-body">
+            <div class="accordion-body text-dark bg-primary bg-opacity-10">
+                <div class="form-floating">
+                    <select asp-for="SearchType" class="form-control" asp-items="@Html.GetEnumSelectList<VehicleType>()">
+                        <option>All</option>
+                    </select>
+                    <label asp-for="SearchType" class="control-label"></label>
+                </div>
+
                 <div class="form-floating">
                     <input type="text" asp-for="SearchBrand" class="form-control" name="searchBrand" />
                     <label asp-for="SearchBrand" class="form-label"></label>
@@ -36,13 +44,6 @@
                 <div class="form-floating">
                     <input type="text" asp-for="SearchWheelCount" class="form-control" name="searchWheelCount" />
                     <label asp-for="SearchWheelCount" class="form-label"></label>
-                </div>
-        
-                <div class="form-floating">
-                    <select asp-for="SearchType" class="form-control" asp-items="@Html.GetEnumSelectList<VehicleType>()">
-                        <option>All</option>
-                    </select>
-                    <label asp-for="SearchType" class="control-label"></label>
                 </div>
             </div>
         </div>
@@ -58,9 +59,9 @@
     </form>
 </div>
 
-<div class="container bg-light rounded">
+<div class="container bg-light rounded shadow mt-4 p-2">
 
-<h1 class="mt-4">Parked Vehicles</h1>
+<h3>Parked Vehicles</h3>
 
 @*<partial name="VehicleListPartial" model="@Model.VehicleList" />*@
 
@@ -68,7 +69,7 @@
     <thead>
         <tr>
             <th>
-                <a asp-action="Index" asp-route-Desc="@Html.Raw(!Model.Desc)" asp-route-Order="@Order.Type">Type</a>
+                <a asp-action="Index" asp-route-Desc="@Html.Raw(!Model.Desc)" asp-route-Order="@Order.Type">Vehicle Type</a>
             </th>
             <th>
                 <a asp-action="Index" asp-route-Desc="@Html.Raw(!Model.Desc)" asp-route-Order="@Order.RegistrationNumber">Registration Number</a>

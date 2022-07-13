@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - MVC Garage</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/MVCGarage.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     @if((bool)(ViewData["useLinkTag"] ?? false)) { @Html.Raw($"<link rel=\"stylesheet\" href=\"/css/{ViewData["LinkCSSName"]}\" />"); }
 </head>
 <body class="bg-secondary bg-opacity-10">
-    <div class="container-fluid bg-dark text-center p-2">
+    <div class="container-fluid bg-dark bg-gradient text-center p-2">
         <a class="nav-link link-light" asp-area="" asp-controller="ParkedVehicles" asp-action="Index"><h5>MVC Garage</h5></a>
 @*        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
             <div class="container-fluid">

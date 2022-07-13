@@ -4,7 +4,11 @@
     {
         Red, 
         Blue, 
-        Yellow, 
+        Yellow,
+        Green,
+        Brown,
+        Black,
+        White,
         Other 
     }
 }
