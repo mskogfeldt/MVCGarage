@@ -282,7 +282,7 @@ namespace MVCGarage.Controllers
                 CheckoutTime = DateTime.Now,
                 Id = parkedVehicle.Id,
                 Model = parkedVehicle.Model,
-                Price = calculatePrice(parkedTime.TotalHours),
+                Price = CalculatePrice(parkedTime.TotalHours),
                 ParkedTime = parkedTime,
                 RegistrationNumber = parkedVehicle.RegistrationNumber,
                 Type = parkedVehicle.Type,
@@ -292,7 +292,7 @@ namespace MVCGarage.Controllers
             return View(cvm);
         }
 
-        private decimal calculatePrice(double totalHour)
+        private decimal CalculatePrice(double totalHour)
         {
             int iHourPrice = int.Parse(_configuration["Price:HourPrice"]);
             return (decimal)(totalHour * iHourPrice);
@@ -315,7 +315,6 @@ namespace MVCGarage.Controllers
                 _context.ParkedVehicle.Remove(parkedVehicle);
 
                 var parkedTime = DateTime.Now.Subtract(parkedVehicle.ArrivalTime);
-                //TODO decide what cost per minute is, hardcoded to 20kr per minute
 
                 rvm = new ReceiptViewModel()
                 {
@@ -324,7 +323,7 @@ namespace MVCGarage.Controllers
                     Color = parkedVehicle.Color,
                     CheckoutTime = DateTime.Now,
                     Model = parkedVehicle.Model,
-                    Price = calculatePrice(parkedTime.TotalHours),
+                    Price = CalculatePrice(parkedTime.TotalHours),
                     ParkedTime = parkedTime,
                     RegistrationNumber = parkedVehicle.RegistrationNumber,
                     Type = parkedVehicle.Type

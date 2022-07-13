@@ -4,6 +4,10 @@
     ViewData["Title"] = "Park";
 }
 
+<div class="m-2">
+    <a asp-action="Index">Back to Garage</a>
+</div>
+
 @if(@Model.ParkSuccess) {
 <!-- Button trigger modal -->
 <button type="button" id="clickable" class="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
@@ -87,10 +91,6 @@
 </div>
 
 </form>
-
-<div class="mt-2">
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
