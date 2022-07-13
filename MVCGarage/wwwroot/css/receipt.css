@@ -1,0 +1,10 @@
+﻿@media print {
+    @page {
+        margin: 0;
+    }
+
+    body {
+        margin: 1cm;
+        background-color: transparent;
+    }
+}

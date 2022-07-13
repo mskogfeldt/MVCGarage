@@ -18,11 +18,15 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 @*    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/MVCGarage.styles.css" asp-append-version="true" />*@
+    <link rel="stylesheet" href="~/css/receipt.css" />
 </head>
-<body>
-<h1>Receipt</h1>
+<body class="bg-white text-black">
 
+<div class="m-2 d-print-none">
+    <a asp-action="Index">Back to Garage</a>
+</div>
 
+<h3>Receipt</h3>
 <div>
     <dl class="row">
         <dt class = "col-sm-2">
@@ -80,11 +84,9 @@
             @Html.DisplayFor(model => model.Price)kr
         </dd>
     </dl>
-    
-    <form asp-action="Checkout" class="d-print-none">
-        <a asp-action="Index">Back to List</a>
-    </form>
+     <button class="btn btn-primary d-print-none m-2" onclick="window.print()">Print Receipt</button>
  </div>
+
 
 </body>
 </html>

@@ -331,7 +331,7 @@ namespace MVCGarage.Controllers
                 };
             }
 
-            await _context.SaveChangesAsync();
+            //await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Receipt), rvm);
         }
 
