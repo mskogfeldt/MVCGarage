@@ -4,7 +4,8 @@
     {
         Red, 
         Blue, 
-        Yellow, 
+        Yellow,
+        Brown,
         Other 
     }
 }

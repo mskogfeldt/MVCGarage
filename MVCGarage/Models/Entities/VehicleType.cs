@@ -3,6 +3,8 @@
     public enum VehicleType 
     { 
         Car, 
-        AirPlane 
+        AirPlane,
+        Motorcycle,
+        Other
     }
 }
