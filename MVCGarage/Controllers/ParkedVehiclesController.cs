@@ -224,21 +224,19 @@ namespace MVCGarage.Controllers
                     {
                         await _context.SaveChangesAsync();
                     }
-                    catch (Microsoft.EntityFrameworkCore.DbUpdateException e)
+                    //TODO: Log the error somewhere
+                    catch (DbUpdateException e)
                     {
-                        if (e.InnerException.Message.StartsWith("Cannot insert duplicate"))
+                        if (e.InnerException != null && e.InnerException.Message.StartsWith("Cannot insert duplicate"))
                             cvm.Error = "The RegistrationNumber does already excist on another car that is also already parked. Checkout that vehicle first.";
                         else
                         {
-                            //TODO: Log the error somewhere
                             cvm.Error = "Your vehicle was not modified due to an error";
-
                         }
                         bModifySuccess = false;
                     }
                     catch
                     {
-                        //TODO: Log the error somewhere
                         cvm.Error = "Your vehicle was not modified due to an error";
                         bModifySuccess = false;
                     }
