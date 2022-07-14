@@ -72,7 +72,7 @@ namespace MVCGarage.Migrations
                             Brand = "Volvo",
                             Color = 2,
                             Model = "240",
-                            RegistrationNumber = "ABC-123",
+                            RegistrationNumber = "ABC123",
                             Type = 0,
                             WheelCount = 4
                         },
@@ -83,7 +83,7 @@ namespace MVCGarage.Migrations
                             Brand = "Saab",
                             Color = 1,
                             Model = "900",
-                            RegistrationNumber = "BLA-222",
+                            RegistrationNumber = "BLA222",
                             Type = 0,
                             WheelCount = 4
                         },
@@ -94,7 +94,7 @@ namespace MVCGarage.Migrations
                             Brand = "BMW",
                             Color = 0,
                             Model = "320i",
-                            RegistrationNumber = "ALB-333",
+                            RegistrationNumber = "ALB333",
                             Type = 0,
                             WheelCount = 4
                         },
@@ -105,7 +105,7 @@ namespace MVCGarage.Migrations
                             Brand = "Toyota",
                             Color = 2,
                             Model = "Yaris",
-                            RegistrationNumber = "HEY-332",
+                            RegistrationNumber = "HEY332",
                             Type = 1,
                             WheelCount = 3
                         });

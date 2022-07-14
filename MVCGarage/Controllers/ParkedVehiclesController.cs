@@ -103,6 +103,11 @@ namespace MVCGarage.Controllers
             return View(pvm);
         }
 
+        public string minifyAndUpperCaseString(string stringToMinify)
+        {
+            return stringToMinify.Replace(" ", "").Replace("-", "");
+        }
+
         // POST: ParkedVehicles/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -112,7 +117,7 @@ namespace MVCGarage.Controllers
         {
             if (ModelState.IsValid)
             {
-                pvm.RegistrationNumber = pvm.RegistrationNumber!.ToUpper();
+                pvm.RegistrationNumber = minifyAndUpperCaseString(pvm.RegistrationNumber!);
                 pvm.Error = "";
                 var parkedVehicle = new ParkedVehicle
                 {
@@ -202,14 +207,14 @@ namespace MVCGarage.Controllers
                     if (_context.ParkedVehicle == null)
                         return NotFound();
 
-                    cvm.RegistrationNumber = cvm.RegistrationNumber!.ToUpper();
+                    cvm.RegistrationNumber = minifyAndUpperCaseString(cvm.RegistrationNumber!);
                     cvm.Error = "";
                     var parkedVehicle = new ParkedVehicle()
                     {
                         Id = cvm.Id,
                         WheelCount = cvm.WheelCount,
                         Model = cvm.Model,
-                        RegistrationNumber = cvm.RegistrationNumber!.ToUpper(),
+                        RegistrationNumber = cvm.RegistrationNumber,
                         Brand = cvm.Brand,
                         Color = cvm.Color,
                         Type = cvm.Type

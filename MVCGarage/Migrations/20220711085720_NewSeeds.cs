@@ -21,9 +21,9 @@ namespace MVCGarage.Migrations
                 columns: new[] { "Id", "ArrivalTime", "Brand", "Color", "Model", "RegistrationNumber", "Type", "WheelCount" },
                 values: new object[,]
                 {
-                    { 2, new DateTime(2022, 7, 11, 10, 57, 19, 905, DateTimeKind.Local).AddTicks(2131), "Saab", 1, "900", "BLA-222", 0, 4 },
-                    { 3, new DateTime(2022, 7, 11, 10, 57, 19, 905, DateTimeKind.Local).AddTicks(2134), "BMW", 0, "320i", "ALB-333", 0, 4 },
-                    { 4, new DateTime(2022, 7, 11, 10, 57, 19, 905, DateTimeKind.Local).AddTicks(2137), "Toyota", 2, "Yaris", "HEY-332", 1, 3 }
+                    { 2, new DateTime(2022, 7, 11, 10, 57, 19, 905, DateTimeKind.Local).AddTicks(2131), "Saab", 1, "900", "BLA222", 0, 4 },
+                    { 3, new DateTime(2022, 7, 11, 10, 57, 19, 905, DateTimeKind.Local).AddTicks(2134), "BMW", 0, "320i", "ALB333", 0, 4 },
+                    { 4, new DateTime(2022, 7, 11, 10, 57, 19, 905, DateTimeKind.Local).AddTicks(2137), "Toyota", 2, "Yaris", "HEY332", 1, 3 }
                 });
         }
 
