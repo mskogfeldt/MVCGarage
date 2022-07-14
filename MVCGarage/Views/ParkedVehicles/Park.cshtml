@@ -60,6 +60,7 @@
             <label asp-for="Type" class="control-label"></label>
         </div>
         <div class="form-floating">
+            <input type="hidden" id="RegistrationNumberId" value="@Html.IdFor(@Model=>@Model.RegistrationNumber)" />
             <input asp-for="RegistrationNumber" class="form-control" />
             <span asp-validation-for="RegistrationNumber" class="text-danger"></span>
             <label asp-for="RegistrationNumber" class="control-label"></label>

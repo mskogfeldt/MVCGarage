@@ -1,6 +1,10 @@
 ﻿document.addEventListener("DOMContentLoaded", function (event) {
-    let regnr = document.querySelector('#RegistrationNumber');
-    regnr.addEventListener("change", function () {
-        document.getElementById('ErrorSpan').innerHTML = '';
+    let regnrId = document.querySelector('#RegistrationNumberId').value;
+    let regnrInput = document.querySelector('#' + regnrId);
+    regnrInput.addEventListener("change", function () {
+        try {
+            document.querySelector('#ErrorSpan').innerHTML = '';
+        } catch {
+        }        
     });
 });
