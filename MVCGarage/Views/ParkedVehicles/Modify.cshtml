@@ -33,6 +33,7 @@
 </div>
 <script src="/js/clickable.js"></script>
 }
+<script src="/js/clientValidationReset.js"></script>
 <h2>Modify</h2>
 
 <h3>Parked Vehicle</h3>
@@ -78,7 +79,7 @@
         </div>
     </div>
     <div class="form-group mt-2">
-        <span class="text-danger">@Model.Error</span>
+        <span id="ErrorSpan" class="text-danger">@Model.Error</span>
     </div>
     <div class="form-group mt-2">
         <input type="submit" value="Save" class="btn btn-primary" />
