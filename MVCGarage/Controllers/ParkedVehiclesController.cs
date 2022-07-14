@@ -99,12 +99,14 @@ namespace MVCGarage.Controllers
         // GET: ParkedVehicles/Create
         public IActionResult Park()
         {
-            var pvm = new ParkViewModel();
-            pvm.Price = options.Value.HourPrice;
+            var pvm = new ParkViewModel
+            {
+                Price = options.Value.HourPrice
+            };
             return View(pvm);
         }
 
-        public string minifyAndUpperCaseString(string stringToMinify)
+        public string MinifyAndUpperCaseString(string stringToMinify)
         {
             return stringToMinify.Replace(" ", "").Replace("-", "");
         }
@@ -118,7 +120,7 @@ namespace MVCGarage.Controllers
         {
             if (ModelState.IsValid)
             {
-                pvm.RegistrationNumber = minifyAndUpperCaseString(pvm.RegistrationNumber!);
+                pvm.RegistrationNumber = MinifyAndUpperCaseString(pvm.RegistrationNumber!);
                 pvm.Error = "";
                 var parkedVehicle = new ParkedVehicle
                 {
@@ -208,7 +210,7 @@ namespace MVCGarage.Controllers
                     if (_context.ParkedVehicle == null)
                         return NotFound();
 
-                    cvm.RegistrationNumber = minifyAndUpperCaseString(cvm.RegistrationNumber!);
+                    cvm.RegistrationNumber = MinifyAndUpperCaseString(cvm.RegistrationNumber!);
                     cvm.Error = "";
                     var parkedVehicle = new ParkedVehicle()
                     {
@@ -313,7 +315,7 @@ namespace MVCGarage.Controllers
                 return Problem("Entity set 'MVCGarageContext.ParkedVehicle'  is null.");
             }
 
-            ReceiptViewModel rvm = new ReceiptViewModel();
+            ReceiptViewModel rvm = new();
             var parkedVehicle = await _context.ParkedVehicle.FindAsync(id);
             if (parkedVehicle != null)
             {
