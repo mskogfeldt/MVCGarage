@@ -2,10 +2,22 @@
 
 @{
     ViewData["Title"] = "Parked Vehicles";
-}
 
-@{
-    var searchBool = Model.HasSearchItem;
+    string Sort(Order order)
+    {
+        //return @Model.Order == order ? 
+        //            @Model.Desc ? 
+        //                " ↓" 
+        //            : " ↑" 
+        //        : "";
+
+        if (@Model.Order == order)
+        {
+            if (@Model.Desc) return " ↓";
+            return " ↑";
+        }
+        return "";
+    }
 }
 
 <p>
@@ -25,11 +37,11 @@
 
             <div class="accordion-item p-0 mt-2 border-0">
                 <h5 class="accordion-header">
-                    <button class="accordion-button alert-primary @if(!searchBool) @Html.Raw("collapsed")" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="@Html.Raw(Model.HasSearchItem)" aria-controls="collapseOne">
+                    <button class="accordion-button alert-primary @if(!Model.HasSearchItem) @Html.Raw("collapsed")" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="@Html.Raw(Model.HasSearchItem)" aria-controls="collapseOne">
                     More search options...
                     </button>
                 </h5>
-                <div id="collapseOne" class="accordion-collapse collapse @if(searchBool) @Html.Raw("show")" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div id="collapseOne" class="accordion-collapse collapse @if(Model.HasSearchItem) @Html.Raw("show")" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                     <div class="accordion-body text-dark bg-primary bg-opacity-10">
                         <div class="form-floating">
                             <select asp-for="SearchType" class="form-control" asp-items="@Html.GetEnumSelectList<VehicleType>()">
@@ -74,16 +86,24 @@
                 <thead>
                     <tr>
                         <th>
-                            <a asp-action="Index" asp-route-Desc="@Html.Raw(!Model.Desc)" asp-route-Order="@Order.Type">Vehicle Type</a>
+                            <a asp-action="Index" asp-route-Desc="@Html.Raw(!Model.Desc)" asp-route-Order="@Order.Type">
+                                Vehicle Type @Html.Raw(Sort(Order.Type))
+                            </a>
                         </th>
                         <th>
-                            <a asp-action="Index" asp-route-Desc="@Html.Raw(!Model.Desc)" asp-route-Order="@Order.RegistrationNumber">Registration Number</a>
+                            <a asp-action="Index" asp-route-Desc="@Html.Raw(!Model.Desc)" asp-route-Order="@Order.RegistrationNumber">
+                                Registration Number @Html.Raw(Sort(Order.RegistrationNumber))
+                            </a>
                         </th>
                         <th>
-                            <a asp-action="Index" asp-route-Desc="@Html.Raw(!Model.Desc)" asp-route-Order="@Order.ArrivalTime">Arrival Time</a>
+                            <a asp-action="Index" asp-route-Desc="@Html.Raw(!Model.Desc)" asp-route-Order="@Order.ArrivalTime">
+                                Arrival Time @Html.Raw(Sort(Order.ArrivalTime))
+                            </a>
                         </th>
                         <th>
-                            <a asp-action="Index" asp-route-Desc="@Html.Raw(!Model.Desc)" asp-route-Order="@Order.ParkedTime">Parked Time</a>
+                            <a asp-action="Index" asp-route-Desc="@Html.Raw(!Model.Desc)" asp-route-Order="@Order.ParkedTime">
+                                Parked Time @Html.Raw(Sort(Order.ParkedTime))
+                            </a>
                         </th>
                         <th></th>
                     </tr>

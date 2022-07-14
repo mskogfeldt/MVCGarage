@@ -9,90 +9,91 @@
 </div>
 
 @if(@Model.ParkSuccess) {
-<!-- Button trigger modal -->
-<button type="button" id="clickable" class="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-  Launch static backdrop modal
-</button>
+    <!-- Button trigger modal -->
+    <button type="button" id="clickable" class="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+      Launch static backdrop modal
+    </button>
 
-<!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Your vehicle is now parked</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        When you no longer want to stay parked. Choose Checkout in the Parked Vehicles List.
-      </div>
-      <div class="modal-footer">
-        <a asp-action="Index" class="btn btn-primary">To Parked Vehicles List</a>
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Your vehicle is now parked</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            When you no longer want to stay parked. Choose Checkout in the Parked Vehicles List.
+          </div>
+          <div class="modal-footer">
+            <a asp-action="Index" class="btn btn-primary">To Parked Vehicles List</a>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
-<script src="/js/clickable.js"></script>
+    <script src="/js/clickable.js"></script>
 }
-<script src="/js/clientValidationReset.js"></script>
-<div class="row">
-    <div class="col-md-6">
-        <h3>Park</h3>
-    </div>
-    <div class="col-md-6 alert alert-primary text-center">
-        <h4>Parking Price</h4>
-        <p>@Model.Price kr / hour</p>
-    </div>
-</div>
+
+<h3>Park</h3>
+
 <hr />
 
 <form asp-action="Park">
-<div class="row print">
-    <div class="col-md-6">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="form-floating">
-            <select asp-for="Color" class="form-control" asp-items="@Html.GetEnumSelectList<Color>()"></select>
-            <span asp-validation-for="Color" class="text-danger"></span>
-            <label asp-for="Color" class="form-label"></label>
-        </div>
-        <div class="form-floating">
-            <select asp-for="Type" class="form-control" asp-items="@Html.GetEnumSelectList<VehicleType>()"></select>
-            <span asp-validation-for="Type" class="text-danger"></span>
-            <label asp-for="Type" class="control-label"></label>
-        </div>
-        <div class="form-floating">
-            <input type="hidden" id="RegistrationNumberId" value="@Html.IdFor(@Model=>@Model.RegistrationNumber)" />
-            <input asp-for="RegistrationNumber" class="form-control" />
-            <span asp-validation-for="RegistrationNumber" class="text-danger"></span>
-            <label asp-for="RegistrationNumber" class="control-label"></label>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="form-floating">
-            <input asp-for="Brand" class="form-control" />
-            <span asp-validation-for="Brand" class="text-danger"></span>
-            <label asp-for="Brand" class="control-label"></label>
-        </div>
-        <div class="form-floating">
-            <input asp-for="Model" class="form-control" />
-            <span asp-validation-for="Model" class="text-danger"></span>
-            <label asp-for="Model" class="control-label"></label>
-        </div>
-        <div class="form-floating">
-            <input asp-for="WheelCount" class="form-control" />
-            <span asp-validation-for="WheelCount" class="text-danger"></span>
-            <label asp-for="WheelCount" class="control-label"></label>
-        </div>
-    </div>
-</div>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-<div class="form-group mt-2">
-    <span id="ErrorSpan" class="text-danger">@Model.Error</span>
-</div>
-<div class="form-group mt-2">
-    <input type="submit" value="Park" class="btn btn-primary" />
-</div>
+    <div class="row print">
+        <div class="col-md-6">
+            <div class="form-floating">
+                <input type="hidden" id="RegistrationNumberId" value="@Html.IdFor(@Model=>@Model.RegistrationNumber)" />
+                <input asp-for="RegistrationNumber" class="form-control" />
+                <span asp-validation-for="RegistrationNumber" class="text-danger"></span>
+                <label asp-for="RegistrationNumber" class="form-label"></label>
+            </div>
+            <div class="form-floating">
+                <select asp-for="Type" class="form-control" asp-items="@Html.GetEnumSelectList<VehicleType>()"></select>
+                <span asp-validation-for="Type" class="text-danger"></span>
+                <label asp-for="Type" class="form-label"></label>
+            </div>
+            <div class="form-floating">
+                <input asp-for="WheelCount" class="form-control" />
+                <span asp-validation-for="WheelCount" class="text-danger"></span>
+                <label asp-for="WheelCount" class="form-label"></label>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-floating">
+                <input asp-for="Brand" class="form-control" />
+                <span asp-validation-for="Brand" class="text-danger"></span>
+                <label asp-for="Brand" class="form-label"></label>
+            </div>
+            <div class="form-floating">
+                <input asp-for="Model" class="form-control" />
+                <span asp-validation-for="Model" class="text-danger"></span>
+                <label asp-for="Model" class="form-label"></label>
+            </div>
+            <div class="form-floating">
+                <select asp-for="Color" class="form-control" asp-items="@Html.GetEnumSelectList<Color>()"></select>
+                <span asp-validation-for="Color" class="text-danger"></span>
+                <label asp-for="Color" class="form-label"></label>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 alert alert-primary text-center mt-2">
+        <h4>Parking Price</h4>
+        <span>@Model.Price kr / hour</span>
+    </div>
+
+    <div class="form-group mt-2">
+        <span id="ErrorSpan" class="text-danger">@Model.Error</span>
+    </div>
+    <div class="form-group mt-2">
+        <input type="submit" value="Park" class="btn btn-primary" />
+    </div>
 
 </form>
+
+<script src="/js/clientValidationReset.js"></script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

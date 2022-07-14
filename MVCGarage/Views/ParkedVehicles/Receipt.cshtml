@@ -30,24 +30,18 @@
     <div class="col-sm-2 d-print-none"></div>
     <div class="col">
         <h3>Receipt</h3>
-        <dl class="row">
+        <dl class="row mt-2">
             <dt class = "col-sm-4">
-                @Html.DisplayNameFor(model => model.Color)
+                @Html.DisplayNameFor(model => model.RegistrationNumber)
             </dt>
             <dd class = "col-sm-8">
-                @Html.DisplayFor(model => model.Color)
+                @Html.DisplayFor(model => model.RegistrationNumber)
             </dd>
             <dt class = "col-sm-4">
                 @Html.DisplayNameFor(model => model.Type)
             </dt>
             <dd class = "col-sm-8">
                 @Html.DisplayFor(model => model.Type)
-            </dd>
-            <dt class = "col-sm-4">
-                @Html.DisplayNameFor(model => model.RegistrationNumber)
-            </dt>
-            <dd class = "col-sm-8">
-                @Html.DisplayFor(model => model.RegistrationNumber)
             </dd>
             <dt class = "col-sm-4">
                 @Html.DisplayNameFor(model => model.Brand)
@@ -62,9 +56,15 @@
                 @Html.DisplayFor(model => model.Model)
             </dd>
             <dt class = "col-sm-4">
-                @Html.DisplayNameFor(model => model.ArrivalTime)
+                @Html.DisplayNameFor(model => model.Color)
             </dt>
             <dd class = "col-sm-8">
+                @Html.DisplayFor(model => model.Color)
+            </dd>
+            <dt class = "col-sm-4 mt-2">
+                @Html.DisplayNameFor(model => model.ArrivalTime)
+            </dt>
+            <dd class = "col-sm-8 mt-2">
                 @Html.DisplayFor(model => model.ArrivalTime)
             </dd>
             <dt class = "col-sm-4">
@@ -79,10 +79,10 @@
             <dd class = "col-sm-8">
                 @Html.DisplayFor(model => model.ParkedTime)
             </dd>
-            <dt class = "col-sm-4">
+            <dt class = "col-sm-4 mt-2">
                 @Html.DisplayNameFor(model => model.Price)
             </dt>
-            <dd class = "col-sm-8">
+            <dd class = "col-sm-8 mt-2 text-decoration-underline">
                 @Html.DisplayFor(model => model.Price)kr
             </dd>
         </dl>
