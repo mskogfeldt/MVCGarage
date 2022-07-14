@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using MVCGarage.Data;
 using MVCGarage.Models.Entities;
 using MVCGarage.Models.ViewModels;
@@ -14,12 +15,12 @@ namespace MVCGarage.Controllers
     public class ParkedVehiclesController : Controller
     {
         private readonly MVCGarageContext _context;
-        private readonly IConfiguration _configuration;
+        private readonly IOptions<PriceSettings> options;
 
-        public ParkedVehiclesController(MVCGarageContext context, IConfiguration configuration)
+        public ParkedVehiclesController(MVCGarageContext context, IOptions<PriceSettings> options)
         {
             _context = context;
-            _configuration = configuration;
+            this.options = options;
         }
 
         public async Task<IActionResult> Index(ListViewModel lvm)
@@ -99,7 +100,7 @@ namespace MVCGarage.Controllers
         public IActionResult Park()
         {
             var pvm = new ParkViewModel();
-            pvm.Price = int.Parse(_configuration["Price:HourPrice"]);
+            pvm.Price = options.Value.HourPrice;
             return View(pvm);
         }
 
@@ -298,7 +299,7 @@ namespace MVCGarage.Controllers
 
         private decimal CalculatePrice(double totalHour)
         {
-            int iHourPrice = int.Parse(_configuration["Price:HourPrice"]);
+            int iHourPrice = options.Value.HourPrice;
             return (decimal)(totalHour * iHourPrice);
         }
 

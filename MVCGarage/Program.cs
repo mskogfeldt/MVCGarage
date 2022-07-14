@@ -1,8 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MVCGarage;
 using MVCGarage.Data;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<MVCGarageContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MVCGarageContext") ?? throw new InvalidOperationException("Connection string 'MVCGarageContext' not found.")));
+
+var _configuration = builder.Configuration;
+builder.Services.AddSingleton(_configuration.GetSection("Price").Get<PriceSettings>());
+builder.Services.Configure<PriceSettings>(_configuration.GetSection("Price").Bind);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
