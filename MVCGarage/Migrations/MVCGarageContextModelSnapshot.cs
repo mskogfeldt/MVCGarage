@@ -68,7 +68,7 @@ namespace MVCGarage.Migrations
                         new
                         {
                             Id = 1,
-                            ArrivalTime = new DateTime(2022, 7, 11, 10, 57, 19, 905, DateTimeKind.Local).AddTicks(2101),
+                            ArrivalTime = new DateTime(2022, 8, 4, 20, 56, 28, 557, DateTimeKind.Local).AddTicks(7919),
                             Brand = "Volvo",
                             Color = 2,
                             Model = "240",
@@ -79,7 +79,7 @@ namespace MVCGarage.Migrations
                         new
                         {
                             Id = 2,
-                            ArrivalTime = new DateTime(2022, 7, 11, 10, 57, 19, 905, DateTimeKind.Local).AddTicks(2131),
+                            ArrivalTime = new DateTime(2022, 8, 4, 20, 56, 28, 557, DateTimeKind.Local).AddTicks(7950),
                             Brand = "Saab",
                             Color = 1,
                             Model = "900",
@@ -90,7 +90,7 @@ namespace MVCGarage.Migrations
                         new
                         {
                             Id = 3,
-                            ArrivalTime = new DateTime(2022, 7, 11, 10, 57, 19, 905, DateTimeKind.Local).AddTicks(2134),
+                            ArrivalTime = new DateTime(2022, 8, 4, 20, 56, 28, 557, DateTimeKind.Local).AddTicks(7952),
                             Brand = "BMW",
                             Color = 0,
                             Model = "320i",
@@ -101,12 +101,12 @@ namespace MVCGarage.Migrations
                         new
                         {
                             Id = 4,
-                            ArrivalTime = new DateTime(2022, 7, 11, 10, 57, 19, 905, DateTimeKind.Local).AddTicks(2137),
+                            ArrivalTime = new DateTime(2022, 8, 4, 20, 56, 28, 557, DateTimeKind.Local).AddTicks(7954),
                             Brand = "Toyota",
                             Color = 2,
                             Model = "Yaris",
                             RegistrationNumber = "HEY332",
-                            Type = 1,
+                            Type = 4,
                             WheelCount = 3
                         });
                 });
