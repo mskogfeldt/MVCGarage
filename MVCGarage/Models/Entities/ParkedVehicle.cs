@@ -1,12 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
 namespace MVCGarage.Models.Entities
 {
     [Index(nameof(RegistrationNumber), IsUnique = true)]
     public class ParkedVehicle
-    {
-        
+    {        
         public int Id { get; set; }
         [Required]
         public Color Color { get; set; }
@@ -14,6 +14,7 @@ namespace MVCGarage.Models.Entities
         public VehicleType Type { get; set; }
         [Required] 
         [StringLength(40)]
+        [Remote(action: "CheckIfRegIsUnique", controller: "ParkedVehicles")]
         public string? RegistrationNumber { get; set; }
         [Required]
         [StringLength(40)]
@@ -25,6 +26,5 @@ namespace MVCGarage.Models.Entities
         public int WheelCount { get; set; }
         [Required]
         public DateTime ArrivalTime { get; set; }
-       
     }
 }

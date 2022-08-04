@@ -161,6 +161,20 @@ namespace MVCGarage.Controllers
             return View(pvm);
         }
 
+        public async Task<IActionResult> CheckIfRegIsUnique(string registrationNumber)
+        {
+            try
+            {
+                if (await _context.ParkedVehicle!.AnyAsync(v => v.RegistrationNumber == registrationNumber))
+                    return Json("A vehicle with that registration number is already parked. Try modifying the vehicle instead.");
+            }
+            catch
+            {                
+            }
+            //if database messed up on validation it is not a big deal if this was not validated (since it is not to be trusted once we reach backend), we validate once more on database index
+            return Json(true);
+        }
+
         // GET: ParkedVehicles/Edit/5
         public async Task<IActionResult> Modify(int? id)
         {

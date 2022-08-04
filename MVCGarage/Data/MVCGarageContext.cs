@@ -20,10 +20,10 @@ namespace MVCGarage.Data
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<ParkedVehicle>().HasData(
-                new ParkedVehicle {Id = 1, Brand = "Volvo", Color = Color.Yellow, Model = "240", RegistrationNumber = "ABC-123", Type = VehicleType.Car, WheelCount = 4, ArrivalTime = DateTime.Now },
-                new ParkedVehicle {Id = 2, Brand = "Saab", Color = Color.Blue, Model = "900", RegistrationNumber = "BLA-222", Type = VehicleType.Car, WheelCount = 4, ArrivalTime = DateTime.Now },
-                new ParkedVehicle {Id = 3, Brand = "BMW", Color = Color.Red, Model = "320i", RegistrationNumber = "ALB-333", Type = VehicleType.Car, WheelCount = 4, ArrivalTime = DateTime.Now },
-                new ParkedVehicle {Id = 4, Brand = "Toyota", Color = Color.Yellow, Model = "Yaris", RegistrationNumber = "HEY-332", Type = VehicleType.Airplane, WheelCount = 3, ArrivalTime = DateTime.Now }
+                new ParkedVehicle {Id = 1, Brand = "Volvo", Color = Color.Yellow, Model = "240", RegistrationNumber = "ABC123", Type = VehicleType.Car, WheelCount = 4, ArrivalTime = DateTime.Now },
+                new ParkedVehicle {Id = 2, Brand = "Saab", Color = Color.Blue, Model = "900", RegistrationNumber = "BLA222", Type = VehicleType.Car, WheelCount = 4, ArrivalTime = DateTime.Now },
+                new ParkedVehicle {Id = 3, Brand = "BMW", Color = Color.Red, Model = "320i", RegistrationNumber = "ALB333", Type = VehicleType.Car, WheelCount = 4, ArrivalTime = DateTime.Now },
+                new ParkedVehicle {Id = 4, Brand = "Toyota", Color = Color.Yellow, Model = "Yaris", RegistrationNumber = "HEY332", Type = VehicleType.Airplane, WheelCount = 3, ArrivalTime = DateTime.Now }
             );
         }
     }
