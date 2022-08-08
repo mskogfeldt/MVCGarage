@@ -25,6 +25,14 @@ namespace MVCGarage.Data
                 new ParkedVehicle {Id = 3, Brand = "BMW", Color = Color.Red, Model = "320i", RegistrationNumber = "ALB333", Type = VehicleType.Car, WheelCount = 4, ArrivalTime = DateTime.Now },
                 new ParkedVehicle {Id = 4, Brand = "Toyota", Color = Color.Yellow, Model = "Yaris", RegistrationNumber = "HEY332", Type = VehicleType.Airplane, WheelCount = 3, ArrivalTime = DateTime.Now }
             );
+
+            //modelBuilder.Entity<ParkedVehicle>()
+            //    .HasIndex(pv => pv.RegistrationNumber)
+            //    .IsUnique();
+
+            //modelBuilder.Entity<ParkedVehicle>()
+            //    .HasAlternateKey(a => a.RegistrationNumber);
+
         }
     }
 }
