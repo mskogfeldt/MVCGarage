@@ -31,7 +31,7 @@ namespace MVCGarage.Migrations
             migrationBuilder.InsertData(
                 table: "ParkedVehicle",
                 columns: new[] { "Id", "ArrivalTime", "Brand", "Color", "Model", "RegistrationNumber", "Type", "WheelCount" },
-                values: new object[] { 1, new DateTime(2022, 7, 8, 9, 38, 48, 701, DateTimeKind.Local).AddTicks(4740), "Volvo", 2, "240", "ABC-123", 0, 4 });
+                values: new object[] { 1, new DateTime(2022, 7, 8, 9, 38, 48, 701, DateTimeKind.Local).AddTicks(4740), "Volvo", 2, "240", "ABC123", 0, 4 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ParkedVehicle_RegistrationNumber",

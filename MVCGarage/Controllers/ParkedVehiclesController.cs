@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using MVCGarage.Data;
 using MVCGarage.Models.Entities;
 using MVCGarage.Models.ViewModels;
@@ -14,12 +15,12 @@ namespace MVCGarage.Controllers
     public class ParkedVehiclesController : Controller
     {
         private readonly MVCGarageContext _context;
-        private readonly IConfiguration _configuration;
+        private readonly IOptions<PriceSettings> options;
 
-        public ParkedVehiclesController(MVCGarageContext context, IConfiguration configuration)
+        public ParkedVehiclesController(MVCGarageContext context, IOptions<PriceSettings> options)
         {
             _context = context;
-            _configuration = configuration;
+            this.options = options;
         }
 
         public async Task<IActionResult> Index(ListViewModel lvm)
@@ -98,9 +99,16 @@ namespace MVCGarage.Controllers
         // GET: ParkedVehicles/Create
         public IActionResult Park()
         {
-            var pvm = new ParkViewModel();
-            pvm.Price = int.Parse(_configuration["Price:HourPrice"]);
+            var pvm = new ParkViewModel
+            {
+                Price = options.Value.HourPrice
+            };
             return View(pvm);
+        }
+
+        public string MinifyAndUpperCaseString(string stringToMinify)
+        {
+            return stringToMinify.Replace(" ", "").Replace("-", "");
         }
 
         // POST: ParkedVehicles/Create
@@ -112,7 +120,7 @@ namespace MVCGarage.Controllers
         {
             if (ModelState.IsValid)
             {
-                pvm.RegistrationNumber = pvm.RegistrationNumber!.ToUpper();
+                pvm.RegistrationNumber = MinifyAndUpperCaseString(pvm.RegistrationNumber!);
                 pvm.Error = "";
                 var parkedVehicle = new ParkedVehicle
                 {
@@ -151,6 +159,20 @@ namespace MVCGarage.Controllers
                 pvm.ParkSuccess = bParkSuccess;
             }            
             return View(pvm);
+        }
+
+        public async Task<IActionResult> CheckIfRegIsUnique(string registrationNumber)
+        {
+            try
+            {
+                if (await _context.ParkedVehicle!.AnyAsync(v => v.RegistrationNumber == registrationNumber))
+                    return Json("A vehicle with that registration number is already parked. Try modifying the vehicle instead.");
+            }
+            catch
+            {                
+            }
+            //if database messed up on validation it is not a big deal if this was not validated (since it is not to be trusted once we reach backend), we validate once more on database index
+            return Json(true);
         }
 
         // GET: ParkedVehicles/Edit/5
@@ -202,14 +224,14 @@ namespace MVCGarage.Controllers
                     if (_context.ParkedVehicle == null)
                         return NotFound();
 
-                    cvm.RegistrationNumber = cvm.RegistrationNumber!.ToUpper();
+                    cvm.RegistrationNumber = MinifyAndUpperCaseString(cvm.RegistrationNumber!);
                     cvm.Error = "";
                     var parkedVehicle = new ParkedVehicle()
                     {
                         Id = cvm.Id,
                         WheelCount = cvm.WheelCount,
                         Model = cvm.Model,
-                        RegistrationNumber = cvm.RegistrationNumber!.ToUpper(),
+                        RegistrationNumber = cvm.RegistrationNumber,
                         Brand = cvm.Brand,
                         Color = cvm.Color,
                         Type = cvm.Type
@@ -293,7 +315,7 @@ namespace MVCGarage.Controllers
 
         private decimal CalculatePrice(double totalHour)
         {
-            int iHourPrice = int.Parse(_configuration["Price:HourPrice"]);
+            int iHourPrice = options.Value.HourPrice;
             return (decimal)(totalHour * iHourPrice);
         }
 
@@ -307,7 +329,7 @@ namespace MVCGarage.Controllers
                 return Problem("Entity set 'MVCGarageContext.ParkedVehicle'  is null.");
             }
 
-            ReceiptViewModel rvm = new ReceiptViewModel();
+            ReceiptViewModel rvm = new();
             var parkedVehicle = await _context.ParkedVehicle.FindAsync(id);
             if (parkedVehicle != null)
             {

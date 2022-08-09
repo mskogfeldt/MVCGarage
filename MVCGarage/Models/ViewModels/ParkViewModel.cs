@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MVCGarage.Models.Entities;
 using System.ComponentModel.DataAnnotations;
 
@@ -16,6 +17,7 @@ namespace MVCGarage.Models.ViewModels
         [Required]
         [StringLength(40)]
         [Display(Name = "Registration Number")]
+        [Remote(action: "CheckIfRegIsUnique", controller: "ParkedVehicles")]
         public string? RegistrationNumber { get; set; }
         [Required]
         [StringLength(40)]
@@ -29,6 +31,5 @@ namespace MVCGarage.Models.ViewModels
         public string? Error { get; set; }
         public bool ParkSuccess { get; set; } = false;
         public int Price { get; set; }
-
     }
 }

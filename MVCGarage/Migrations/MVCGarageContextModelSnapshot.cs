@@ -68,45 +68,45 @@ namespace MVCGarage.Migrations
                         new
                         {
                             Id = 1,
-                            ArrivalTime = new DateTime(2022, 7, 11, 10, 57, 19, 905, DateTimeKind.Local).AddTicks(2101),
+                            ArrivalTime = new DateTime(2022, 8, 4, 20, 56, 28, 557, DateTimeKind.Local).AddTicks(7919),
                             Brand = "Volvo",
                             Color = 2,
                             Model = "240",
-                            RegistrationNumber = "ABC-123",
+                            RegistrationNumber = "ABC123",
                             Type = 0,
                             WheelCount = 4
                         },
                         new
                         {
                             Id = 2,
-                            ArrivalTime = new DateTime(2022, 7, 11, 10, 57, 19, 905, DateTimeKind.Local).AddTicks(2131),
+                            ArrivalTime = new DateTime(2022, 8, 4, 20, 56, 28, 557, DateTimeKind.Local).AddTicks(7950),
                             Brand = "Saab",
                             Color = 1,
                             Model = "900",
-                            RegistrationNumber = "BLA-222",
+                            RegistrationNumber = "BLA222",
                             Type = 0,
                             WheelCount = 4
                         },
                         new
                         {
                             Id = 3,
-                            ArrivalTime = new DateTime(2022, 7, 11, 10, 57, 19, 905, DateTimeKind.Local).AddTicks(2134),
+                            ArrivalTime = new DateTime(2022, 8, 4, 20, 56, 28, 557, DateTimeKind.Local).AddTicks(7952),
                             Brand = "BMW",
                             Color = 0,
                             Model = "320i",
-                            RegistrationNumber = "ALB-333",
+                            RegistrationNumber = "ALB333",
                             Type = 0,
                             WheelCount = 4
                         },
                         new
                         {
                             Id = 4,
-                            ArrivalTime = new DateTime(2022, 7, 11, 10, 57, 19, 905, DateTimeKind.Local).AddTicks(2137),
+                            ArrivalTime = new DateTime(2022, 8, 4, 20, 56, 28, 557, DateTimeKind.Local).AddTicks(7954),
                             Brand = "Toyota",
                             Color = 2,
                             Model = "Yaris",
-                            RegistrationNumber = "HEY-332",
-                            Type = 1,
+                            RegistrationNumber = "HEY332",
+                            Type = 4,
                             WheelCount = 3
                         });
                 });
