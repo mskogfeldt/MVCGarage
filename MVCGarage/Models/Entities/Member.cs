@@ -25,6 +25,8 @@ namespace MVCGarage.Models.Entities
         [StringLength(50)]
         public string? LastName { get; set; }
         public bool HasReceived2YearsProMembership { get; set; }
-        public List<Vehicle> Vehicles { get; set; }
+
+        //Nav prop
+        public ICollection<Vehicle> Vehicles { get; set; }
     }
 }

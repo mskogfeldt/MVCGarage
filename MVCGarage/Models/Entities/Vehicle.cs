@@ -10,6 +10,7 @@ namespace MVCGarage.Models.Entities
         public Vehicle()
         {
             PSpots = new List<PSpot>();
+            VehicleAssignments = new List<VehicleAssignment>();
         }
         public int Id { get; set; }
         [Required]
@@ -28,10 +29,14 @@ namespace MVCGarage.Models.Entities
         [Range(0, int.MaxValue)]
         public int WheelCount { get; set; }
 
-        public int VehicleTypeId { get; set; }
-        public VehicleType VehicleType { get; set; } = null!;
+        public int VehicleTypeId { get; set; }       
         
+        // Foreign key
         public int MemberId { get; set; }
-        public List<PSpot> PSpots { get; set; }
+
+        //Nav prop
+        public ICollection<PSpot> PSpots { get; set; }
+        public VehicleType VehicleType { get; set; } = null!;
+        public ICollection<VehicleAssignment> VehicleAssignments { get; set; }
     }
 }

@@ -9,8 +9,12 @@ namespace MVCGarage.Models.Entities
         public PSpot()
         {
             Vehicles = new List<Vehicle>();
+            VehicleAssignments = new List<VehicleAssignment>();
         }
         public int Id { get; set; }
-        public List<Vehicle> Vehicles { get; set; }
+
+        //Nav prop
+        public ICollection<Vehicle> Vehicles { get; set; }
+        public ICollection<VehicleAssignment> VehicleAssignments { get; set; }
     }
 }

@@ -62,7 +62,7 @@ namespace MVCGarage.Controllers
                         ParkedTime = DateTime.Now.Subtract(v.asgnmt.ArrivalDate)
                     })
                     .ToListAsync();
-                
+
                 var orderedVehicles =
                     lvm.Order == Order.RegistrationNumber ? dbVehicles.OrderAscOrDesc(lvm.Desc, v => v.RegistrationNumber)
                   : lvm.Order == Order.Type ? dbVehicles.OrderAscOrDesc(lvm.Desc, v => v.Type)

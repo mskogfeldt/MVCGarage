@@ -58,14 +58,9 @@ namespace MVCGarage.Data
                 .HasMany(v => v.PSpots)
                 .WithMany(s => s.Vehicles)
                 .UsingEntity<VehicleAssignment>(
-                join => join
-                  .HasOne<PSpot>()
-                  .WithMany()
-                  .HasForeignKey(va => va.PSpotId),
-                join => join
-                 .HasOne<Vehicle>()
-                 .WithMany()
-                 .HasForeignKey(va => va.VehicleId));
+                va => va.HasOne(va => va.PSpot).WithMany(v => v.VehicleAssignments),
+                va => va.HasOne(va => va.Vehicle).WithMany(v => v.VehicleAssignments));
+
 
             modelBuilder.Entity<VehicleAssignment>()
                 .Property(va => va.ArrivalDate).HasDefaultValueSql("GetDate()");
