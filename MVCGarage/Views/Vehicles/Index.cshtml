@@ -112,7 +112,7 @@
                     @foreach (var item in Model.VehicleList) {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Type)
+                            @Html.DisplayFor(modelItem => item.Type.Name)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.RegistrationNumber)

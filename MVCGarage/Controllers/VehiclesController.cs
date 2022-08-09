@@ -37,24 +37,31 @@ namespace MVCGarage.Controllers
                     lvm.SearchType != null || lvm.SearchWheelCount != null ||
                     !string.IsNullOrEmpty(lvm.SearchBrand) || !string.IsNullOrEmpty(lvm.SearchModel);
 
-                await Task.Delay(100);
-                throw new Exception("TODO Arrivaltime changed, type changed");
-                /*
-                var dbVehicles = await _context.Vehicle
-                    .WhereIf(lvm.SearchRegistrationNumber != null, x => x.RegistrationNumber != null && x.RegistrationNumber.StartsWith(lvm.SearchRegistrationNumber!.Trim()))
-                    .WhereIf(lvm.SearchBrand != null, x => x.Brand != null && x.Brand.StartsWith(lvm.SearchBrand!.Trim()))
-                    .WhereIf(lvm.SearchWheelCount != null, x => x.WheelCount == lvm.SearchWheelCount)
-                    .WhereIf(lvm.SearchModel != null, x => x.Model != null && x.Model.StartsWith(lvm.SearchModel!.Trim()))
-                    //.WhereIf(lvm.SearchType != null, x => x.Type == lvm.SearchType)
+                var dbVehicles = await _context.Vehicle!
+                    .Join(_context.VehicleAssignment!,
+                    v => v.Id,
+                    va => va.VehicleId,
+                    (v, va) => new { vehicle = v, asgnmt = va })
+                    .WhereIf(lvm.SearchRegistrationNumber != null, x => x.vehicle.RegistrationNumber != null && x.vehicle.RegistrationNumber.StartsWith(lvm.SearchRegistrationNumber!.Trim()))
+                    .WhereIf(lvm.SearchBrand != null, x => x.vehicle.Brand != null && x.vehicle.Brand.StartsWith(lvm.SearchBrand!.Trim()))
+                    .WhereIf(lvm.SearchWheelCount != null, x => x.vehicle.WheelCount == lvm.SearchWheelCount)
+                    .WhereIf(lvm.SearchModel != null, x => x.vehicle.Model != null && x.vehicle.Model.StartsWith(lvm.SearchModel!.Trim()))
+                    //TODO testa searchtype
+                    .WhereIf(lvm.SearchType != null, x => x.vehicle.VehicleType.Id == lvm.SearchType!.Id)
                     .Select(v => new IndexVehicleViewModel()
                     {
-                        Id = v.Id,
-                        RegistrationNumber = v.RegistrationNumber
-                        //Type = v.Type,
-                        //TODO                        
-                        //ArrivalTime = v.ArrivalTime,
-                        //ParkedTime = DateTime.Now.Subtract(v.ArrivalTime)
-                    }).ToListAsync();
+                        Id = v.vehicle.Id,
+                        RegistrationNumber = v.vehicle.RegistrationNumber,
+                        Type = new VehicleType()
+                        {
+                            Id = v.vehicle.VehicleType.Id,
+                            Name = v.vehicle.VehicleType.Name,
+                            NeededSize = v.vehicle.VehicleType.NeededSize
+                        },
+                        ArrivalTime = v.asgnmt.ArrivalDate,
+                        ParkedTime = DateTime.Now.Subtract(v.asgnmt.ArrivalDate)
+                    })
+                    .ToListAsync();
                 
                 var orderedVehicles =
                     lvm.Order == Order.RegistrationNumber ? dbVehicles.OrderAscOrDesc(lvm.Desc, v => v.RegistrationNumber)
@@ -63,9 +70,7 @@ namespace MVCGarage.Controllers
                   : dbVehicles.OrderAscOrDesc(lvm.Desc, v => v.ArrivalTime);
 
                 lvm.VehicleList = orderedVehicles.ToList();
-
-                return View(lvm);
-                */
+                return View(lvm);                
             }
             else return Problem("Entity set 'MVCGarageContext.Vehicle'  is null.");
         }

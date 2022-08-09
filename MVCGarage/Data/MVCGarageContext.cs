@@ -16,6 +16,7 @@ namespace MVCGarage.Data
 
         public DbSet<Vehicle>? Vehicle { get; set; }
         public DbSet<VehicleType>? VehicleType { get; set; }
+        public DbSet<VehicleAssignment>? VehicleAssignment { get; set; }
         public DbSet<Member>? Member { get; set; }
         public DbSet<PSpot>? PSpot { get; set; }
 

@@ -6,7 +6,11 @@ namespace MVCGarage.Models.Entities
 {
     [Index(nameof(PersonalIdentityNumber), IsUnique = true)]
     public class Member
-    {        
+    {
+        public Member()
+        {
+            Vehicles = new List<Vehicle>();
+        }
         public int Id { get; set; }
         [Required]
         public DateTime ProMembershipToDate { get; set; }
@@ -21,6 +25,6 @@ namespace MVCGarage.Models.Entities
         [StringLength(50)]
         public string? LastName { get; set; }
         public bool HasReceived2YearsProMembership { get; set; }
-        public List<Vehicle> Vehicles { get; set; } = null!;
+        public List<Vehicle> Vehicles { get; set; }
     }
 }

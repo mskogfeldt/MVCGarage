@@ -7,6 +7,10 @@ namespace MVCGarage.Models.Entities
     [Index(nameof(RegistrationNumber), IsUnique = true)]
     public class Vehicle
     {        
+        public Vehicle()
+        {
+            PSpots = new List<PSpot>();
+        }
         public int Id { get; set; }
         [Required]
         public Color Color { get; set; }
@@ -28,6 +32,6 @@ namespace MVCGarage.Models.Entities
         public VehicleType VehicleType { get; set; } = null!;
         
         public int MemberId { get; set; }
-        public List<PSpot> PSpots { get; set; } = null!;
+        public List<PSpot> PSpots { get; set; }
     }
 }
