@@ -4,13 +4,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MVCGarage.Models.Entities
 {
-    public class VehicleType
+    public class PSpot
     {        
         public int Id { get; set; }
-        [Required]
-        [StringLength(50)]
-        public string? Name { get; set; }
-        [Range(0, float.MaxValue)]
-        public float NeededSize { get; set; }
+        public List<Vehicle> Vehicles { get; set; } = null!;
     }
 }

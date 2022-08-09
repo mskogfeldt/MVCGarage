@@ -7,7 +7,7 @@ namespace MVCGarage.Models.ViewModels
     {
         public int Id { get; set; }
         [Display(Name = "Type of Vehicle")]
-        public VehicleType Type { get; set; }
+        public VehicleType Type { get; set; } = null!;
         [Display(Name = "Parked Time")]
         public string? RegistrationNumber { get; set; }
         [Display(Name = "Arrival Time")]

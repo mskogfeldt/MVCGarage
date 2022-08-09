@@ -13,11 +13,11 @@ namespace MVCGarage.Models.ViewModels
         public Color Color { get; set; }
         [Required]
         [Display(Name = "Type of Vehicle")]
-        public VehicleType Type { get; set; }
+        public VehicleType Type { get; set; } = null!;
         [Required]
         [StringLength(40)]
         [Display(Name = "Registration Number")]
-        [Remote(action: "CheckIfRegIsUnique", controller: "ParkedVehicles")]
+        [Remote(action: "CheckIfRegIsUnique", controller: "Vehicles")]
         public string? RegistrationNumber { get; set; }
         [Required]
         [StringLength(40)]

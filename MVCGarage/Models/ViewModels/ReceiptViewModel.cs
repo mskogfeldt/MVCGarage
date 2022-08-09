@@ -6,7 +6,7 @@ namespace MVCGarage.Models.ViewModels
     public class ReceiptViewModel
     {
         [Display(Name = "Type of Vehicle")]
-        public VehicleType Type { get; set; }
+        public VehicleType Type { get; set; } = null!;
         [Display(Name = "Registration Number")]
         public string? RegistrationNumber { get; set; }
         [Display(Name = "Arrival Time")]

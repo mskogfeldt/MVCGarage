@@ -13,7 +13,7 @@ namespace MVCGarage.Models.ViewModels
         public Color Color { get; set; }
         [Required]
         [Display(Name = "Type of Vehicle")]
-        public VehicleType Type { get; set; }
+        public VehicleType Type { get; set; } = null!;
         [Required]
         [StringLength(40)]
         [Display(Name = "Registration Number")]

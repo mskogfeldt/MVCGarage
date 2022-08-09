@@ -50,11 +50,11 @@
                 <span asp-validation-for="RegistrationNumber" class="text-danger"></span>
                 <label asp-for="RegistrationNumber" class="control-label"></label>
             </div>
-            <div class="form-floating">
-                <select asp-for="Type" class="form-control" asp-items="@Html.GetEnumSelectList<VehicleType>()"></select>
-                <span asp-validation-for="Type" class="text-danger"></span>
-                <label asp-for="Type" class="control-label"></label>
-            </div>
+@*            <div class="form-floating">
+                <select asp-for="VehicleType" class="form-control" asp-items="@Html.GetEnumSelectList<VehicleTypeOld>()"></select>
+                <span asp-validation-for="VehicleType" class="text-danger"></span>
+                <label asp-for="VehicleType" class="control-label"></label>
+            </div>*@
             <div class="form-floating">
                 <input asp-for="WheelCount" class="form-control" />
                 <span asp-validation-for="WheelCount" class="text-danger"></span>
