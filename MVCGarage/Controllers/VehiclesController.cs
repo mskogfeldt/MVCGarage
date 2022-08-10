@@ -78,35 +78,48 @@ namespace MVCGarage.Controllers
         // GET: Vehicles/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Vehicle == null)
+            if (id == null || _context.Vehicle == null || _context.Member == null || _context.VehicleAssignment == null)
             {
                 return NotFound();
             }
 
-            var Vehicle = await _context.Vehicle
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (Vehicle == null)
+            var vehicle = await _context.Vehicle.FirstOrDefaultAsync(m => m.Id == id);
+
+            if (vehicle == null)
             {
                 return NotFound();
             }
-            await Task.Delay(100);
-            throw new Exception("TODO Arrivaltime changed, type changed");
-            /*
+
+            var va = await _context.VehicleAssignment.FirstOrDefaultAsync(va => va.VehicleId == id);
+
+            var member = await _context.Member.FirstOrDefaultAsync(m => m.Id == vehicle.MemberId);
+
+            if (va == null || member == null)
+            {
+                return NotFound();
+            }
+
+
+            //await Task.Delay(100);
+            //throw new Exception("TODO Arrivaltime changed, type changed");
+
             var model = new DetailsViewModel
             {
-                //ArrivalTime = Vehicle.ArrivalTime,
-                Brand = Vehicle.Brand,
-                Color = Vehicle.Color,
-                Id = Vehicle.Id,
-                Model = Vehicle.Model,
-                RegistrationNumber = Vehicle.RegistrationNumber,
-                //Type = Vehicle.Type,
-                WheelCount = Vehicle.WheelCount,
-                //ParkedTime = DateTime.Now.Subtract(Vehicle.ArrivalTime)
+                Brand = vehicle.Brand,
+                Color = vehicle.Color,
+                Id = vehicle.Id,
+                Model = vehicle.Model,
+                RegistrationNumber = vehicle.RegistrationNumber,
+                VehicleType = vehicle.VehicleType,
+                WheelCount = vehicle.WheelCount,
+                OwnerFirstName = member.FirstName,
+                OwnerLastName = member.LastName,
+                ArrivalTime = va.ArrivalDate,
+                ParkedTime = DateTime.Now.Subtract(va.ArrivalDate)
             };
 
             return View(model);
-            */
+
         }
 
         // GET: Vehicles/Create
