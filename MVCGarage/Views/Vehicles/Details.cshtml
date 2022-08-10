@@ -11,7 +11,7 @@
 <h2>Details</h2>
 <hr />
 <div>
-    <h4>Parked Vehicle</h4>
+    <h5>Vehicle</h5>
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.RegistrationNumber)
@@ -20,10 +20,10 @@
             @Html.DisplayFor(model => model.RegistrationNumber)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Type)
+            @Html.DisplayNameFor(model => model.VehicleTypeName)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Type)
+            @Html.DisplayFor(model => model.VehicleTypeName)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.WheelCount)
@@ -49,19 +49,40 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Color)
         </dd>
+    </dl>
+    <h5>Owner</h5>
+    <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ArrivalTime)
+            @Html.DisplayNameFor(model => model.OwnerFirstName)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ArrivalTime)
+            @Html.DisplayFor(model => model.OwnerFirstName)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ParkedTime)
+            @Html.DisplayNameFor(model => model.OwnerLastName)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ParkedTime)
+            @Html.DisplayFor(model => model.OwnerLastName)
         </dd>
     </dl>
+    @if (Model.ArrivalTime != null)
+    {
+        <h5>Parking</h5>
+        <dl class="row">
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.ArrivalTime)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.ArrivalTime)
+            </dd>
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.ParkedTime)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.ParkedTime)
+            </dd>
+        </dl>
+    }
 </div>
 <div>
     <a asp-action="Modify" asp-route-id="@Model?.Id" class="btn btn-dark">Modify</a>

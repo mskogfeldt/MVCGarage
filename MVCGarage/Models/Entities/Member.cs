@@ -20,10 +20,10 @@ namespace MVCGarage.Models.Entities
         public string? PersonalIdentityNumber { get; set; }
         [Required]
         [StringLength(50)]
-        public string? FirstName { get; set; }
+        public string FirstName { get; set; } = string.Empty;
         [Required]
         [StringLength(50)]
-        public string? LastName { get; set; }
+        public string LastName { get; set; } = string.Empty;
         public bool HasReceived2YearsProMembership { get; set; }
 
         //Nav prop

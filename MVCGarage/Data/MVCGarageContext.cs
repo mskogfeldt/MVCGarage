@@ -14,11 +14,11 @@ namespace MVCGarage.Data
         {
         }
 
-        public DbSet<Vehicle>? Vehicle { get; set; }
-        public DbSet<VehicleType>? VehicleType { get; set; }
-        public DbSet<VehicleAssignment>? VehicleAssignment { get; set; }
-        public DbSet<Member>? Member { get; set; }
-        public DbSet<PSpot>? PSpot { get; set; }
+        public DbSet<Vehicle> Vehicle => Set<Vehicle>();
+        public DbSet<VehicleType> VehicleType => Set<VehicleType>();
+        public DbSet<VehicleAssignment> VehicleAssignment => Set<VehicleAssignment>();
+        public DbSet<Member> Member => Set<Member>();
+        public DbSet<PSpot> PSpot => Set<PSpot>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -69,7 +69,11 @@ namespace MVCGarage.Data
             modelBuilder.Entity<VehicleAssignment>()
                 .Property(va => va.VehicleId).HasColumnName("VehiclesVehicleId()");
 
-
+            modelBuilder.Entity<VehicleAssignment>().HasData(
+                new VehicleAssignment { Id = 1, ArrivalDate = DateTime.Now, PSpotId = 1, VehicleId = 1 },
+                new VehicleAssignment { Id = 2, ArrivalDate = DateTime.Now, PSpotId = 2, VehicleId = 2 },
+                new VehicleAssignment { Id = 3, ArrivalDate = DateTime.Now, PSpotId = 3, VehicleId = 3 }
+            );
 
 
 
