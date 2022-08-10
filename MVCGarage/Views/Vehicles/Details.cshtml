@@ -65,14 +65,14 @@
             @Html.DisplayFor(model => model.OwnerLastName)
         </dd>
     </dl>
-    @if (Model.ArrivalTime is not null)
+    @if (Model.ArrivalTime != null)
     {
         <h5>Parking</h5>
         <dl class="row">
-            <dt class = "col-sm-2 mt-2">
+            <dt class = "col-sm-2">
                 @Html.DisplayNameFor(model => model.ArrivalTime)
             </dt>
-            <dd class = "col-sm-10 mt-2">
+            <dd class = "col-sm-10">
                 @Html.DisplayFor(model => model.ArrivalTime)
             </dd>
             <dt class = "col-sm-2">
