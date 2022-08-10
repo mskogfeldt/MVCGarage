@@ -1,0 +1,56 @@
+﻿@model MVCGarage.Models.ViewModels.Members.ListViewModel
+
+@{
+    ViewData["Title"] = "Members";
+}
+
+
+<p>
+    <a asp-action="AddMember" class="btn btn-primary mt-2 mb-2" role="button">Add new member</a>
+</p>
+
+<div class="row">   
+    <div class="col-lg-8 order-lg-first">
+        <div class="container bg-light rounded shadow p-2">
+            <h3>Members</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @{ MVCGarage.Models.ViewModels.Members.IndexMemberViewModel dummyModel = null!; }
+                            @Html.DisplayNameFor(dummyParam => dummyModel.FirstName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(dummyParam => dummyModel.LastName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(dummyParam => dummyModel.NrOfVehicles)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.MemberList) {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LastName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NrOfVehicles)
+                        </td>
+                        <td>
+                            @*<a asp-action="Modify" asp-route-id="@item.Id">Modify</a> |*@
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            @*<a asp-action="Checkout" asp-route-id="@item.Id">Checkout</a>*@
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
