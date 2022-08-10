@@ -4,6 +4,7 @@ using MVCGarage.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MVCGarage.Migrations
 {
     [DbContext(typeof(MVCGarageContext))]
-    partial class MVCGarageContextModelSnapshot : ModelSnapshot
+    [Migration("20220810081743_SeedDataTest")]
+    partial class SeedDataTest
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -66,7 +68,7 @@ namespace MVCGarage.Migrations
                             HasReceived2YearsProMembership = false,
                             LastName = "Larsson",
                             PersonalIdentityNumber = "19810701-6666",
-                            ProMembershipToDate = new DateTime(2022, 9, 9, 10, 40, 40, 936, DateTimeKind.Local).AddTicks(3251)
+                            ProMembershipToDate = new DateTime(2022, 9, 9, 10, 17, 43, 548, DateTimeKind.Local).AddTicks(6695)
                         });
                 });
 
@@ -246,36 +248,6 @@ namespace MVCGarage.Migrations
                     b.HasIndex("VehicleId");
 
                     b.ToTable("VehicleAssignment");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ArrivalDate = new DateTime(2022, 8, 10, 10, 40, 40, 936, DateTimeKind.Local).AddTicks(7758),
-                            PSpotId = 1,
-                            VehicleId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            ArrivalDate = new DateTime(2022, 8, 10, 10, 40, 40, 936, DateTimeKind.Local).AddTicks(7776),
-                            PSpotId = 2,
-                            VehicleId = 2
-                        },
-                        new
-                        {
-                            Id = 3,
-                            ArrivalDate = new DateTime(2022, 8, 10, 10, 40, 40, 936, DateTimeKind.Local).AddTicks(7779),
-                            PSpotId = 3,
-                            VehicleId = 3
-                        },
-                        new
-                        {
-                            Id = 4,
-                            ArrivalDate = new DateTime(2022, 8, 10, 10, 40, 40, 936, DateTimeKind.Local).AddTicks(7781),
-                            PSpotId = 4,
-                            VehicleId = 4
-                        });
                 });
 
             modelBuilder.Entity("MVCGarage.Models.Entities.VehicleType", b =>
