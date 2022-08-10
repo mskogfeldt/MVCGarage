@@ -54,6 +54,63 @@ namespace MVCGarage.Controllers
             }
         }
 
+        // GET
+        public IActionResult Register()
+        {
+            var amvm = new RegisterViewModel();
+            return View(amvm);
+        }
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> Register(RegisterViewModel amvm)
+		{
+            var member = new Member()
+            {
+                PersonalIdentityNumber = amvm.PersonalIdentityNumber,
+                FirstName = amvm.FirstName,
+                LastName = amvm.LastName
+            };
+
+            _context.Member.Add(member);
+
+            try
+            {
+                await _context.SaveChangesAsync();
+                amvm.RegisterSuccess = true;
+            }
+            //TODO: Log the error somewhere
+            //catch (DbUpdateException e)
+            //{
+            //    if (e.InnerException != null && e.InnerException.Message.StartsWith("Cannot insert duplicate"))
+            //        amvm.Error = "A member with that personal identity number is already registered.";
+            //    else
+            //    {
+            //        amvm.Error = "Could not register member due to an error.";
+            //    }
+            //}
+            catch
+            {
+                //amvm.Error = "Could not register member due to an error.";
+            }
+
+            return View(amvm);
+        }
+
+        public async Task<IActionResult> CheckIfPINIsUnique(string personalIdentityNumber)
+        {
+            try
+            {
+                if (await _context.Member.AnyAsync(m => m.PersonalIdentityNumber == personalIdentityNumber))
+                    return Json("A member with that personal identity number is already registered.");
+            }
+            catch
+            {
+            }
+            //if database messed up on validation it is not a big deal if this was not validated (since it is not to be trusted once we reach backend), we validate once more on database index
+            return Json(true);
+        }
+
         // GET: Vehicles/Details/5
         public async Task<IActionResult> Details(int? id)
         {
