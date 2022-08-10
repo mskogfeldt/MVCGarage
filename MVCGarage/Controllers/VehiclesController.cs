@@ -78,23 +78,23 @@ namespace MVCGarage.Controllers
         // GET: Vehicles/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Vehicle == null || _context.Member == null || _context.VehicleAssignment == null)
+            if (id == null || _context.Vehicle == null || _context.Member == null || _context.VehicleAssignment == null || _context.VehicleType == null)
             {
                 return NotFound();
             }
 
-            var vehicle = await _context.Vehicle.FirstOrDefaultAsync(m => m.Id == id);
+            var vehicle = await _context.Vehicle.FirstOrDefaultAsync(v => v.Id == id);
 
             if (vehicle == null)
             {
                 return NotFound();
             }
 
-            var va = await _context.VehicleAssignment.FirstOrDefaultAsync(va => va.VehicleId == id);
-
             var member = await _context.Member.FirstOrDefaultAsync(m => m.Id == vehicle.MemberId);
 
-            if (va == null || member == null)
+            var vehicleType = await _context.VehicleType.FirstOrDefaultAsync(vt => vt.Id == vehicle.VehicleTypeId);
+
+            if (member == null || vehicleType == null)
             {
                 return NotFound();
             }
@@ -110,12 +110,18 @@ namespace MVCGarage.Controllers
                 Id = vehicle.Id,
                 Model = vehicle.Model,
                 RegistrationNumber = vehicle.RegistrationNumber,
-                VehicleType = vehicle.VehicleType,
+                VehicleTypeName = vehicleType.Name,
                 WheelCount = vehicle.WheelCount,
                 OwnerFirstName = member.FirstName,
-                OwnerLastName = member.LastName,
-                ArrivalTime = va.ArrivalDate,
-                ParkedTime = DateTime.Now.Subtract(va.ArrivalDate)
+                OwnerLastName = member.LastName
+            };
+
+            var va = await _context.VehicleAssignment.FirstOrDefaultAsync(va => va.VehicleId == id);
+
+            if (va is not null)
+            {
+                model.ArrivalTime = va.ArrivalDate;
+                model.ParkedTime = DateTime.Now.Subtract(va.ArrivalDate);
             };
 
             return View(model);

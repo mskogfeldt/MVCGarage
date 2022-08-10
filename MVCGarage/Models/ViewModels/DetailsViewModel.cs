@@ -13,7 +13,7 @@ namespace MVCGarage.Models.ViewModels
         public Color Color { get; set; }
         [Required]
         [Display(Name = "Type of Vehicle")]
-        public VehicleType VehicleType { get; set; } = null!;
+        public string? VehicleTypeName { get; set; }
         [Required]
         [StringLength(40)]
         [Display(Name = "Registration Number")]
@@ -34,12 +34,11 @@ namespace MVCGarage.Models.ViewModels
         public string OwnerLastName { get; set; } = string.Empty;
 
 
-        [Required]
         [Display(Name = "Arrival Time")]
-        public DateTime ArrivalTime { get; set; }
+        public DateTime? ArrivalTime { get; set; }
         [Display(Name = "Parked Time")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:d\\d\\ hh\\h\\ mm\\m}")]
-        public TimeSpan ParkedTime { get; set; }
+        public TimeSpan? ParkedTime { get; set; }
     }
 
 }

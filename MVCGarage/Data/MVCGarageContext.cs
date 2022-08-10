@@ -72,8 +72,7 @@ namespace MVCGarage.Data
             modelBuilder.Entity<VehicleAssignment>().HasData(
                 new VehicleAssignment { Id = 1, ArrivalDate = DateTime.Now, PSpotId = 1, VehicleId = 1 },
                 new VehicleAssignment { Id = 2, ArrivalDate = DateTime.Now, PSpotId = 2, VehicleId = 2 },
-                new VehicleAssignment { Id = 3, ArrivalDate = DateTime.Now, PSpotId = 3, VehicleId = 3 },
-                new VehicleAssignment { Id = 4, ArrivalDate = DateTime.Now, PSpotId = 4, VehicleId = 4 }
+                new VehicleAssignment { Id = 3, ArrivalDate = DateTime.Now, PSpotId = 3, VehicleId = 3 }
             );
 
 
