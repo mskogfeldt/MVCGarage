@@ -9,6 +9,7 @@ using Microsoft.Extensions.Options;
 using MVCGarage.Data;
 using MVCGarage.Models.Entities;
 using MVCGarage.Models.ViewModels.Members;
+using Personnummer;
 
 namespace MVCGarage.Controllers
 {
@@ -65,33 +66,19 @@ namespace MVCGarage.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Register(RegisterViewModel amvm)
 		{
-            var member = new Member()
+            if (ModelState.IsValid)
             {
-                PersonalIdentityNumber = amvm.PersonalIdentityNumber,
-                FirstName = amvm.FirstName,
-                LastName = amvm.LastName
-            };
+                var member = new Member()
+                {
+                    PersonalIdentityNumber = amvm.PersonalIdentityNumber,
+                    FirstName = amvm.FirstName,
+                    LastName = amvm.LastName
+                };
 
-            _context.Member.Add(member);
+                _context.Add(member);
 
-            try
-            {
                 await _context.SaveChangesAsync();
                 amvm.RegisterSuccess = true;
-            }
-            //TODO: Log the error somewhere
-            //catch (DbUpdateException e)
-            //{
-            //    if (e.InnerException != null && e.InnerException.Message.StartsWith("Cannot insert duplicate"))
-            //        amvm.Error = "A member with that personal identity number is already registered.";
-            //    else
-            //    {
-            //        amvm.Error = "Could not register member due to an error.";
-            //    }
-            //}
-            catch
-            {
-                //amvm.Error = "Could not register member due to an error.";
             }
 
             return View(amvm);
