@@ -9,5 +9,6 @@ namespace MVCGarage.Models.ViewModels.Members
         public string? RegistrationNumber { get; set; }
         public string? Brand { get; set; }
         public string? Model { get; set; }
+        public bool IsParked { get; set; }
     }
 }
