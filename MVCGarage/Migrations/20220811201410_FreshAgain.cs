@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MVCGarage.Migrations
 {
-    public partial class InitRelations : Migration
+    public partial class FreshAgain : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -89,9 +89,9 @@ namespace MVCGarage.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    VehiclesVehicleId = table.Column<int>(name: "VehiclesVehicleId()", type: "int", nullable: false),
+                    ArrivalDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GetDate()"),
                     PSpotsPSpotId = table.Column<int>(type: "int", nullable: false),
-                    ArrivalDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GetDate()")
+                    VehiclesVehicleId = table.Column<int>(name: "VehiclesVehicleId()", type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -113,7 +113,16 @@ namespace MVCGarage.Migrations
             migrationBuilder.InsertData(
                 table: "Member",
                 columns: new[] { "Id", "FirstName", "HasReceived2YearsProMembership", "LastName", "PersonalIdentityNumber", "ProMembershipToDate" },
-                values: new object[] { 1, "Kalle", false, "Larsson", "19810701-6666", new DateTime(2022, 9, 8, 14, 19, 45, 930, DateTimeKind.Local).AddTicks(2827) });
+                values: new object[,]
+                {
+                    { 1, "Kalle", false, "Larsson", "19810701-6666", new DateTime(2022, 9, 10, 22, 14, 10, 739, DateTimeKind.Local).AddTicks(9868) },
+                    { 2, "Kolle", false, "Persson", "19810702-6666", new DateTime(2022, 9, 5, 22, 14, 10, 739, DateTimeKind.Local).AddTicks(9902) },
+                    { 3, "Koklan", false, "Sigvardsson", "19810703-6666", new DateTime(2022, 8, 26, 22, 14, 10, 739, DateTimeKind.Local).AddTicks(9904) },
+                    { 4, "Kille", false, "Andersson", "19810704-6666", new DateTime(2022, 8, 21, 22, 14, 10, 739, DateTimeKind.Local).AddTicks(9906) },
+                    { 5, "Ablin", false, "Dahlstedt", "19810705-6666", new DateTime(2022, 8, 16, 22, 14, 10, 739, DateTimeKind.Local).AddTicks(9908) },
+                    { 6, "Sara", false, "Larsson", "19810706-6666", new DateTime(2022, 8, 18, 22, 14, 10, 739, DateTimeKind.Local).AddTicks(9910) },
+                    { 7, "FlygAnders", true, "Highlander", "19010101-6666", new DateTime(2022, 8, 1, 22, 14, 10, 739, DateTimeKind.Local).AddTicks(9912) }
+                });
 
             migrationBuilder.InsertData(
                 table: "PSpot",
@@ -138,7 +147,8 @@ namespace MVCGarage.Migrations
                 values: new object[,]
                 {
                     { 1, "Car", 1f },
-                    { 2, "Motorcycle", 0.33f }
+                    { 2, "Motorcycle", 0.33f },
+                    { 3, "Airplane", 8f }
                 });
 
             migrationBuilder.InsertData(
@@ -149,8 +159,32 @@ namespace MVCGarage.Migrations
                     { 1, "Volvo", 2, 1, "240", "ABC123", 1, 4 },
                     { 2, "Saab", 1, 1, "900", "BLA222", 1, 4 },
                     { 3, "BMW", 0, 1, "320i", "ALB333", 1, 4 },
-                    { 4, "Toyota", 2, 1, "Yaris", "HEY332", 1, 3 }
+                    { 4, "Honda", 2, 2, "MT-07", "MOT123", 2, 2 },
+                    { 5, "Yamaha", 5, 2, "XT500", "YAM456", 2, 2 },
+                    { 6, "Suzuki", 2, 2, "350", "SUZ111", 2, 2 },
+                    { 7, "Honda", 6, 3, "MT-07", "MOT456", 2, 2 },
+                    { 8, "Yamaha", 4, 3, "XT500", "YAM789", 2, 2 },
+                    { 9, "Suzuki", 1, 3, "750", "SUZ222", 2, 2 },
+                    { 10, "Honda", 0, 4, "MT-07", "MOT777", 2, 2 },
+                    { 11, "Yamaha", 3, 4, "XT500", "YAM888", 2, 2 },
+                    { 12, "Suzuki", 7, 4, "1050", "SUZ333", 2, 2 },
+                    { 13, "Boeing", 6, 7, "C-73", "FFF111", 3, 2 }
                 });
+
+            migrationBuilder.InsertData(
+                table: "VehicleAssignment",
+                columns: new[] { "Id", "ArrivalDate", "PSpotsPSpotId", "VehiclesVehicleId()" },
+                values: new object[] { 1, new DateTime(2022, 8, 11, 22, 14, 10, 740, DateTimeKind.Local).AddTicks(3145), 1, 1 });
+
+            migrationBuilder.InsertData(
+                table: "VehicleAssignment",
+                columns: new[] { "Id", "ArrivalDate", "PSpotsPSpotId", "VehiclesVehicleId()" },
+                values: new object[] { 2, new DateTime(2022, 8, 11, 22, 14, 10, 740, DateTimeKind.Local).AddTicks(3156), 2, 2 });
+
+            migrationBuilder.InsertData(
+                table: "VehicleAssignment",
+                columns: new[] { "Id", "ArrivalDate", "PSpotsPSpotId", "VehiclesVehicleId()" },
+                values: new object[] { 3, new DateTime(2022, 8, 11, 22, 14, 10, 740, DateTimeKind.Local).AddTicks(3158), 3, 3 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Member_PersonalIdentityNumber",

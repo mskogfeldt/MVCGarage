@@ -66,7 +66,61 @@ namespace MVCGarage.Migrations
                             HasReceived2YearsProMembership = false,
                             LastName = "Larsson",
                             PersonalIdentityNumber = "19810701-6666",
-                            ProMembershipToDate = new DateTime(2022, 9, 9, 10, 40, 40, 936, DateTimeKind.Local).AddTicks(3251)
+                            ProMembershipToDate = new DateTime(2022, 9, 10, 22, 14, 10, 739, DateTimeKind.Local).AddTicks(9868)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            FirstName = "Kolle",
+                            HasReceived2YearsProMembership = false,
+                            LastName = "Persson",
+                            PersonalIdentityNumber = "19810702-6666",
+                            ProMembershipToDate = new DateTime(2022, 9, 5, 22, 14, 10, 739, DateTimeKind.Local).AddTicks(9902)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            FirstName = "Koklan",
+                            HasReceived2YearsProMembership = false,
+                            LastName = "Sigvardsson",
+                            PersonalIdentityNumber = "19810703-6666",
+                            ProMembershipToDate = new DateTime(2022, 8, 26, 22, 14, 10, 739, DateTimeKind.Local).AddTicks(9904)
+                        },
+                        new
+                        {
+                            Id = 4,
+                            FirstName = "Kille",
+                            HasReceived2YearsProMembership = false,
+                            LastName = "Andersson",
+                            PersonalIdentityNumber = "19810704-6666",
+                            ProMembershipToDate = new DateTime(2022, 8, 21, 22, 14, 10, 739, DateTimeKind.Local).AddTicks(9906)
+                        },
+                        new
+                        {
+                            Id = 5,
+                            FirstName = "Ablin",
+                            HasReceived2YearsProMembership = false,
+                            LastName = "Dahlstedt",
+                            PersonalIdentityNumber = "19810705-6666",
+                            ProMembershipToDate = new DateTime(2022, 8, 16, 22, 14, 10, 739, DateTimeKind.Local).AddTicks(9908)
+                        },
+                        new
+                        {
+                            Id = 6,
+                            FirstName = "Sara",
+                            HasReceived2YearsProMembership = false,
+                            LastName = "Larsson",
+                            PersonalIdentityNumber = "19810706-6666",
+                            ProMembershipToDate = new DateTime(2022, 8, 18, 22, 14, 10, 739, DateTimeKind.Local).AddTicks(9910)
+                        },
+                        new
+                        {
+                            Id = 7,
+                            FirstName = "FlygAnders",
+                            HasReceived2YearsProMembership = true,
+                            LastName = "Highlander",
+                            PersonalIdentityNumber = "19010101-6666",
+                            ProMembershipToDate = new DateTime(2022, 8, 1, 22, 14, 10, 739, DateTimeKind.Local).AddTicks(9912)
                         });
                 });
 
@@ -208,13 +262,112 @@ namespace MVCGarage.Migrations
                         new
                         {
                             Id = 4,
-                            Brand = "Toyota",
+                            Brand = "Honda",
                             Color = 2,
-                            MemberId = 1,
-                            Model = "Yaris",
-                            RegistrationNumber = "HEY332",
-                            VehicleTypeId = 1,
-                            WheelCount = 3
+                            MemberId = 2,
+                            Model = "MT-07",
+                            RegistrationNumber = "MOT123",
+                            VehicleTypeId = 2,
+                            WheelCount = 2
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Brand = "Yamaha",
+                            Color = 5,
+                            MemberId = 2,
+                            Model = "XT500",
+                            RegistrationNumber = "YAM456",
+                            VehicleTypeId = 2,
+                            WheelCount = 2
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Brand = "Suzuki",
+                            Color = 2,
+                            MemberId = 2,
+                            Model = "350",
+                            RegistrationNumber = "SUZ111",
+                            VehicleTypeId = 2,
+                            WheelCount = 2
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Brand = "Honda",
+                            Color = 6,
+                            MemberId = 3,
+                            Model = "MT-07",
+                            RegistrationNumber = "MOT456",
+                            VehicleTypeId = 2,
+                            WheelCount = 2
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Brand = "Yamaha",
+                            Color = 4,
+                            MemberId = 3,
+                            Model = "XT500",
+                            RegistrationNumber = "YAM789",
+                            VehicleTypeId = 2,
+                            WheelCount = 2
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Brand = "Suzuki",
+                            Color = 1,
+                            MemberId = 3,
+                            Model = "750",
+                            RegistrationNumber = "SUZ222",
+                            VehicleTypeId = 2,
+                            WheelCount = 2
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Brand = "Honda",
+                            Color = 0,
+                            MemberId = 4,
+                            Model = "MT-07",
+                            RegistrationNumber = "MOT777",
+                            VehicleTypeId = 2,
+                            WheelCount = 2
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Brand = "Yamaha",
+                            Color = 3,
+                            MemberId = 4,
+                            Model = "XT500",
+                            RegistrationNumber = "YAM888",
+                            VehicleTypeId = 2,
+                            WheelCount = 2
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Brand = "Suzuki",
+                            Color = 7,
+                            MemberId = 4,
+                            Model = "1050",
+                            RegistrationNumber = "SUZ333",
+                            VehicleTypeId = 2,
+                            WheelCount = 2
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Brand = "Boeing",
+                            Color = 6,
+                            MemberId = 7,
+                            Model = "C-73",
+                            RegistrationNumber = "FFF111",
+                            VehicleTypeId = 3,
+                            WheelCount = 2
                         });
                 });
 
@@ -251,30 +404,23 @@ namespace MVCGarage.Migrations
                         new
                         {
                             Id = 1,
-                            ArrivalDate = new DateTime(2022, 8, 10, 10, 40, 40, 936, DateTimeKind.Local).AddTicks(7758),
+                            ArrivalDate = new DateTime(2022, 8, 11, 22, 14, 10, 740, DateTimeKind.Local).AddTicks(3145),
                             PSpotId = 1,
                             VehicleId = 1
                         },
                         new
                         {
                             Id = 2,
-                            ArrivalDate = new DateTime(2022, 8, 10, 10, 40, 40, 936, DateTimeKind.Local).AddTicks(7776),
+                            ArrivalDate = new DateTime(2022, 8, 11, 22, 14, 10, 740, DateTimeKind.Local).AddTicks(3156),
                             PSpotId = 2,
                             VehicleId = 2
                         },
                         new
                         {
                             Id = 3,
-                            ArrivalDate = new DateTime(2022, 8, 10, 10, 40, 40, 936, DateTimeKind.Local).AddTicks(7779),
+                            ArrivalDate = new DateTime(2022, 8, 11, 22, 14, 10, 740, DateTimeKind.Local).AddTicks(3158),
                             PSpotId = 3,
                             VehicleId = 3
-                        },
-                        new
-                        {
-                            Id = 4,
-                            ArrivalDate = new DateTime(2022, 8, 10, 10, 40, 40, 936, DateTimeKind.Local).AddTicks(7781),
-                            PSpotId = 4,
-                            VehicleId = 4
                         });
                 });
 
@@ -310,6 +456,12 @@ namespace MVCGarage.Migrations
                             Id = 2,
                             Name = "Motorcycle",
                             NeededSize = 0.33f
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Airplane",
+                            NeededSize = 8f
                         });
                 });
 

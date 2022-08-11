@@ -137,7 +137,11 @@ namespace MVCGarage.Controllers
             
             if (NeededSize < 1)
             {
-                var allPSpots = _context.PSpot.ToList();
+                var allPSpots = _context.PSpot
+                    .Include(p => p.VehicleAssignments)
+                    .ThenInclude(va => va.Vehicle)
+                    .ThenInclude(v => v.VehicleType)
+                    .ToList();
                 //We need to see if there still is room in already taken PSpots
                 foreach (PSpot pSpot in allPSpots)
                 {

@@ -40,18 +40,34 @@ namespace MVCGarage.Data
 
             modelBuilder.Entity<VehicleType>().HasData(
                 new VehicleType { Id = 1, Name = "Car", NeededSize = 1 },
-                new VehicleType { Id = 2, Name = "Motorcycle", NeededSize = 0.33f }
+                new VehicleType { Id = 2, Name = "Motorcycle", NeededSize = 0.33f },
+                new VehicleType { Id = 3, Name = "Airplane", NeededSize = 8 }
             );
 
             modelBuilder.Entity<Member>().HasData(
-                new Member { Id = 1, FirstName = "Kalle", HasReceived2YearsProMembership = false, LastName = "Larsson", PersonalIdentityNumber = "19810701-6666", ProMembershipToDate = DateTime.Now.AddDays(30) }
+                new Member { Id = 1, FirstName = "Kalle", HasReceived2YearsProMembership = false, LastName = "Larsson", PersonalIdentityNumber = "19810701-6666", ProMembershipToDate = DateTime.Now.AddDays(30) },
+                new Member { Id = 2, FirstName = "Kolle", HasReceived2YearsProMembership = false, LastName = "Persson", PersonalIdentityNumber = "19810702-6666", ProMembershipToDate = DateTime.Now.AddDays(25) },
+                new Member { Id = 3, FirstName = "Koklan", HasReceived2YearsProMembership = false, LastName = "Sigvardsson", PersonalIdentityNumber = "19810703-6666", ProMembershipToDate = DateTime.Now.AddDays(15) },
+                new Member { Id = 4, FirstName = "Kille", HasReceived2YearsProMembership = false, LastName = "Andersson", PersonalIdentityNumber = "19810704-6666", ProMembershipToDate = DateTime.Now.AddDays(10) },
+                new Member { Id = 5, FirstName = "Ablin", HasReceived2YearsProMembership = false, LastName = "Dahlstedt", PersonalIdentityNumber = "19810705-6666", ProMembershipToDate = DateTime.Now.AddDays(5) },
+                new Member { Id = 6, FirstName = "Sara", HasReceived2YearsProMembership = false, LastName = "Larsson", PersonalIdentityNumber = "19810706-6666", ProMembershipToDate = DateTime.Now.AddDays(7) },
+                new Member { Id = 7, FirstName = "FlygAnders", HasReceived2YearsProMembership = true, LastName = "Highlander", PersonalIdentityNumber = "19010101-6666", ProMembershipToDate = DateTime.Now.AddDays(-10) }
             );
 
             modelBuilder.Entity<Vehicle>().HasData(
                 new Vehicle { Id = 1, Brand = "Volvo", Color = Color.Yellow, Model = "240", RegistrationNumber = "ABC123", VehicleTypeId=1, WheelCount = 4, MemberId = 1 },
                 new Vehicle { Id = 2, Brand = "Saab", Color = Color.Blue, Model = "900", RegistrationNumber = "BLA222", VehicleTypeId = 1, WheelCount = 4, MemberId = 1 },
                 new Vehicle { Id = 3, Brand = "BMW", Color = Color.Red, Model = "320i", RegistrationNumber = "ALB333", VehicleTypeId = 1, WheelCount = 4, MemberId = 1 },
-                new Vehicle { Id = 4, Brand = "Toyota", Color = Color.Yellow, Model = "Yaris", RegistrationNumber = "HEY332", VehicleTypeId = 1, WheelCount = 3, MemberId = 1 }
+                new Vehicle { Id = 4, Brand = "Honda", Color = Color.Yellow, Model = "MT-07", RegistrationNumber = "MOT123", VehicleTypeId = 2, WheelCount = 2, MemberId = 2 },
+                new Vehicle { Id = 5, Brand = "Yamaha", Color = Color.Black, Model = "XT500", RegistrationNumber = "YAM456", VehicleTypeId = 2, WheelCount = 2, MemberId = 2 },
+                new Vehicle { Id = 6, Brand = "Suzuki", Color = Color.Yellow, Model = "350", RegistrationNumber = "SUZ111", VehicleTypeId = 2, WheelCount = 2, MemberId = 2 },
+                new Vehicle { Id = 7, Brand = "Honda", Color = Color.White, Model = "MT-07", RegistrationNumber = "MOT456", VehicleTypeId = 2, WheelCount = 2, MemberId = 3 },
+                new Vehicle { Id = 8, Brand = "Yamaha", Color = Color.Brown, Model = "XT500", RegistrationNumber = "YAM789", VehicleTypeId = 2, WheelCount = 2, MemberId = 3 },
+                new Vehicle { Id = 9, Brand = "Suzuki", Color = Color.Blue, Model = "750", RegistrationNumber = "SUZ222", VehicleTypeId = 2, WheelCount = 2, MemberId = 3 },
+                new Vehicle { Id = 10, Brand = "Honda", Color = Color.Red, Model = "MT-07", RegistrationNumber = "MOT777", VehicleTypeId = 2, WheelCount = 2, MemberId = 4 },
+                new Vehicle { Id = 11, Brand = "Yamaha", Color = Color.Green, Model = "XT500", RegistrationNumber = "YAM888", VehicleTypeId = 2, WheelCount = 2, MemberId = 4 },
+                new Vehicle { Id = 12, Brand = "Suzuki", Color = Color.Other, Model = "1050", RegistrationNumber = "SUZ333", VehicleTypeId = 2, WheelCount = 2, MemberId = 4 },
+                new Vehicle { Id = 13, Brand = "Boeing", Color = Color.White, Model = "C-73", RegistrationNumber = "FFF111", VehicleTypeId = 3, WheelCount = 2, MemberId = 7 }
             );
 
             modelBuilder.Entity<Vehicle>()
