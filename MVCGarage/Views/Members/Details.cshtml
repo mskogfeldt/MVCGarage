@@ -3,11 +3,34 @@
 @{
     ViewData["Title"] = "Details";
 }
-
 <div class="m-2">
     <a asp-action="Index">Back to Members</a>
 </div>
+@if (@Model.ParkSuccess != null) {
+    <!-- Button trigger modal -->
+    <button type="button" id="clickable" class="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+        Launch static backdrop modal
+    </button>
 
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">@Model.modalTitleText</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        @Model.modalBodyText
+      </div>
+      <div class="modal-footer">
+        <a asp-action="Index" class="btn btn-primary">To Members List</a>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/js/clickable.js"></script>
+}
 <h2>Details</h2>
 <hr />
 <div>
@@ -71,6 +94,18 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.Brand)
                         </td>
+                        <td>
+                            @if(item.IsParked) {
+                                    <a asp-controller="Vehicles" asp-action="Checkout" class="btn btn-danger" asp-route-id="@item.Id">Checkout</a>
+                                }
+                                else {
+                                    <form asp-action="Details">
+                                    <input type="hidden" asp-for="Id" />
+                                    <input type="hidden"  asp-for="VehicleId" value="@item.Id" />
+                                    <input type="submit" class="btn btn-success" value="Park @item.Id" />
+                                    </form>
+                                }
+                            </td>
                     </tr>
                     }
                 </tbody>

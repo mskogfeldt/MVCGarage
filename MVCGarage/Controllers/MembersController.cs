@@ -99,6 +99,7 @@ namespace MVCGarage.Controllers
         }
 
         // GET: Vehicles/Details/5
+        [HttpGet]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Member == null)
@@ -108,12 +109,156 @@ namespace MVCGarage.Controllers
 
             var Member = await _context.Member
                 .Include(m => m.Vehicles)
+                .ThenInclude(v => v.VehicleAssignments)
                 .FirstOrDefaultAsync(m => m.Id == id);
-                
+
             if (Member == null)
             {
                 return NotFound();
             }
+
+            DetailsViewModel model;
+            try
+            {
+                model = await getDetailsForMember(id);
+            }
+            catch (MemberNotFoundException e)
+            {
+                return NotFound();
+            }
+            return View(model);
+        }
+
+        public (bool, List<PSpot>) FindFirstAvailableSpots(float NeededSize)
+        {
+            var retList = new List<PSpot>();
+            if (_context.PSpot == null)
+                return (false, retList);
+            
+            if (NeededSize < 1)
+            {
+                var allPSpots = _context.PSpot.ToList();
+                //We need to see if there still is room in already taken PSpots
+                foreach (PSpot pSpot in allPSpots)
+                {
+                    float alreadyUsedSizeInSpotTotal = 0f;
+                    foreach (VehicleAssignment va in pSpot.VehicleAssignments)
+                    {
+                        alreadyUsedSizeInSpotTotal += va.Vehicle.VehicleType.NeededSize;
+                    }
+                    //would it fit here?
+                    if ((alreadyUsedSizeInSpotTotal + NeededSize) <= 1)
+                    {
+                        //Yup return there is room and what available spots to use
+                        retList.Add(pSpot);
+                        return (true, retList);
+                    }
+                }
+            }
+
+            if(NeededSize >= 1)
+            {
+                var allEmptyPSpots = _context.PSpot
+                    .Where(p => p.VehicleAssignments.Count == 0).ToList();
+
+                //Is there room for this vehicle?
+                int NeededSizeRoundedUp = (int)Math.Ceiling(NeededSize);
+                if(NeededSizeRoundedUp <= allEmptyPSpots.Count)
+                {
+                    //Yes there is room, return first [amount PSpots needed] PSpots
+                    for(int i=0;i<NeededSizeRoundedUp;i++)
+                        retList.Add(allEmptyPSpots[i]);                        
+
+                    return (true, retList);
+                }
+            }
+
+            //We failed to find any available pSpots to use for NeededSize
+            return (false, retList);
+        }
+
+        // GET: Vehicles/Details/5
+        [HttpPost]
+        public async Task<IActionResult> Details(DetailsViewModel dvm)
+        {
+            //if optional parameter wasParked was sent here, user tried to park a vehicle, show message informing user of park success
+            bool bSuccess = true;
+            string parkFailedReason = string.Empty;
+            if (dvm == null || _context.Member == null)
+                return NotFound();        
+            if (dvm.VehicleId == null)
+                return NotFound();
+
+            var MemberVehicle = await _context.Vehicle
+                .Include(v => v.VehicleType)
+                .Where(v => v.Id == dvm.VehicleId).FirstOrDefaultAsync();
+            if (MemberVehicle == null)
+            { 
+                bSuccess = false;
+                parkFailedReason = "Vehicle was not found";
+            }
+
+            try
+            { 
+                var SpotsResult = FindFirstAvailableSpots(MemberVehicle!.VehicleType.NeededSize);
+            
+                if(SpotsResult.Item1)
+                {
+                    //We found out there is available spots, let's use those spots
+                    foreach(PSpot pspot in SpotsResult.Item2)
+                    _context.VehicleAssignment.Add(new VehicleAssignment()
+                    {
+                        ArrivalDate = DateTime.Now,
+                        PSpotId = pspot.Id,
+                        Vehicle = MemberVehicle
+                    });
+                    await _context.SaveChangesAsync();
+                }
+                else
+                {
+                    bSuccess = false;
+                    parkFailedReason = $"There is not enough room left to park a {MemberVehicle!.VehicleType.Name}";
+                }
+            }
+            catch
+            {
+                bSuccess = false;
+                parkFailedReason = "Could not park vehicle in any spots";
+            }
+
+            //Reload page but show infobox for success or not
+            DetailsViewModel model;
+            try
+            { 
+                model = await getDetailsForMember(dvm.Id);
+                model.ParkSuccess = bSuccess;
+                if (bSuccess)
+                {
+                    model.modalTitleText = $"{MemberVehicle!.VehicleType.Name} {MemberVehicle!.RegistrationNumber} is now parked.";
+                    model.modalBodyText = "Use Checkout when unparking your vehicle.";
+                }
+                else
+                {
+                    model.modalTitleText = $"{MemberVehicle!.VehicleType.Name} {MemberVehicle!.RegistrationNumber} was not parked.";
+                    model.modalBodyText = parkFailedReason;
+                }
+            }
+            catch (MemberNotFoundException e)
+            {
+                return NotFound();
+            }
+            return View(model);
+        }
+
+        public async Task<DetailsViewModel> getDetailsForMember(int? id)
+        {
+            var Member = await _context.Member
+                .Include(m => m.Vehicles)
+                .ThenInclude(v => v.VehicleAssignments)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (Member == null)
+                throw new MemberNotFoundException();
 
             var model = new DetailsViewModel
             {
@@ -125,11 +270,11 @@ namespace MVCGarage.Controllers
                     Id = v.Id,
                     Brand = v.Brand,
                     Model = v.Model,
-                    RegistrationNumber = v.RegistrationNumber
+                    RegistrationNumber = v.RegistrationNumber,
+                    IsParked = v.VehicleAssignments.Count > 0
                 }).ToList()
             };
-
-            return View(model);
+            return model;
         }
     }
 }
