@@ -70,7 +70,7 @@ namespace MVCGarage.Controllers
             {
                 var member = new Member()
                 {
-                    PersonalIdentityNumber = amvm.PersonalIdentityNumber,
+                    PersonalIdentityNumber = new Personnummer.Personnummer(amvm.PersonalIdentityNumber).Format(true),
                     FirstName = amvm.FirstName,
                     LastName = amvm.LastName
                 };
