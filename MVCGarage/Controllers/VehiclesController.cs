@@ -38,10 +38,11 @@ namespace MVCGarage.Controllers
                     !string.IsNullOrEmpty(lvm.SearchBrand) || !string.IsNullOrEmpty(lvm.SearchModel);
 
                 var dbVehicles = await _context.Vehicle!
+                    .Include(v => v.Member)
                     .Join(_context.VehicleAssignment!,
                     v => v.Id,
                     va => va.VehicleId,
-                    (v, va) => new { vehicle = v, asgnmt = va })
+                    (v, va) => new { vehicle = v, asgnmt = va })                    
                     .WhereIf(lvm.SearchRegistrationNumber != null, x => x.vehicle.RegistrationNumber != null && x.vehicle.RegistrationNumber.StartsWith(lvm.SearchRegistrationNumber!.Trim()))
                     .WhereIf(lvm.SearchBrand != null, x => x.vehicle.Brand != null && x.vehicle.Brand.StartsWith(lvm.SearchBrand!.Trim()))
                     .WhereIf(lvm.SearchWheelCount != null, x => x.vehicle.WheelCount == lvm.SearchWheelCount)
@@ -59,7 +60,9 @@ namespace MVCGarage.Controllers
                             NeededSize = v.vehicle.VehicleType.NeededSize
                         },
                         ArrivalTime = v.asgnmt.ArrivalDate,
-                        ParkedTime = DateTime.Now.Subtract(v.asgnmt.ArrivalDate)
+                        ParkedTime = DateTime.Now.Subtract(v.asgnmt.ArrivalDate),
+                        Owner = $"{v.vehicle.Member.FirstName} {v.vehicle.Member.LastName}",
+                        MembershipType = new Membership(v.vehicle.Member.ProMembershipToDate).Type
                     })                    
                     .ToListAsync();
 

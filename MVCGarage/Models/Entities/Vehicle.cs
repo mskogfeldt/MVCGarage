@@ -35,6 +35,7 @@ namespace MVCGarage.Models.Entities
         public int MemberId { get; set; }
 
         //Nav prop
+        public Member Member { get; set; } = null!;
         public ICollection<PSpot> PSpots { get; set; }
         public VehicleType VehicleType { get; set; } = null!;
         public ICollection<VehicleAssignment> VehicleAssignments { get; set; }

@@ -269,6 +269,7 @@ namespace MVCGarage.Controllers
                 Id = Member.Id,
                 FirstName = Member.FirstName,
                 LastName = Member.LastName,
+                Type = new Membership(Member.ProMembershipToDate).Type,
                 Vehicles = Member.Vehicles.Select(v => new MemberVehicleModel()
                 {
                     Id = v.Id,

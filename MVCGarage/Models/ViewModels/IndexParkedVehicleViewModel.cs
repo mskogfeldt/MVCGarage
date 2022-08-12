@@ -1,4 +1,4 @@
-﻿    using MVCGarage.Models.Entities;
+﻿using MVCGarage.Models.Entities;
 using System.ComponentModel.DataAnnotations;
 
 namespace MVCGarage.Models.ViewModels
@@ -9,7 +9,10 @@ namespace MVCGarage.Models.ViewModels
         [Display(Name = "Type of Vehicle")]
         public VehicleType Type { get; set; } = null!;
         [Display(Name = "Registration Number")]
-        public string? RegistrationNumber { get; set; }
+        public string? RegistrationNumber { get; set; }        
+        public string? Owner { get; set; }
+        [Display(Name = "Membership")]
+        public Membership.MembershipType? MembershipType { get; set; }
         [Display(Name = "Arrival Time")]
         public DateTime ArrivalTime { get; set; }
         [Display(Name = "Parked Time")]

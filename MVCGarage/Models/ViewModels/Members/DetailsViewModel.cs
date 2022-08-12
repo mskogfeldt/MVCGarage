@@ -15,6 +15,7 @@ namespace MVCGarage.Models.ViewModels.Members
         public string? FirstName { get; set; }
         [Display(Name = "Last Name")]
         public string? LastName { get; set; }
+        public Membership.MembershipType Type { get; set; }
         public List<MemberVehicleModel> Vehicles { get; set; }
         public int? VehicleId { get; set; }
 

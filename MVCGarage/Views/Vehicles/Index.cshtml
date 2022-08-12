@@ -96,6 +96,12 @@
                             </a>
                         </th>
                         <th>
+                            Owner
+                        </th>
+                        <th>
+                            Membership
+                        </th>
+                        <th>
                             <a asp-action="Index" asp-route-Desc="@Html.Raw(!Model.Desc)" asp-route-Order="@Order.ArrivalTime">
                                 Arrival Time @Html.Raw(Sort(Order.ArrivalTime))
                             </a>
@@ -116,6 +122,12 @@
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.RegistrationNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Owner)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MembershipType)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.ArrivalTime)
