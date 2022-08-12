@@ -85,7 +85,9 @@ namespace MVCGarage.Controllers
                 return NotFound();
             }
 
-            var vehicle = await _context.Vehicle.FirstOrDefaultAsync(v => v.Id == id);
+            var vehicle = await _context.Vehicle
+                .Include(v => v.VehicleType)
+                .FirstOrDefaultAsync(v => v.Id == id);
 
             if (vehicle == null)
             {
@@ -94,16 +96,12 @@ namespace MVCGarage.Controllers
 
             var member = await _context.Member.FirstOrDefaultAsync(m => m.Id == vehicle.MemberId);
 
-            var vehicleType = await _context.VehicleType.FirstOrDefaultAsync(vt => vt.Id == vehicle.VehicleTypeId);
+            var vehicleType = vehicle.VehicleType;
 
             if (member == null || vehicleType == null)
             {
                 return NotFound();
             }
-
-
-            //await Task.Delay(100);
-            //throw new Exception("TODO Arrivaltime changed, type changed");
 
             var model = new DetailsViewModel
             {
@@ -118,7 +116,7 @@ namespace MVCGarage.Controllers
                 OwnerLastName = member.LastName
             };
 
-            var va = await _context.VehicleAssignment.FirstOrDefaultAsync(va => va.VehicleId == id);
+            var va = vehicle.VehicleAssignments.FirstOrDefault();
 
             if (va != null)
             {
@@ -127,7 +125,6 @@ namespace MVCGarage.Controllers
             };
 
             return View(model);
-
         }
 
         // GET: Vehicles/Create
@@ -334,33 +331,32 @@ namespace MVCGarage.Controllers
             }
 
             var Vehicle = await _context.Vehicle
+                .Include(x => x.VehicleAssignments)                
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (Vehicle == null)
             {
                 return NotFound();
             }
-            await Task.Delay(100);
-            throw new Exception("TODO Arrivaltime changed, type changed");
-            /*
-            //var parkedTime = DateTime.Now.Subtract(Vehicle.ArrivalTime);
+
+            var ArrivalTime = Vehicle.VehicleAssignments.ToList()[0].ArrivalDate;
+            var parkedTime = DateTime.Now.Subtract(ArrivalTime);
 
             var cvm = new CheckoutViewModel()
             {
-                //ArrivalTime = Vehicle.ArrivalTime,
+                ArrivalTime = ArrivalTime,
                 Brand = Vehicle.Brand,
                 Color = Vehicle.Color,
                 CheckoutTime = DateTime.Now,
                 Id = Vehicle.Id,
                 Model = Vehicle.Model,
-                //Price = CalculatePrice(parkedTime.TotalHours),
-                //ParkedTime = parkedTime,
+                Price = CalculatePrice(parkedTime.TotalHours),
+                ParkedTime = parkedTime,
                 RegistrationNumber = Vehicle.RegistrationNumber,
-                //Type = Vehicle.Type,
+                Type = Vehicle.VehicleType,
                 WheelCount = Vehicle.WheelCount
             };
             
             return View(cvm);
-            */
         }
 
         private decimal CalculatePrice(double totalHour)
@@ -380,29 +376,29 @@ namespace MVCGarage.Controllers
             }
 
             ReceiptViewModel rvm = new();
-            var Vehicle = await _context.Vehicle.FindAsync(id);
+            var Vehicle = await _context.Vehicle
+                .Include(v => v.VehicleAssignments)
+                .Where(v => v.Id == id)
+                .FirstOrDefaultAsync();
+
             if (Vehicle != null)
             {
                 _context.Vehicle.Remove(Vehicle);
-
-                await Task.Delay(100);
-                throw new Exception("TODO Arrivaltime changed, type changed");
-                /*
-                //var parkedTime = DateTime.Now.Subtract(Vehicle.ArrivalTime);
+                var ArrivalTime = (DateTime)(Vehicle.VehicleAssignments.FirstOrDefault()?.ArrivalDate!);
+                var parkedTime = DateTime.Now.Subtract(ArrivalTime);
 
                 rvm = new ReceiptViewModel()
                 {
-                    //ArrivalTime = Vehicle.ArrivalTime,
+                    ArrivalTime = ArrivalTime,
                     Brand = Vehicle.Brand,
                     Color = Vehicle.Color,
                     CheckoutTime = DateTime.Now,
                     Model = Vehicle.Model,
-                    //Price = CalculatePrice(parkedTime.TotalHours),
-                    //ParkedTime = parkedTime,
-                    RegistrationNumber = Vehicle.RegistrationNumber
-                    //Type = Vehicle.Type
+                    Price = CalculatePrice(parkedTime.TotalHours),
+                    ParkedTime = parkedTime,
+                    RegistrationNumber = Vehicle.RegistrationNumber,
+                    Type = Vehicle.VehicleType
                 };
-                */
             }
 
             await _context.SaveChangesAsync();
