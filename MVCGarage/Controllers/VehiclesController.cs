@@ -60,7 +60,7 @@ namespace MVCGarage.Controllers
                         },
                         ArrivalTime = v.asgnmt.ArrivalDate,
                         ParkedTime = DateTime.Now.Subtract(v.asgnmt.ArrivalDate)
-                    })
+                    })                    
                     .ToListAsync();
 
                 var orderedVehicles =
@@ -69,7 +69,7 @@ namespace MVCGarage.Controllers
                   : lvm.Order == Order.ParkedTime ? dbVehicles.OrderAscOrDesc(lvm.Desc, v => v.ParkedTime)
                   : dbVehicles.OrderAscOrDesc(lvm.Desc, v => v.ArrivalTime);
 
-                lvm.VehicleList = orderedVehicles.ToList();
+                lvm.VehicleList = orderedVehicles.GroupBy(x => x.Id).Select(y => y.First());
 
                 lvm.VehicleTypes = await _context.VehicleType.ToListAsync();
                 return View(lvm);                
