@@ -47,7 +47,7 @@ namespace MVCGarage.Controllers
                     .WhereIf(lvm.SearchWheelCount != null, x => x.vehicle.WheelCount == lvm.SearchWheelCount)
                     .WhereIf(lvm.SearchModel != null, x => x.vehicle.Model != null && x.vehicle.Model.StartsWith(lvm.SearchModel!.Trim()))
                     //TODO testa searchtype
-                    .WhereIf(lvm.SearchType != null, x => x.vehicle.VehicleType.Id == lvm.SearchType!.Id)
+                    .WhereIf(lvm.SearchType != null, x => x.vehicle.VehicleType.Id == lvm.SearchType)
                     .Select(v => new IndexVehicleViewModel()
                     {
                         Id = v.vehicle.Id,
@@ -65,11 +65,13 @@ namespace MVCGarage.Controllers
 
                 var orderedVehicles =
                     lvm.Order == Order.RegistrationNumber ? dbVehicles.OrderAscOrDesc(lvm.Desc, v => v.RegistrationNumber)
-                  : lvm.Order == Order.Type ? dbVehicles.OrderAscOrDesc(lvm.Desc, v => v.Type)
+                  : lvm.Order == Order.Type ? dbVehicles.OrderAscOrDesc(lvm.Desc, v => v.Type.Id)
                   : lvm.Order == Order.ParkedTime ? dbVehicles.OrderAscOrDesc(lvm.Desc, v => v.ParkedTime)
                   : dbVehicles.OrderAscOrDesc(lvm.Desc, v => v.ArrivalTime);
 
                 lvm.VehicleList = orderedVehicles.ToList();
+
+                lvm.VehicleTypes = await _context.VehicleType.ToListAsync();
                 return View(lvm);                
             }
             else return Problem("Entity set 'MVCGarageContext.Vehicle'  is null.");

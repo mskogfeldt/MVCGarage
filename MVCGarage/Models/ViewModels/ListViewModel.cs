@@ -16,7 +16,8 @@ namespace MVCGarage.Models.ViewModels
         [Display(Name = "Number of Wheels")]
         public int? SearchWheelCount { get; set; }
         [Display(Name = "Type of Vehicle")]
-        public VehicleType? SearchType { get; set; }
+        public int? SearchType { get; set; }
+        public List<VehicleType> VehicleTypes { get; set; } = new List<VehicleType>();
         public Order? Order { get; set; }
         public bool Desc { get; set; } = false;
         public bool HasSearchItem { get; set; } = false;
