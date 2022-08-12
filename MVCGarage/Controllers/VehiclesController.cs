@@ -139,7 +139,8 @@ namespace MVCGarage.Controllers
 
             var avvm = new AddVehicleViewModel
             {
-                MemberId = (int)id
+                MemberId = (int)id,
+                VehicleTypes = await _context.VehicleType.ToListAsync()
             };
 
             return View(avvm);
@@ -159,7 +160,7 @@ namespace MVCGarage.Controllers
                     RegistrationNumber = avvm.RegistrationNumber,
                     WheelCount = avvm.WheelCount,
                     MemberId = avvm.MemberId,
-                    VehicleTypeId = 1
+                    VehicleTypeId = avvm.VehicleTypeId
                 };
                 _context.Add(vehicle);
                 await _context.SaveChangesAsync();

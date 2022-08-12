@@ -19,7 +19,8 @@ namespace MVCGarage.Models.ViewModels
 
         [Required]
         [Display(Name = "Type of Vehicle")]
-        public string VehicleType { get; set; } = string.Empty;
+        public int VehicleTypeId { get; set; }
+        public List<VehicleType> VehicleTypes { get; set; } = new List<VehicleType>();
 
         [Required]
         [StringLength(40)]

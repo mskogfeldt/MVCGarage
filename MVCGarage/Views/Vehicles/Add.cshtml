@@ -41,15 +41,9 @@
                 <span asp-validation-for="RegistrationNumber" class="text-danger"></span>
                 <label asp-for="RegistrationNumber" class="form-label"></label>
             </div>
-@*            <div class="form-floating">
-                <select asp-for="VehicleType" class="form-control" asp-items="@Html.GetEnumSelectList<VehicleTypeOld>()"></select>
-                <span asp-validation-for="VehicleType" class="text-danger"></span>
-                <label asp-for="VehicleType" class="form-label"></label>
-            </div>*@
             <div class="form-floating">
-                <input asp-for="VehicleType" class="form-control" />
-                <span asp-validation-for="VehicleType" class="text-danger"></span>
-                <label asp-for="VehicleType" class="form-label"></label>
+                <select asp-for="VehicleTypeId" class="form-control" asp-items="@(new SelectList(Model.VehicleTypes, nameof(VehicleType.Id), nameof(VehicleType.Name)))"></select>
+                <label asp-for="VehicleTypeId" class="control-label"></label>
             </div>
             <div class="form-floating">
                 <input asp-for="WheelCount" class="form-control" />
