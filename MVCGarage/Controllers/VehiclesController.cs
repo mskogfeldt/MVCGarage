@@ -128,6 +128,45 @@ namespace MVCGarage.Controllers
 
         }
 
+        public async Task<IActionResult> Add(int? id)
+        {
+            if (id == null || !await _context.Member.AnyAsync(m => m.Id == id))
+            {
+                return NotFound();
+            }
+
+            var avvm = new AddVehicleViewModel
+            {
+                MemberId = (int)id
+            };
+
+            return View(avvm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Add(AddVehicleViewModel avvm)
+        {
+            if (ModelState.IsValid)
+            {
+                var vehicle = new Vehicle
+                {
+                    Brand = avvm.Brand,
+                    Color = avvm.Color,
+                    Model = avvm.Model,
+                    RegistrationNumber = avvm.RegistrationNumber,
+                    WheelCount = avvm.WheelCount,
+                    MemberId = avvm.MemberId,
+                    VehicleTypeId = 1
+                };
+                _context.Add(vehicle);
+                await _context.SaveChangesAsync();
+                avvm.AddSuccess = true;
+            }
+            return View(avvm);
+        }
+
+
         // GET: Vehicles/Create
         public IActionResult Park()
         {
@@ -193,7 +232,7 @@ namespace MVCGarage.Controllers
                 }
                 pvm.ParkSuccess = bParkSuccess;
                 */
-            }            
+            }
             return View(pvm);
         }
 
