@@ -30,27 +30,35 @@
     <script src="/js/clickable.js"></script>
 }
 
-<form asp-action="Register">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <div class="form-floating">
-        <input asp-for="PersonalIdentityNumber" class="form-control" />
-        <span asp-validation-for="PersonalIdentityNumber" class="text-danger"></span>
-        <label asp-for="PersonalIdentityNumber" class="form-label"></label>
-    </div>
-    <div class="form-floating">
-        <input asp-for="FirstName" class="form-control" />
-        <span asp-validation-for="FirstName" class="text-danger"></span>
-        <label asp-for="FirstName" class="form-label"></label>
-    </div>
-    <div class="form-floating">
-        <input asp-for="LastName" class="form-control" />
-        <span asp-validation-for="LastName" class="text-danger"></span>
-        <label asp-for="LastName" class="form-label"></label>
-    </div>
-    <div class="form-group mt-2">
-        <input type="submit" value="Register" class="btn btn-primary" />
-    </div>
-</form>
+<div class="m-2">
+    <a asp-action="Index">Back to Members</a>
+</div>
+<h2>Register</h2>
+<hr />
+<div>
+    <h4>Member</h4>
+    <form asp-action="Register">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-floating">
+            <input asp-for="PersonalIdentityNumber" class="form-control" />
+            <span asp-validation-for="PersonalIdentityNumber" class="text-danger"></span>
+            <label asp-for="PersonalIdentityNumber" class="form-label"></label>
+        </div>
+        <div class="form-floating">
+            <input asp-for="FirstName" class="form-control" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+            <label asp-for="FirstName" class="form-label"></label>
+        </div>
+        <div class="form-floating">
+            <input asp-for="LastName" class="form-control" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+            <label asp-for="LastName" class="form-label"></label>
+        </div>
+        <div class="form-group mt-2">
+            <input type="submit" value="Register" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

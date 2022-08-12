@@ -101,21 +101,24 @@
                             @Html.DisplayFor(modelItem => item.Brand)
                         </td>
                         <td>
-                            @if(item.IsParked) {
-                                    <a asp-controller="Vehicles" asp-action="Checkout" class="btn btn-danger" asp-route-id="@item.Id">Checkout</a>
-                                }
-                                else {
-                                    <form asp-action="Details">
+                            @if(item.IsParked) 
+                            {
+                                <a asp-controller="Vehicles" asp-action="Checkout" class="btn btn-danger form-control" asp-route-id="@item.Id">Checkout</a>
+                            }
+                            else 
+                            {
+                                <form asp-action="Details">
                                     <input type="hidden" asp-for="Id" />
                                     <input type="hidden"  asp-for="VehicleId" value="@item.Id" />
-                                    <input type="submit" class="btn btn-success" value="Park" />
-                                    </form>
-                                }
-                            </td>
+                                    <input type="submit" class="btn btn-success form-control" value="Park" />
+                                </form>
+                            }
+                        </td>
                     </tr>
                     }
                 </tbody>
             </table>
+            <a class="btn btn-primary" asp-controller="Vehicles" asp-action="Add" asp-route-id="@Model.Id">Add Vehicle</a>
         </div>
     </div>
 </div>
