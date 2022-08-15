@@ -35,12 +35,11 @@
 }
 <script src="/js/clientValidationReset.js"></script>
 <h2>Modify</h2>
-
-<h3>Parked Vehicle</h3>
 <hr />
 
 <form asp-action="Modify">
     <div class="row">
+        <h5>Vehicle</h5>
         <div class="col-md-6">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
@@ -50,11 +49,12 @@
                 <span asp-validation-for="RegistrationNumber" class="text-danger"></span>
                 <label asp-for="RegistrationNumber" class="control-label"></label>
             </div>
-@*            <div class="form-floating">
-                <select asp-for="VehicleType" class="form-control" asp-items="@Html.GetEnumSelectList<VehicleTypeOld>()"></select>
-                <span asp-validation-for="VehicleType" class="text-danger"></span>
-                <label asp-for="VehicleType" class="control-label"></label>
-            </div>*@
+            <fieldset disabled>
+                <div class="form-floating">
+                    <input asp-for="VehicleTypeName" readonly class="form-control">
+                    <label asp-for="VehicleTypeName" class="control-label"></label>
+                </div>
+            </fieldset>
             <div class="form-floating">
                 <input asp-for="WheelCount" class="form-control" />
                 <span asp-validation-for="WheelCount" class="text-danger"></span>
@@ -79,10 +79,26 @@
             </div>
         </div>
     </div>
-    <div class="form-group mt-2">
+    <div class="row">
+        <div class="col-md-6 mt-4">
+            <h5>Owner</h5>
+            <fieldset disabled>
+                <div class="form-floating">
+                    <input asp-for="OwnerFirstName" class="form-control" />
+                    <label asp-for="OwnerFirstName" class="control-label"></label>
+                </div>
+                <div class="form-floating">
+                    <input asp-for="OwnerLastName" class="form-control" />
+                    <label asp-for="OwnerLastName" class="control-label"></label>
+                </div>
+            </fieldset>
+        </div>
+        <div class="col-md-6"></div>
+    </div>
+    <div class="form-group mt-4">
         <span id="ErrorSpan" class="text-danger">@Model.Error</span>
     </div>
-    <div class="form-group mt-2">
+    <div class="form-group mt-4">
         <input type="submit" value="Save" class="btn btn-primary" />
     </div>
 </form>
