@@ -426,7 +426,9 @@ namespace MVCGarage.Controllers
 
             if (Vehicle != null)
             {
-                _context.Vehicle.Remove(Vehicle);
+                foreach(var va in Vehicle.VehicleAssignments)
+                    _context.VehicleAssignment.Remove(va);
+
                 var ArrivalTime = (DateTime)(Vehicle.VehicleAssignments.FirstOrDefault()?.ArrivalDate!);
                 var parkedTime = DateTime.Now.Subtract(ArrivalTime);
 
