@@ -45,13 +45,13 @@ namespace MVCGarage.Data
             );
 
             modelBuilder.Entity<Member>().HasData(
-                new Member { Id = 1, FirstName = "Kalle", HasReceived2YearsProMembership = false, LastName = "Larsson", PersonalIdentityNumber = "19810701-6666", ProMembershipToDate = DateTime.Now.AddDays(30) },
-                new Member { Id = 2, FirstName = "Kolle", HasReceived2YearsProMembership = false, LastName = "Persson", PersonalIdentityNumber = "19810702-6666", ProMembershipToDate = DateTime.Now.AddDays(25) },
-                new Member { Id = 3, FirstName = "Koklan", HasReceived2YearsProMembership = false, LastName = "Sigvardsson", PersonalIdentityNumber = "19810703-6666", ProMembershipToDate = DateTime.Now.AddDays(15) },
-                new Member { Id = 4, FirstName = "Kille", HasReceived2YearsProMembership = false, LastName = "Andersson", PersonalIdentityNumber = "19810704-6666", ProMembershipToDate = DateTime.Now.AddDays(10) },
-                new Member { Id = 5, FirstName = "Ablin", HasReceived2YearsProMembership = false, LastName = "Dahlstedt", PersonalIdentityNumber = "19810705-6666", ProMembershipToDate = DateTime.Now.AddDays(5) },
-                new Member { Id = 6, FirstName = "Sara", HasReceived2YearsProMembership = false, LastName = "Larsson", PersonalIdentityNumber = "19810706-6666", ProMembershipToDate = DateTime.Now.AddDays(7) },
-                new Member { Id = 7, FirstName = "FlygAnders", HasReceived2YearsProMembership = true, LastName = "Highlander", PersonalIdentityNumber = "19010101-6666", ProMembershipToDate = DateTime.Now.AddDays(-10) }
+                new Member { Id = 1, FirstName = "Kalle", HasReceived2YearsProMembership = false, LastName = "Larsson", PersonalIdentityNumber = "19810701-2018", ProMembershipToDate = DateTime.Now.AddDays(30) },
+                new Member { Id = 2, FirstName = "Kolle", HasReceived2YearsProMembership = false, LastName = "Persson", PersonalIdentityNumber = "19810702-4351", ProMembershipToDate = DateTime.Now.AddDays(25) },
+                new Member { Id = 3, FirstName = "Koklan", HasReceived2YearsProMembership = false, LastName = "Sigvardsson", PersonalIdentityNumber = "19810703-0614", ProMembershipToDate = DateTime.Now.AddDays(15) },
+                new Member { Id = 4, FirstName = "Kille", HasReceived2YearsProMembership = false, LastName = "Andersson", PersonalIdentityNumber = "19810704-0373", ProMembershipToDate = DateTime.Now.AddDays(10) },
+                new Member { Id = 5, FirstName = "Ablin", HasReceived2YearsProMembership = false, LastName = "Dahlstedt", PersonalIdentityNumber = "19810705-5330", ProMembershipToDate = DateTime.Now.AddDays(5) },
+                new Member { Id = 6, FirstName = "Sara", HasReceived2YearsProMembership = false, LastName = "Larsson", PersonalIdentityNumber = "19810706-5016", ProMembershipToDate = DateTime.Now.AddDays(7) },
+                new Member { Id = 7, FirstName = "FlygAnders", HasReceived2YearsProMembership = true, LastName = "Highlander", PersonalIdentityNumber = "19010101-3530", ProMembershipToDate = DateTime.Now.AddDays(-10) }
             );
 
             modelBuilder.Entity<Vehicle>().HasData(

@@ -320,38 +320,39 @@ namespace MVCGarage.Controllers
         // GET: Vehicles/Checkout/5
         public async Task<IActionResult> Checkout(int? id)
         {
-            if (id == null || _context.Vehicle == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var Vehicle = await _context.Vehicle
-                .Include(x => x.VehicleAssignments)                
+            var vehicle = await _context.Vehicle
+                .Include(x => x.VehicleAssignments)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (Vehicle == null)
+
+            if (vehicle == null)
             {
                 return NotFound();
             }
 
-            var ArrivalTime = Vehicle.VehicleAssignments.ToList()[0].ArrivalDate;
-            var parkedTime = DateTime.Now.Subtract(ArrivalTime);
+            var arrivalTime = vehicle.VehicleAssignments.ToList()[0].ArrivalDate;
+            var parkedTime = DateTime.Now.Subtract(arrivalTime);
 
-            var cvm = new CheckoutViewModel()
+            var viewModel = new CheckoutViewModel()
             {
-                ArrivalTime = ArrivalTime,
-                Brand = Vehicle.Brand,
-                Color = Vehicle.Color,
+                ArrivalTime = arrivalTime,
+                Brand = vehicle.Brand,
+                Color = vehicle.Color,
                 CheckoutTime = DateTime.Now,
-                Id = Vehicle.Id,
-                Model = Vehicle.Model,
+                Id = vehicle.Id,
+                Model = vehicle.Model,
                 Price = CalculatePrice(parkedTime.TotalHours),
                 ParkedTime = parkedTime,
-                RegistrationNumber = Vehicle.RegistrationNumber,
-                Type = Vehicle.VehicleType,
-                WheelCount = Vehicle.WheelCount
+                RegistrationNumber = vehicle.RegistrationNumber,
+                Type = vehicle.VehicleType,
+                WheelCount = vehicle.WheelCount
             };
             
-            return View(cvm);
+            return View(viewModel);
         }
 
         private decimal CalculatePrice(double totalHour)
@@ -365,36 +366,48 @@ namespace MVCGarage.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CheckoutConfirmed(int id)
         {
-            if (_context.Vehicle == null)
-            {
-                return Problem("Entity set 'MVCGarageContext.Vehicle'  is null.");
-            }
-
             ReceiptViewModel rvm = new();
-            var Vehicle = await _context.Vehicle
+            var vehicle = await _context.Vehicle
                 .Include(v => v.VehicleAssignments)
+                .Include(x => x.Member)
                 .Where(v => v.Id == id)
                 .FirstOrDefaultAsync();
 
-            if (Vehicle != null)
+            if (vehicle != null)
             {
-                foreach(var va in Vehicle.VehicleAssignments)
+                foreach(var va in vehicle.VehicleAssignments)
                     _context.VehicleAssignment.Remove(va);
 
-                var ArrivalTime = (DateTime)(Vehicle.VehicleAssignments.FirstOrDefault()?.ArrivalDate!);
-                var parkedTime = DateTime.Now.Subtract(ArrivalTime);
+                var arrivalTime = (DateTime)(vehicle.VehicleAssignments.FirstOrDefault()?.ArrivalDate!);
+                var parkedTime = DateTime.Now.Subtract(arrivalTime);
+
+                var member = vehicle.Member;
+                var memberPIN = new Personnummer.Personnummer(member.PersonalIdentityNumber);
+
+                if (!member.HasReceived2YearsProMembership && memberPIN.Age >= 65)
+                {
+                    // Personnummer stores dates in strings so we have to convert to int first
+                    if    (Int32.TryParse(memberPIN.FullYear, out int memberBirthYear)
+                        && Int32.TryParse(memberPIN.Month, out int memberBirthMonth)
+                        && Int32.TryParse(memberPIN.Day, out int memberBirthDay))
+                    {
+                        var memberBirthDay65 = new DateTime(memberBirthYear + 65, memberBirthMonth, memberBirthDay);
+
+                        member.ProMembershipToDate = (memberBirthDay65 > arrivalTime ? memberBirthDay65 : arrivalTime).AddDays(730);
+                    }
+                }
 
                 rvm = new ReceiptViewModel()
                 {
-                    ArrivalTime = ArrivalTime,
-                    Brand = Vehicle.Brand,
-                    Color = Vehicle.Color,
+                    ArrivalTime = arrivalTime,
+                    Brand = vehicle.Brand,
+                    Color = vehicle.Color,
                     CheckoutTime = DateTime.Now,
-                    Model = Vehicle.Model,
+                    Model = vehicle.Model,
                     Price = CalculatePrice(parkedTime.TotalHours),
                     ParkedTime = parkedTime,
-                    RegistrationNumber = Vehicle.RegistrationNumber,
-                    Type = Vehicle.VehicleType
+                    RegistrationNumber = vehicle.RegistrationNumber,
+                    Type = vehicle.VehicleType
                 };
             }
 

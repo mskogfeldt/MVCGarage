@@ -23,5 +23,9 @@ namespace MVCGarage.Models.ViewModels
         public int WheelCount { get; set; }
         public string? Model { get; set; }
         public Color Color { get; set; }
+
+        public DateTime ProMembershipToDate { get; set; }
+        public bool HasReceived2YearsProMembership { get; set; }
+
     }
 }
