@@ -86,7 +86,7 @@ namespace MVCGarage.Controllers
 
                 var member = new Member()
                 {
-                    PersonalIdentityNumber = new Personnummer.Personnummer(amvm.PersonalIdentityNumber).Format(true),
+                    PersonalIdentityNumber = personalIdentityNumber.Format(true),
                     FirstName = amvm.FirstName,
                     LastName = amvm.LastName,
                     ProMembershipToDate = proMembershipExpires,
