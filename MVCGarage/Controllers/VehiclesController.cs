@@ -246,116 +246,75 @@ namespace MVCGarage.Controllers
             return Json(true);
         }
 
-        // GET: Vehicles/Edit/5
+        // GET
         public async Task<IActionResult> Modify(int? id)
         {
-            if (id == null || _context.Vehicle == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var Vehicle = await _context.Vehicle.FindAsync(id);
-            if (Vehicle == null)
+            var vehicle = await _context.Vehicle
+                .Include(v => v.VehicleType)
+                .Include(v => v.Member)
+                .FirstOrDefaultAsync(v => v.Id == id);
+
+            if (vehicle == null)
             {
                 return NotFound();
             }
-            await Task.Delay(100);
-            throw new Exception("TODO type changed");
-            /*
-            var VehicleVM = new ChangeViewModel()
-            {
-                Id = Vehicle.Id,
-                Brand = Vehicle.Brand,
-                Color = Vehicle.Color,
-                //Colors = Enum.GetValues<Color>()
-                //                .Select(g => new SelectListItem
-                //                {
-                //                    Text = g.ToString(),
-                //                    Value = g.ToString()
-                //                })
-                //                .ToList(),
-                Model = Vehicle.Model,
-                RegistrationNumber = Vehicle.RegistrationNumber,
-                //Type = Vehicle.Type,
-                WheelCount = Vehicle.WheelCount
 
+            var viewModel = new ChangeViewModel()
+            {
+                Id = vehicle.Id,
+                Brand = vehicle.Brand,
+                Color = vehicle.Color,
+                Model = vehicle.Model,
+                RegistrationNumber = vehicle.RegistrationNumber,
+                WheelCount = vehicle.WheelCount,
+                VehicleTypeName = vehicle.VehicleType.Name,
+                OwnerFirstName = vehicle.Member.FirstName,
+                OwnerLastName = vehicle.Member.LastName
             };
-            return View(VehicleVM);
-            */
+            return View(viewModel);
+
         }
 
-        // POST: Vehicles/Edit/5
+        // POST
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Modify(ChangeViewModel cvm)
+        public async Task<IActionResult> Modify(ChangeViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                bool bModifySuccess = true;
-                try
+                viewModel.RegistrationNumber = MinifyAndUpperCaseString(viewModel.RegistrationNumber!);
+                viewModel.Error = "";
+
+                var vehicle = new Vehicle()
                 {
-                    if (_context.Vehicle == null)
-                        return NotFound();
+                    Id = viewModel.Id,
+                    WheelCount = viewModel.WheelCount,
+                    Model = viewModel.Model,
+                    RegistrationNumber = viewModel.RegistrationNumber,
+                    Brand = viewModel.Brand,
+                    Color = viewModel.Color
+                };
 
-                    cvm.RegistrationNumber = MinifyAndUpperCaseString(cvm.RegistrationNumber!);
-                    cvm.Error = "";
-                    await Task.Delay(100);
-                    throw new Exception("TODO type changed");
-                    /*
-                    var Vehicle = new Vehicle()
-                    {
-                        Id = cvm.Id,
-                        WheelCount = cvm.WheelCount,
-                        Model = cvm.Model,
-                        RegistrationNumber = cvm.RegistrationNumber,
-                        Brand = cvm.Brand,
-                        Color = cvm.Color
-                        //Type = cvm.Type
-                    };
+                _context.Update(vehicle);
 
-                    _context.Update(Vehicle);
-                    throw new Exception("TODO Arrivaltime changed");
-                    //_context.Entry(Vehicle).Property(x => x.ArrivalTime).IsModified = false;
+                _context.Entry(vehicle).Property(x => x.MemberId).IsModified = false;
 
-                    try
-                    {
-                        await _context.SaveChangesAsync();
-                    }
-                    //TODO: Log the error somewhere
-                    catch (DbUpdateException e)
-                    {
-                        if (e.InnerException != null && e.InnerException.Message.StartsWith("Cannot insert duplicate"))
-                            cvm.Error = "The RegistrationNumber does already excist on another car that is also already parked. Checkout that vehicle first.";
-                        else
-                        {
-                            cvm.Error = "Your vehicle was not modified due to an error";
-                        }
-                        bModifySuccess = false;
-                    }
-                    catch
-                    {
-                        cvm.Error = "Your vehicle was not modified due to an error";
-                        bModifySuccess = false;
-                    }
-                    */
-                    
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    bModifySuccess = false;
-                    if (!VehicleExists(cvm.Id))
-                        return NotFound();
-                    else
-                        cvm.Error = "Your vehicle was not modified due to an error";
+                // TODO: Possibly add change VehicleType functionality. Would require checking if Vehicle is parked and if there's space in the garage.
+                _context.Entry(vehicle).Property(x => x.VehicleTypeId).IsModified = false;
 
-                }
-                cvm.ModifySuccess = bModifySuccess;
-                return View(cvm);
+                await _context.SaveChangesAsync();
+                viewModel.ModifySuccess = true;
+                return View(viewModel);
             }
             
-            return View(cvm);
+            return View(viewModel);
         }
 
         // GET: Vehicles/Checkout/5

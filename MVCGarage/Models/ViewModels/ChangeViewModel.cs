@@ -28,8 +28,11 @@ namespace MVCGarage.Models.ViewModels
         public bool ModifySuccess { get; set; } = false;
         public string? Error { get; set; }
 
-
-        public int VehicleTypeId { get; set; }
-        public VehicleType VehicleType { get; set; } = null!;
+        [Display(Name = "Type of Vehicle")]
+        public string VehicleTypeName { get; set; } = string.Empty;
+        [Display(Name = "First Name")]
+        public string OwnerFirstName { get; set; } = string.Empty;
+        [Display(Name = "Last Name")]
+        public string OwnerLastName { get; set; } = string.Empty;
     }
 }
