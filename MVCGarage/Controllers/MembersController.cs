@@ -28,11 +28,13 @@ namespace MVCGarage.Controllers
         {
             if (_context.Member != null)
             {
-                lvm.HasExpandedSearchItem = !string.IsNullOrEmpty(lvm.SearchName);
+                lvm.HasExpandedSearchItem = !string.IsNullOrEmpty(lvm.SearchName) || !string.IsNullOrEmpty(lvm.SearchRegistrationNumber);
 
                 var dbMembers = await _context.Member!
+                    .Include(m => m.Vehicles)
                     .WhereIf(lvm.SearchPersonalIdentityNumber != null, x => x.PersonalIdentityNumber != null && EF.Functions.Like(x.PersonalIdentityNumber, $"%{lvm.SearchPersonalIdentityNumber!.Trim()}%"   ))
                     .WhereIf(lvm.SearchName != null, x => (x.FirstName != null && x.FirstName.StartsWith(lvm.SearchName!.Trim())) || (x.LastName != null && x.LastName.StartsWith(lvm.SearchName!.Trim())))
+                    .WhereIf(lvm.SearchRegistrationNumber != null, x => (x.Vehicles.Any(v => v.RegistrationNumber != null && EF.Functions.Like(v.RegistrationNumber, $"%{lvm.SearchRegistrationNumber!.Trim()}%"))))
                     .Select(m => new IndexMemberViewModel()
                     {
                         Id = m.Id,

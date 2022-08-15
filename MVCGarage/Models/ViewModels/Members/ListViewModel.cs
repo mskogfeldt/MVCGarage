@@ -10,6 +10,8 @@ namespace MVCGarage.Models.ViewModels.Members
         public string? SearchPersonalIdentityNumber { get; set; }
         [Display(Name = "Name")]
         public string? SearchName { get; set; }
+        [Display(Name = "Vehicle Registration Number")]
+        public string? SearchRegistrationNumber { get; set; }
         public bool HasExpandedSearchItem { get; set; } = false;
     }
 }
