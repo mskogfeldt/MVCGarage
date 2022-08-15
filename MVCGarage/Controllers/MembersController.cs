@@ -75,12 +75,12 @@ namespace MVCGarage.Controllers
             if (ModelState.IsValid)
             {
                 var personalIdentityNumber = new Personnummer.Personnummer(amvm.PersonalIdentityNumber);
-                var proMembershipExpires = DateTime.Now + TimeSpan.FromDays(30);
+                var proMembershipExpires = DateTime.Today.AddDays(31);
                 var hasReceivedPro = false;
 
                 if (personalIdentityNumber.Age >= 65)
                 {
-                    proMembershipExpires += TimeSpan.FromDays(730);
+                    proMembershipExpires.AddYears(2).AddDays(1);
                     hasReceivedPro = true;
                 }
 

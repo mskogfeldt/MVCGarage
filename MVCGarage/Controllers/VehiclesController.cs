@@ -392,8 +392,9 @@ namespace MVCGarage.Controllers
                         && Int32.TryParse(memberPIN.Day, out int memberBirthDay))
                     {
                         var memberBirthDay65 = new DateTime(memberBirthYear + 65, memberBirthMonth, memberBirthDay);
+                        var arrivalDate = new DateTime(arrivalTime.Year, arrivalTime.Month, arrivalTime.Day);
 
-                        member.ProMembershipToDate = (memberBirthDay65 > arrivalTime ? memberBirthDay65 : arrivalTime).AddDays(730);
+                        member.ProMembershipToDate = (memberBirthDay65 > arrivalDate ? memberBirthDay65 : arrivalDate).AddYears(2).AddDays(1);
                     }
                 }
 
