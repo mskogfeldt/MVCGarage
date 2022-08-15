@@ -40,7 +40,7 @@ namespace MVCGarage.Data
 
             modelBuilder.Entity<VehicleType>().HasData(
                 new VehicleType { Id = 1, Name = "Car", NeededSize = 1 },
-                new VehicleType { Id = 2, Name = "Motorcycle", NeededSize = 0.33f },
+                new VehicleType { Id = 2, Name = "Motorcycle", NeededSize = 0.33d },
                 new VehicleType { Id = 3, Name = "Airplane", NeededSize = 8 }
             );
 

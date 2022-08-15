@@ -10,7 +10,7 @@ namespace MVCGarage.Models.Entities
         [Required]
         [StringLength(50)]
         public string Name { get; set; } = string.Empty;
-        [Range(0, float.MaxValue)]
-        public float NeededSize { get; set; }
+        [Range(0.0, double.MaxValue)]
+        public double NeededSize { get; set; }
     }
 }

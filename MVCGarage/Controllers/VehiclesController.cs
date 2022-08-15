@@ -27,7 +27,7 @@ namespace MVCGarage.Controllers
         {
             if (_context.Vehicle != null)
             {
-                lvm.HasExpandedSearchItem = 
+                lvm.HasExpandedSearchItem =
                     lvm.SearchType != null || lvm.SearchWheelCount != null ||
                     !string.IsNullOrEmpty(lvm.SearchBrand) || !string.IsNullOrEmpty(lvm.SearchModel);
 
@@ -36,7 +36,7 @@ namespace MVCGarage.Controllers
                     .Join(_context.VehicleAssignment!,
                     v => v.Id,
                     va => va.VehicleId,
-                    (v, va) => new { vehicle = v, asgnmt = va })                    
+                    (v, va) => new { vehicle = v, asgnmt = va })
                     .WhereIf(lvm.SearchRegistrationNumber != null, x => x.vehicle.RegistrationNumber != null && x.vehicle.RegistrationNumber.StartsWith(lvm.SearchRegistrationNumber!.Trim()))
                     .WhereIf(lvm.SearchBrand != null, x => x.vehicle.Brand != null && x.vehicle.Brand.StartsWith(lvm.SearchBrand!.Trim()))
                     .WhereIf(lvm.SearchWheelCount != null, x => x.vehicle.WheelCount == lvm.SearchWheelCount)
@@ -56,7 +56,7 @@ namespace MVCGarage.Controllers
                         ParkedTime = DateTime.Now.Subtract(v.asgnmt.ArrivalDate),
                         Owner = $"{v.vehicle.Member.FirstName} {v.vehicle.Member.LastName}",
                         MembershipType = new Membership(v.vehicle.Member.ProMembershipToDate).Type
-                    })                    
+                    })
                     .ToListAsync();
 
                 var orderedVehicles =
@@ -68,7 +68,7 @@ namespace MVCGarage.Controllers
                 lvm.VehicleList = orderedVehicles.GroupBy(x => x.Id).Select(y => y.First());
 
                 lvm.VehicleTypes = await _context.VehicleType.ToListAsync();
-                return View(lvm);                
+                return View(lvm);
             }
             else return Problem("Entity set 'MVCGarageContext.Vehicle'  is null.");
         }
@@ -123,17 +123,31 @@ namespace MVCGarage.Controllers
             return View(model);
         }
 
+        public async Task<List<VehicleType>> getVehicleTypesPlusCreate()
+        {
+            var dbVehicleTypes = await _context.VehicleType.ToListAsync();
+            dbVehicleTypes.Add(new VehicleType()
+            {
+            Id = 0,
+                Name = "Create New"
+            });
+            return dbVehicleTypes;
+        }
+
         public async Task<IActionResult> Add(int? id)
         {
             if (id == null || !await _context.Member.AnyAsync(m => m.Id == id))
             {
                 return NotFound();
             }
+            var dbVehicleTypes = await getVehicleTypesPlusCreate();
 
             var avvm = new AddVehicleViewModel
             {
                 MemberId = (int)id,
-                VehicleTypes = await _context.VehicleType.ToListAsync()
+                VehicleTypes = dbVehicleTypes,
+                VehicleTypeId = dbVehicleTypes.FirstOrDefault()?.Id ?? 0,
+                VehicleTypeStartOpen = false
             };
 
             return View(avvm);
@@ -145,20 +159,47 @@ namespace MVCGarage.Controllers
         {
             if (ModelState.IsValid)
             {
-                var vehicle = new Vehicle
+                if(avvm.VehicleTypeId == 0)
+                { 
+                    var vehicleType = new VehicleType
+                    {
+                        Name = avvm.VehicleTypeName!,
+                        NeededSize = avvm.VehicleTypeNeededSize
+                    };
+                    _context.Vehicle.Add(new Vehicle
+                    {
+                        Brand = avvm.Brand,
+                        Color = avvm.Color,
+                        Model = avvm.Model,
+                        RegistrationNumber = avvm.RegistrationNumber,
+                        WheelCount = avvm.WheelCount,
+                        MemberId = avvm.MemberId,
+                        VehicleType = vehicleType
+                    });
+                }
+                else
                 {
-                    Brand = avvm.Brand,
-                    Color = avvm.Color,
-                    Model = avvm.Model,
-                    RegistrationNumber = avvm.RegistrationNumber,
-                    WheelCount = avvm.WheelCount,
-                    MemberId = avvm.MemberId,
-                    VehicleTypeId = avvm.VehicleTypeId
-                };
-                _context.Add(vehicle);
+                    _context.Vehicle.Add(new Vehicle
+                    {
+                        Brand = avvm.Brand,
+                        Color = avvm.Color,
+                        Model = avvm.Model,
+                        RegistrationNumber = avvm.RegistrationNumber,
+                        WheelCount = avvm.WheelCount,
+                        MemberId = avvm.MemberId,
+                        VehicleTypeId = avvm.VehicleTypeId
+                    });
+                }
                 await _context.SaveChangesAsync();
                 avvm.AddSuccess = true;
             }
+
+            var dbVehicleTypes = await getVehicleTypesPlusCreate();
+            avvm.VehicleTypes = dbVehicleTypes;
+
+            if (avvm.VehicleTypeId == 0)
+                avvm.VehicleTypeStartOpen = true;
+
             return View(avvm);
         }
 

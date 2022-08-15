@@ -45,10 +45,15 @@
                 <select asp-for="VehicleTypeId" class="form-control" asp-items="@(new SelectList(Model.VehicleTypes, nameof(VehicleType.Id), nameof(VehicleType.Name)))"></select>
                 <label asp-for="VehicleTypeId" class="control-label"></label>
             </div>
-            <div class="form-floating">
-                <input asp-for="WheelCount" class="form-control" />
-                <span asp-validation-for="WheelCount" class="text-danger"></span>
-                <label asp-for="WheelCount" class="form-label"></label>
+            <div class="form-floating offset-1 col-10 @(Model.VehicleTypeStartOpen ? Html.Raw("collapse.show") : Html.Raw("collapse"))">
+                <input asp-for="VehicleTypeName" class="form-control" />
+                <span asp-validation-for="VehicleTypeName" class="text-danger"></span>
+                <label asp-for="VehicleTypeName" class="form-label"></label>
+            </div>
+            <div class="form-floating offset-1 col-10 @(Model.VehicleTypeStartOpen ? Html.Raw("collapse.show") : Html.Raw("collapse"))">
+                <input asp-for="VehicleTypeNeededSize" class="form-control" />
+                <span asp-validation-for="VehicleTypeNeededSize" class="text-danger"></span>
+                <label asp-for="VehicleTypeNeededSize" class="form-label"></label>
             </div>
         </div>
         <div class="col-md-6">
@@ -67,6 +72,11 @@
                 <span asp-validation-for="Color" class="text-danger"></span>
                 <label asp-for="Color" class="form-label"></label>
             </div>
+            <div class="form-floating">
+                <input asp-for="WheelCount" class="form-control" />
+                <span asp-validation-for="WheelCount" class="text-danger"></span>
+                <label asp-for="WheelCount" class="form-label"></label>
+            </div>
         </div>
     </div>
 
@@ -83,4 +93,5 @@
 *@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="/js/VehicleDDChange.js"></script>
 }

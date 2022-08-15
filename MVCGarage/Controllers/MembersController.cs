@@ -147,7 +147,7 @@ namespace MVCGarage.Controllers
             return View(model);
         }
 
-        public (bool, List<PSpot>) FindFirstAvailableSpots(float NeededSize)
+        public (bool, List<PSpot>) FindFirstAvailableSpots(double NeededSize)
         {
             var retList = new List<PSpot>();
             if (_context.PSpot == null)
@@ -163,7 +163,7 @@ namespace MVCGarage.Controllers
                 //We need to see if there still is room in already taken PSpots
                 foreach (PSpot pSpot in allPSpots)
                 {
-                    float alreadyUsedSizeInSpotTotal = 0f;
+                    double alreadyUsedSizeInSpotTotal = 0f;
                     foreach (VehicleAssignment va in pSpot.VehicleAssignments)
                     {
                         alreadyUsedSizeInSpotTotal += va.Vehicle.VehicleType.NeededSize;
