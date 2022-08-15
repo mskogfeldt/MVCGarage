@@ -65,8 +65,8 @@ namespace MVCGarage.Migrations
                             FirstName = "Kalle",
                             HasReceived2YearsProMembership = false,
                             LastName = "Larsson",
-                            PersonalIdentityNumber = "19810701-6666",
-                            ProMembershipToDate = new DateTime(2022, 9, 10, 22, 14, 10, 739, DateTimeKind.Local).AddTicks(9868)
+                            PersonalIdentityNumber = "19810701-2018",
+                            ProMembershipToDate = new DateTime(2022, 9, 14, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
@@ -74,8 +74,8 @@ namespace MVCGarage.Migrations
                             FirstName = "Kolle",
                             HasReceived2YearsProMembership = false,
                             LastName = "Persson",
-                            PersonalIdentityNumber = "19810702-6666",
-                            ProMembershipToDate = new DateTime(2022, 9, 5, 22, 14, 10, 739, DateTimeKind.Local).AddTicks(9902)
+                            PersonalIdentityNumber = "19810702-4351",
+                            ProMembershipToDate = new DateTime(2022, 9, 9, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
@@ -83,8 +83,8 @@ namespace MVCGarage.Migrations
                             FirstName = "Koklan",
                             HasReceived2YearsProMembership = false,
                             LastName = "Sigvardsson",
-                            PersonalIdentityNumber = "19810703-6666",
-                            ProMembershipToDate = new DateTime(2022, 8, 26, 22, 14, 10, 739, DateTimeKind.Local).AddTicks(9904)
+                            PersonalIdentityNumber = "19810703-0614",
+                            ProMembershipToDate = new DateTime(2022, 8, 30, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
@@ -92,8 +92,8 @@ namespace MVCGarage.Migrations
                             FirstName = "Kille",
                             HasReceived2YearsProMembership = false,
                             LastName = "Andersson",
-                            PersonalIdentityNumber = "19810704-6666",
-                            ProMembershipToDate = new DateTime(2022, 8, 21, 22, 14, 10, 739, DateTimeKind.Local).AddTicks(9906)
+                            PersonalIdentityNumber = "19810704-0373",
+                            ProMembershipToDate = new DateTime(2022, 8, 25, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
@@ -101,8 +101,8 @@ namespace MVCGarage.Migrations
                             FirstName = "Ablin",
                             HasReceived2YearsProMembership = false,
                             LastName = "Dahlstedt",
-                            PersonalIdentityNumber = "19810705-6666",
-                            ProMembershipToDate = new DateTime(2022, 8, 16, 22, 14, 10, 739, DateTimeKind.Local).AddTicks(9908)
+                            PersonalIdentityNumber = "19810705-5330",
+                            ProMembershipToDate = new DateTime(2022, 8, 20, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
@@ -110,8 +110,8 @@ namespace MVCGarage.Migrations
                             FirstName = "Sara",
                             HasReceived2YearsProMembership = false,
                             LastName = "Larsson",
-                            PersonalIdentityNumber = "19810706-6666",
-                            ProMembershipToDate = new DateTime(2022, 8, 18, 22, 14, 10, 739, DateTimeKind.Local).AddTicks(9910)
+                            PersonalIdentityNumber = "19810706-5016",
+                            ProMembershipToDate = new DateTime(2022, 8, 22, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
@@ -119,8 +119,8 @@ namespace MVCGarage.Migrations
                             FirstName = "FlygAnders",
                             HasReceived2YearsProMembership = true,
                             LastName = "Highlander",
-                            PersonalIdentityNumber = "19010101-6666",
-                            ProMembershipToDate = new DateTime(2022, 8, 1, 22, 14, 10, 739, DateTimeKind.Local).AddTicks(9912)
+                            PersonalIdentityNumber = "19010101-3530",
+                            ProMembershipToDate = new DateTime(2022, 8, 5, 0, 0, 0, 0, DateTimeKind.Local)
                         });
                 });
 
@@ -404,21 +404,21 @@ namespace MVCGarage.Migrations
                         new
                         {
                             Id = 1,
-                            ArrivalDate = new DateTime(2022, 8, 11, 22, 14, 10, 740, DateTimeKind.Local).AddTicks(3145),
+                            ArrivalDate = new DateTime(2022, 8, 15, 17, 38, 28, 125, DateTimeKind.Local).AddTicks(2593),
                             PSpotId = 1,
                             VehicleId = 1
                         },
                         new
                         {
                             Id = 2,
-                            ArrivalDate = new DateTime(2022, 8, 11, 22, 14, 10, 740, DateTimeKind.Local).AddTicks(3156),
+                            ArrivalDate = new DateTime(2022, 8, 15, 17, 38, 28, 125, DateTimeKind.Local).AddTicks(2613),
                             PSpotId = 2,
                             VehicleId = 2
                         },
                         new
                         {
                             Id = 3,
-                            ArrivalDate = new DateTime(2022, 8, 11, 22, 14, 10, 740, DateTimeKind.Local).AddTicks(3158),
+                            ArrivalDate = new DateTime(2022, 8, 15, 17, 38, 28, 125, DateTimeKind.Local).AddTicks(2615),
                             PSpotId = 3,
                             VehicleId = 3
                         });
