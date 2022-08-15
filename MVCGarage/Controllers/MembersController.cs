@@ -74,11 +74,23 @@ namespace MVCGarage.Controllers
 		{
             if (ModelState.IsValid)
             {
+                var personalIdentityNumber = new Personnummer.Personnummer(amvm.PersonalIdentityNumber);
+                var proMembershipExpires = DateTime.Now + TimeSpan.FromDays(30);
+                var hasReceivedPro = false;
+
+                if (personalIdentityNumber.Age >= 65)
+                {
+                    proMembershipExpires += TimeSpan.FromDays(730);
+                    hasReceivedPro = true;
+                }
+
                 var member = new Member()
                 {
                     PersonalIdentityNumber = new Personnummer.Personnummer(amvm.PersonalIdentityNumber).Format(true),
                     FirstName = amvm.FirstName,
-                    LastName = amvm.LastName
+                    LastName = amvm.LastName,
+                    ProMembershipToDate = proMembershipExpires,
+                    HasReceived2YearsProMembership = hasReceivedPro
                 };
 
                 _context.Add(member);
