@@ -20,7 +20,7 @@ namespace MVCGarage.Models.ViewModels
         public List<VehicleType> VehicleTypes { get; set; } = new List<VehicleType>();
         public Order? Order { get; set; }
         public bool Desc { get; set; } = false;
-        public bool HasSearchItem { get; set; } = false;
+        public bool HasExpandedSearchItem { get; set; } = false;
     }
 
     public enum Order

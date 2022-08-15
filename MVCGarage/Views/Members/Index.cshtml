@@ -9,7 +9,43 @@
     <a asp-action="Register" class="btn btn-primary mt-2 mb-2" role="button">Register</a>
 </p>
 
-<div class="row">   
+<div class="row">
+    <div class="col-lg-4 order-lg-last mb-4">
+        <div class="accordion bg-secondary bg-opacity-10 p-2 rounded shadow">
+            <h3>Search</h3>
+                <form asp-action="Index">
+                <div class="form-floating">
+                    <input type="text" asp-for="SearchPersonalIdentityNumber" class="form-control" name="SearchPersonalIdentityNumber" />
+                    <label asp-for="SearchPersonalIdentityNumber" class="form-label"></label>
+                </div>
+                <div class="accordion-item p-0 mt-2 border-0">
+                <h5 class="accordion-header">
+                    <button class="accordion-button alert-primary @if(!Model.HasExpandedSearchItem) @Html.Raw("collapsed")" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="@Html.Raw(Model.HasExpandedSearchItem)" aria-controls="collapseOne">
+                    More search options...
+                    </button>
+                </h5>
+                <div id="collapseOne" class="accordion-collapse collapse @if(Model.HasExpandedSearchItem) @Html.Raw("show")" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <div class="accordion-body text-dark bg-primary bg-opacity-10">
+                        <div class="form-floating">
+                            <input type="text" asp-for="SearchName" class="form-control" name="searchName" />
+                            <label asp-for="SearchName" class="form-label"></label>
+                        </div>               
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <input type="submit" class="btn btn-dark mt-2 mb-2" value="Search"/>
+                </div>
+                <div class="col text-end">
+                    <a href="/Members" class="btn btn-outline-dark mt-2 mb-2" role="button">Reset Search</a>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+
+
     <div class="col-lg-8 order-lg-first">
         <div class="container bg-light rounded shadow p-2">
             <h3>Members</h3>
@@ -18,6 +54,9 @@
                     <tr>
                         <th>
                             @{ MVCGarage.Models.ViewModels.Members.IndexMemberViewModel dummyModel = null!; }
+                            @Html.DisplayNameFor(dummyParam => dummyModel.BirthDate)
+                        </th>
+                        <th>
                             @Html.DisplayNameFor(dummyParam => dummyModel.FirstName)
                         </th>
                         <th>
@@ -32,6 +71,9 @@
                 <tbody>
                     @foreach (var item in Model.MemberList) {
                     <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BirthDate)
+                        </td>                        
                         <td>
                             @Html.DisplayFor(modelItem => item.FirstName)
                         </td>

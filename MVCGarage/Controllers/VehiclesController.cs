@@ -27,13 +27,7 @@ namespace MVCGarage.Controllers
         {
             if (_context.Vehicle != null)
             {
-                //if ((lvm.SearchType != null) 
-                //    || !string.IsNullOrEmpty(lvm.SearchBrand) 
-                //    || !string.IsNullOrEmpty(lvm.SearchModel) 
-                //    || (lvm.SearchWheelCount != null))
-                //    lvm.HasSearchItem = true;
-
-                lvm.HasSearchItem = 
+                lvm.HasExpandedSearchItem = 
                     lvm.SearchType != null || lvm.SearchWheelCount != null ||
                     !string.IsNullOrEmpty(lvm.SearchBrand) || !string.IsNullOrEmpty(lvm.SearchModel);
 
@@ -47,7 +41,6 @@ namespace MVCGarage.Controllers
                     .WhereIf(lvm.SearchBrand != null, x => x.vehicle.Brand != null && x.vehicle.Brand.StartsWith(lvm.SearchBrand!.Trim()))
                     .WhereIf(lvm.SearchWheelCount != null, x => x.vehicle.WheelCount == lvm.SearchWheelCount)
                     .WhereIf(lvm.SearchModel != null, x => x.vehicle.Model != null && x.vehicle.Model.StartsWith(lvm.SearchModel!.Trim()))
-                    //TODO testa searchtype
                     .WhereIf(lvm.SearchType != null, x => x.vehicle.VehicleType.Id == lvm.SearchType)
                     .Select(v => new IndexVehicleViewModel()
                     {

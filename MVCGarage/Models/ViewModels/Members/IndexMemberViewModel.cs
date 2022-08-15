@@ -10,6 +10,8 @@ namespace MVCGarage.Models.ViewModels.Members
         public int? NrOfVehicles { get; set; }
         [Display(Name = "First Name")]
         public string? FirstName { get; set; }
+        [Display(Name = "Birth Date")]
+        public string? BirthDate { get; set; }
         [Display(Name = "Last Name")]
         public string? LastName { get; set; }
     }
