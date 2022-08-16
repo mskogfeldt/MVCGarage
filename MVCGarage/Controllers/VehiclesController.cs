@@ -203,74 +203,9 @@ namespace MVCGarage.Controllers
             return View(avvm);
         }
 
-
-        // GET: Vehicles/Create
-        public IActionResult Park()
-        {
-            var pvm = new ParkViewModel
-            {
-                Price = options.Value.HourPrice
-            };
-            return View(pvm);
-        }
-
         public string MinifyAndUpperCaseString(string stringToMinify)
         {
             return stringToMinify.Replace(" ", "").Replace("-", "");
-        }
-
-        // POST: Vehicles/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Park(ParkViewModel pvm)
-        {
-            if (ModelState.IsValid)
-            {
-                pvm.RegistrationNumber = MinifyAndUpperCaseString(pvm.RegistrationNumber!);
-                pvm.Error = "";
-                await Task.Delay(100);
-                throw new Exception("TODO Arrivaltime changed, type changed");
-                /*
-                var Vehicle = new Vehicle
-                {
-                    Brand = pvm.Brand,
-                    Color = pvm.Color,
-                    Id = pvm.Id,
-                    Model = pvm.Model,
-                    RegistrationNumber = pvm.RegistrationNumber,
-                    //Type = pvm.Type,
-                    WheelCount = pvm.WheelCount
-                    //ArrivalTime = DateTime.Now
-                };
-
-                _context.Add(Vehicle);
-                bool bParkSuccess = true;
-                try
-                {
-                    await _context.SaveChangesAsync();
-                }
-                //TODO: Log the error somewhere
-                catch(DbUpdateException e)
-                {
-                    if (e.InnerException != null && e.InnerException.Message.StartsWith("Cannot insert duplicate"))
-                        pvm.Error = "A vehicle with that registration number is already parked. Try modifying the vehicle instead.";
-                    else
-                    {
-                        pvm.Error = "Your vehicle was not parked due to an error";
-                    }
-                    bParkSuccess = false;
-                }
-                catch
-                {
-                    pvm.Error = "Your vehicle was not parked due to an error";
-                    bParkSuccess = false;
-                }
-                pvm.ParkSuccess = bParkSuccess;
-                */
-            }
-            return View(pvm);
         }
 
         public async Task<IActionResult> CheckIfRegIsUnique(string registrationNumber)
