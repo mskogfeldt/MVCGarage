@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MVCGarage.Migrations
 {
     [DbContext(typeof(MVCGarageContext))]
-    [Migration("20220815113037_SeedPersonalIdentityNumberValid")]
-    partial class SeedPersonalIdentityNumberValid
+    [Migration("20220815153828_ChangedFloatToDouble")]
+    partial class ChangedFloatToDouble
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -68,7 +68,7 @@ namespace MVCGarage.Migrations
                             HasReceived2YearsProMembership = false,
                             LastName = "Larsson",
                             PersonalIdentityNumber = "19810701-2018",
-                            ProMembershipToDate = new DateTime(2022, 9, 14, 13, 30, 37, 358, DateTimeKind.Local).AddTicks(1398)
+                            ProMembershipToDate = new DateTime(2022, 9, 14, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
@@ -77,7 +77,7 @@ namespace MVCGarage.Migrations
                             HasReceived2YearsProMembership = false,
                             LastName = "Persson",
                             PersonalIdentityNumber = "19810702-4351",
-                            ProMembershipToDate = new DateTime(2022, 9, 9, 13, 30, 37, 358, DateTimeKind.Local).AddTicks(1434)
+                            ProMembershipToDate = new DateTime(2022, 9, 9, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
@@ -86,7 +86,7 @@ namespace MVCGarage.Migrations
                             HasReceived2YearsProMembership = false,
                             LastName = "Sigvardsson",
                             PersonalIdentityNumber = "19810703-0614",
-                            ProMembershipToDate = new DateTime(2022, 8, 30, 13, 30, 37, 358, DateTimeKind.Local).AddTicks(1438)
+                            ProMembershipToDate = new DateTime(2022, 8, 30, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
@@ -95,7 +95,7 @@ namespace MVCGarage.Migrations
                             HasReceived2YearsProMembership = false,
                             LastName = "Andersson",
                             PersonalIdentityNumber = "19810704-0373",
-                            ProMembershipToDate = new DateTime(2022, 8, 25, 13, 30, 37, 358, DateTimeKind.Local).AddTicks(1441)
+                            ProMembershipToDate = new DateTime(2022, 8, 25, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
@@ -104,7 +104,7 @@ namespace MVCGarage.Migrations
                             HasReceived2YearsProMembership = false,
                             LastName = "Dahlstedt",
                             PersonalIdentityNumber = "19810705-5330",
-                            ProMembershipToDate = new DateTime(2022, 8, 20, 13, 30, 37, 358, DateTimeKind.Local).AddTicks(1444)
+                            ProMembershipToDate = new DateTime(2022, 8, 20, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
@@ -113,7 +113,7 @@ namespace MVCGarage.Migrations
                             HasReceived2YearsProMembership = false,
                             LastName = "Larsson",
                             PersonalIdentityNumber = "19810706-5016",
-                            ProMembershipToDate = new DateTime(2022, 8, 22, 13, 30, 37, 358, DateTimeKind.Local).AddTicks(1448)
+                            ProMembershipToDate = new DateTime(2022, 8, 22, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
@@ -122,7 +122,7 @@ namespace MVCGarage.Migrations
                             HasReceived2YearsProMembership = true,
                             LastName = "Highlander",
                             PersonalIdentityNumber = "19010101-3530",
-                            ProMembershipToDate = new DateTime(2022, 8, 5, 13, 30, 37, 358, DateTimeKind.Local).AddTicks(1451)
+                            ProMembershipToDate = new DateTime(2022, 8, 5, 0, 0, 0, 0, DateTimeKind.Local)
                         });
                 });
 
@@ -406,21 +406,21 @@ namespace MVCGarage.Migrations
                         new
                         {
                             Id = 1,
-                            ArrivalDate = new DateTime(2022, 8, 15, 13, 30, 37, 358, DateTimeKind.Local).AddTicks(5721),
+                            ArrivalDate = new DateTime(2022, 8, 15, 17, 38, 28, 125, DateTimeKind.Local).AddTicks(2593),
                             PSpotId = 1,
                             VehicleId = 1
                         },
                         new
                         {
                             Id = 2,
-                            ArrivalDate = new DateTime(2022, 8, 15, 13, 30, 37, 358, DateTimeKind.Local).AddTicks(5736),
+                            ArrivalDate = new DateTime(2022, 8, 15, 17, 38, 28, 125, DateTimeKind.Local).AddTicks(2613),
                             PSpotId = 2,
                             VehicleId = 2
                         },
                         new
                         {
                             Id = 3,
-                            ArrivalDate = new DateTime(2022, 8, 15, 13, 30, 37, 358, DateTimeKind.Local).AddTicks(5739),
+                            ArrivalDate = new DateTime(2022, 8, 15, 17, 38, 28, 125, DateTimeKind.Local).AddTicks(2615),
                             PSpotId = 3,
                             VehicleId = 3
                         });
@@ -439,8 +439,8 @@ namespace MVCGarage.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<float>("NeededSize")
-                        .HasColumnType("real");
+                    b.Property<double>("NeededSize")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
@@ -451,19 +451,19 @@ namespace MVCGarage.Migrations
                         {
                             Id = 1,
                             Name = "Car",
-                            NeededSize = 1f
+                            NeededSize = 1.0
                         },
                         new
                         {
                             Id = 2,
                             Name = "Motorcycle",
-                            NeededSize = 0.33f
+                            NeededSize = 0.33000000000000002
                         },
                         new
                         {
                             Id = 3,
                             Name = "Airplane",
-                            NeededSize = 8f
+                            NeededSize = 8.0
                         });
                 });
 

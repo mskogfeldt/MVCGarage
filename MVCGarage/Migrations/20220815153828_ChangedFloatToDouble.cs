@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MVCGarage.Migrations
 {
-    public partial class FreshAgain : Migration
+    public partial class ChangedFloatToDouble : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -45,7 +45,7 @@ namespace MVCGarage.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    NeededSize = table.Column<float>(type: "real", nullable: false)
+                    NeededSize = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -115,13 +115,13 @@ namespace MVCGarage.Migrations
                 columns: new[] { "Id", "FirstName", "HasReceived2YearsProMembership", "LastName", "PersonalIdentityNumber", "ProMembershipToDate" },
                 values: new object[,]
                 {
-                    { 1, "Kalle", false, "Larsson", "19810701-6666", new DateTime(2022, 9, 10, 22, 14, 10, 739, DateTimeKind.Local).AddTicks(9868) },
-                    { 2, "Kolle", false, "Persson", "19810702-6666", new DateTime(2022, 9, 5, 22, 14, 10, 739, DateTimeKind.Local).AddTicks(9902) },
-                    { 3, "Koklan", false, "Sigvardsson", "19810703-6666", new DateTime(2022, 8, 26, 22, 14, 10, 739, DateTimeKind.Local).AddTicks(9904) },
-                    { 4, "Kille", false, "Andersson", "19810704-6666", new DateTime(2022, 8, 21, 22, 14, 10, 739, DateTimeKind.Local).AddTicks(9906) },
-                    { 5, "Ablin", false, "Dahlstedt", "19810705-6666", new DateTime(2022, 8, 16, 22, 14, 10, 739, DateTimeKind.Local).AddTicks(9908) },
-                    { 6, "Sara", false, "Larsson", "19810706-6666", new DateTime(2022, 8, 18, 22, 14, 10, 739, DateTimeKind.Local).AddTicks(9910) },
-                    { 7, "FlygAnders", true, "Highlander", "19010101-6666", new DateTime(2022, 8, 1, 22, 14, 10, 739, DateTimeKind.Local).AddTicks(9912) }
+                    { 1, "Kalle", false, "Larsson", "19810701-2018", new DateTime(2022, 9, 14, 0, 0, 0, 0, DateTimeKind.Local) },
+                    { 2, "Kolle", false, "Persson", "19810702-4351", new DateTime(2022, 9, 9, 0, 0, 0, 0, DateTimeKind.Local) },
+                    { 3, "Koklan", false, "Sigvardsson", "19810703-0614", new DateTime(2022, 8, 30, 0, 0, 0, 0, DateTimeKind.Local) },
+                    { 4, "Kille", false, "Andersson", "19810704-0373", new DateTime(2022, 8, 25, 0, 0, 0, 0, DateTimeKind.Local) },
+                    { 5, "Ablin", false, "Dahlstedt", "19810705-5330", new DateTime(2022, 8, 20, 0, 0, 0, 0, DateTimeKind.Local) },
+                    { 6, "Sara", false, "Larsson", "19810706-5016", new DateTime(2022, 8, 22, 0, 0, 0, 0, DateTimeKind.Local) },
+                    { 7, "FlygAnders", true, "Highlander", "19010101-3530", new DateTime(2022, 8, 5, 0, 0, 0, 0, DateTimeKind.Local) }
                 });
 
             migrationBuilder.InsertData(
@@ -146,9 +146,9 @@ namespace MVCGarage.Migrations
                 columns: new[] { "Id", "Name", "NeededSize" },
                 values: new object[,]
                 {
-                    { 1, "Car", 1f },
-                    { 2, "Motorcycle", 0.33f },
-                    { 3, "Airplane", 8f }
+                    { 1, "Car", 1.0 },
+                    { 2, "Motorcycle", 0.33000000000000002 },
+                    { 3, "Airplane", 8.0 }
                 });
 
             migrationBuilder.InsertData(
@@ -174,17 +174,17 @@ namespace MVCGarage.Migrations
             migrationBuilder.InsertData(
                 table: "VehicleAssignment",
                 columns: new[] { "Id", "ArrivalDate", "PSpotsPSpotId", "VehiclesVehicleId()" },
-                values: new object[] { 1, new DateTime(2022, 8, 11, 22, 14, 10, 740, DateTimeKind.Local).AddTicks(3145), 1, 1 });
+                values: new object[] { 1, new DateTime(2022, 8, 15, 17, 38, 28, 125, DateTimeKind.Local).AddTicks(2593), 1, 1 });
 
             migrationBuilder.InsertData(
                 table: "VehicleAssignment",
                 columns: new[] { "Id", "ArrivalDate", "PSpotsPSpotId", "VehiclesVehicleId()" },
-                values: new object[] { 2, new DateTime(2022, 8, 11, 22, 14, 10, 740, DateTimeKind.Local).AddTicks(3156), 2, 2 });
+                values: new object[] { 2, new DateTime(2022, 8, 15, 17, 38, 28, 125, DateTimeKind.Local).AddTicks(2613), 2, 2 });
 
             migrationBuilder.InsertData(
                 table: "VehicleAssignment",
                 columns: new[] { "Id", "ArrivalDate", "PSpotsPSpotId", "VehiclesVehicleId()" },
-                values: new object[] { 3, new DateTime(2022, 8, 11, 22, 14, 10, 740, DateTimeKind.Local).AddTicks(3158), 3, 3 });
+                values: new object[] { 3, new DateTime(2022, 8, 15, 17, 38, 28, 125, DateTimeKind.Local).AddTicks(2615), 3, 3 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Member_PersonalIdentityNumber",

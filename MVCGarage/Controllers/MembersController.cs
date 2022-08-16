@@ -26,28 +26,26 @@ namespace MVCGarage.Controllers
 
         public async Task<IActionResult> Index(ListViewModel lvm)
         {
-            if (_context.Member != null)
-            {
-                lvm.HasExpandedSearchItem = !string.IsNullOrEmpty(lvm.SearchName);
+            lvm.HasExpandedSearchItem = !string.IsNullOrEmpty(lvm.SearchName) || !string.IsNullOrEmpty(lvm.SearchRegistrationNumber);
 
-                var dbMembers = await _context.Member!
-                    .WhereIf(lvm.SearchPersonalIdentityNumber != null, x => x.PersonalIdentityNumber != null && EF.Functions.Like(x.PersonalIdentityNumber, $"%{lvm.SearchPersonalIdentityNumber!.Trim()}%"   ))
-                    .WhereIf(lvm.SearchName != null, x => (x.FirstName != null && x.FirstName.StartsWith(lvm.SearchName!.Trim())) || (x.LastName != null && x.LastName.StartsWith(lvm.SearchName!.Trim())))
-                    .Select(m => new IndexMemberViewModel()
-                    {
-                        Id = m.Id,
+            var dbMembers = await _context.Member
+                .Include(m => m.Vehicles)
+                .WhereIf(lvm.SearchPersonalIdentityNumber != null, x => x.PersonalIdentityNumber != null && EF.Functions.Like(x.PersonalIdentityNumber, $"%{lvm.SearchPersonalIdentityNumber!.Trim()}%"   ))
+                .WhereIf(lvm.SearchName != null, x => (x.FirstName != null && x.FirstName.StartsWith(lvm.SearchName!.Trim())) || (x.LastName != null && x.LastName.StartsWith(lvm.SearchName!.Trim())))
+                .WhereIf(lvm.SearchRegistrationNumber != null, x => (x.Vehicles.Any(v => v.RegistrationNumber != null && EF.Functions.Like(v.RegistrationNumber, $"%{lvm.SearchRegistrationNumber!.Trim()}%"))))
+                .Select(m => new IndexMemberViewModel()
+                {
+                    Id = m.Id,
                         
-                        FirstName = m.FirstName,
-                        LastName = m.LastName,
-                        BirthDate = $"{(m.PersonalIdentityNumber ?? "????????").Substring(0, 8)}-XXXX",
-                        NrOfVehicles = m.Vehicles.Count
-                    })
-                    .ToListAsync();
-                lvm.MemberList = dbMembers;
-                dbMembers.Sort(new TwoFirstCaseSensitiveOnModelsFirstname());
-                return View(lvm);                
-            }
-            else return Problem("Entity set 'MVCGarageContext.Member'  is null.");
+                    FirstName = m.FirstName,
+                    LastName = m.LastName,
+                    BirthDate = $"{(m.PersonalIdentityNumber ?? "????????").Substring(0, 8)}-XXXX",
+                    NrOfVehicles = m.Vehicles.Count
+                })
+                .ToListAsync();
+            lvm.MemberList = dbMembers;
+            dbMembers.Sort(new TwoFirstCaseSensitiveOnModelsFirstname());
+            return View(lvm);                
         }
 
         public class TwoFirstCaseSensitiveOnModelsFirstname : IComparer<Object>
@@ -147,7 +145,7 @@ namespace MVCGarage.Controllers
             return View(model);
         }
 
-        public (bool, List<PSpot>) FindFirstAvailableSpots(float NeededSize)
+        public (bool, List<PSpot>) FindFirstAvailableSpots(double NeededSize)
         {
             var retList = new List<PSpot>();
             if (_context.PSpot == null)
@@ -163,7 +161,7 @@ namespace MVCGarage.Controllers
                 //We need to see if there still is room in already taken PSpots
                 foreach (PSpot pSpot in allPSpots)
                 {
-                    float alreadyUsedSizeInSpotTotal = 0f;
+                    double alreadyUsedSizeInSpotTotal = 0f;
                     foreach (VehicleAssignment va in pSpot.VehicleAssignments)
                     {
                         alreadyUsedSizeInSpotTotal += va.Vehicle.VehicleType.NeededSize;

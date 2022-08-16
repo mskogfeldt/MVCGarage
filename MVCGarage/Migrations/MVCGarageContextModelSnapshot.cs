@@ -404,21 +404,21 @@ namespace MVCGarage.Migrations
                         new
                         {
                             Id = 1,
-                            ArrivalDate = new DateTime(2022, 8, 15, 14, 16, 27, 74, DateTimeKind.Local).AddTicks(1141),
+                            ArrivalDate = new DateTime(2022, 8, 15, 17, 38, 28, 125, DateTimeKind.Local).AddTicks(2593),
                             PSpotId = 1,
                             VehicleId = 1
                         },
                         new
                         {
                             Id = 2,
-                            ArrivalDate = new DateTime(2022, 8, 15, 14, 16, 27, 74, DateTimeKind.Local).AddTicks(1156),
+                            ArrivalDate = new DateTime(2022, 8, 15, 17, 38, 28, 125, DateTimeKind.Local).AddTicks(2613),
                             PSpotId = 2,
                             VehicleId = 2
                         },
                         new
                         {
                             Id = 3,
-                            ArrivalDate = new DateTime(2022, 8, 15, 14, 16, 27, 74, DateTimeKind.Local).AddTicks(1158),
+                            ArrivalDate = new DateTime(2022, 8, 15, 17, 38, 28, 125, DateTimeKind.Local).AddTicks(2615),
                             PSpotId = 3,
                             VehicleId = 3
                         });
@@ -437,8 +437,8 @@ namespace MVCGarage.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<float>("NeededSize")
-                        .HasColumnType("real");
+                    b.Property<double>("NeededSize")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
@@ -449,19 +449,19 @@ namespace MVCGarage.Migrations
                         {
                             Id = 1,
                             Name = "Car",
-                            NeededSize = 1f
+                            NeededSize = 1.0
                         },
                         new
                         {
                             Id = 2,
                             Name = "Motorcycle",
-                            NeededSize = 0.33f
+                            NeededSize = 0.33000000000000002
                         },
                         new
                         {
                             Id = 3,
                             Name = "Airplane",
-                            NeededSize = 8f
+                            NeededSize = 8.0
                         });
                 });
 

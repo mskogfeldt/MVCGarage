@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MVCGarage.Models.Entities;
+using MVCGarage.Validations;
 using System.ComponentModel.DataAnnotations;
 
 namespace MVCGarage.Models.ViewModels
@@ -20,6 +22,15 @@ namespace MVCGarage.Models.ViewModels
         [Required]
         [Display(Name = "Type of Vehicle")]
         public int VehicleTypeId { get; set; }
+
+        [RequiredIfVehicleTypeIdIs0AndStringLength(50)]
+        [Display(Name = "Vehicle Type Name")]
+        public string? VehicleTypeName { get; set; }
+        [Display(Name = "Vehicle Type Needed Size")]
+        [Range(0.0, double.MaxValue)]
+        public double VehicleTypeNeededSize { get; set; }
+
+        public bool VehicleTypeStartOpen { get; set; }
         public List<VehicleType> VehicleTypes { get; set; } = new List<VehicleType>();
 
         [Required]
