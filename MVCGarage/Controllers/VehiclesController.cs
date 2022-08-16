@@ -81,6 +81,7 @@ namespace MVCGarage.Controllers
             var vehicle = await _context.Vehicle
                 .AsNoTracking()
                 .Include(v => v.VehicleType)
+                .Include(v => v.VehicleAssignments)
                 .FirstOrDefaultAsync(v => v.Id == id);
 
             if (vehicle == null)
