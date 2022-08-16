@@ -49,7 +49,7 @@
 
     <div class="col-lg-8 order-lg-first">
         <div class="container bg-light rounded shadow p-2">
-            <table class="table">
+            <table class="table table-striped hoverable">
                 <thead>
                     <tr>
                         <th>
@@ -65,12 +65,11 @@
                         <th>
                             @Html.DisplayNameFor(dummyParam => dummyModel.NrOfVehicles)
                         </th>
-                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in Model.MemberList) {
-                    <tr>
+                    <tr class="clickableTR" myattribute="/Members/Details/@item.Id">
                         <td>
                             @Html.DisplayFor(modelItem => item.BirthDate)
                         </td>                        
@@ -83,11 +82,6 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.NrOfVehicles)
                         </td>
-                        <td>
-                            @*<a asp-action="Modify" asp-route-id="@item.Id">Modify</a> |*@
-                            <a asp-action="Details" asp-route-id="@item.Id">Details</a>
-                            @*<a asp-action="Checkout" asp-route-id="@item.Id">Checkout</a>*@
-                        </td>
                     </tr>
                     }
                 </tbody>
@@ -96,3 +90,7 @@
     </div>
 
 </div>
+
+@section Scripts {
+ <script src="~/js/clickableRows.js"></script>
+}

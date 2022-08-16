@@ -20,3 +20,13 @@ body {
 .form-floating {
     margin-top: 0.5em;
 }
+
+th a {
+    color: #2c2c2c;
+}
+
+.hoverable tbody tr:hover td {
+    background: rgb(230,240,255);
+    color: rgb(30,50,180);
+    cursor: pointer;
+}

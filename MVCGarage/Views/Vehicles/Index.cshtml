@@ -82,13 +82,14 @@
     
     <div class="col-xl-8">
         <div class="container bg-light rounded shadow p-2 overflow-auto">
-            <table class="table">
+            <table class="table table-striped hoverable">
                 <thead>
                     <tr>
-                        <th>
-                            <a asp-action="Index" asp-route-Desc="@Html.Raw(!Model.Desc)" asp-route-Order="@Order.Type">
-                                Vehicle Type @Html.Raw(Sort(Order.Type))
-                            </a>
+                        <th class="muted">
+                            Owner
+                        </th>
+                        <th class="muted">
+                            Membership
                         </th>
                         <th>
                             <a asp-action="Index" asp-route-Desc="@Html.Raw(!Model.Desc)" asp-route-Order="@Order.RegistrationNumber">
@@ -96,10 +97,9 @@
                             </a>
                         </th>
                         <th>
-                            Owner
-                        </th>
-                        <th>
-                            Membership
+                            <a asp-action="Index" asp-route-Desc="@Html.Raw(!Model.Desc)" asp-route-Order="@Order.Type">
+                                Vehicle Type @Html.Raw(Sort(Order.Type))
+                            </a>
                         </th>
                         <th>
                             <a asp-action="Index" asp-route-Desc="@Html.Raw(!Model.Desc)" asp-route-Order="@Order.ArrivalTime">
@@ -116,18 +116,18 @@
                 </thead>
                 <tbody>
                     @foreach (var item in Model.VehicleList) {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Type.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.RegistrationNumber)
-                        </td>
+                    <tr class="clickableTR" myattribute="/Members/Details/@item.Id">
                         <td>
                             @Html.DisplayFor(modelItem => item.Owner)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.MembershipType)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RegistrationNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Type.Name)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.ArrivalTime)
@@ -136,9 +136,7 @@
                             @Html.DisplayFor(modelItem => item.ParkedTime)
                         </td>
                         <td>
-                            <a asp-action="Modify" asp-route-id="@item.Id">Modify</a> |
-                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                            <a asp-action="Checkout" asp-route-id="@item.Id">Checkout</a>
+                            <a asp-action="Checkout" class="btn btn-danger form-control" asp-route-id="@item.Id">Checkout</a>
                         </td>
                     </tr>
                     }
@@ -148,3 +146,7 @@
     </div>
 
 </div>
+
+@section Scripts {
+ <script src="~/js/clickableRows.js"></script>
+}
