@@ -66,7 +66,7 @@
     <div class="col-lg-8 order-lg-first">
         <div class="container bg-light rounded shadow p-2">
             <h3>Member Vehicles</h3>
-            <table class="table">
+            <table class="table table-striped hoverable">
                 <thead>
                     <tr>
                         <th>
@@ -87,7 +87,7 @@
                 </thead>
                 <tbody>
                     @foreach (var item in Model.Vehicles) {
-                    <tr>
+                    <tr class="clickableTR" myattribute="/Vehicles/Details/@item.Id">
                         <td>
                             @Html.DisplayFor(modelItem => item.Id)
                         </td>
@@ -125,3 +125,7 @@
 <div>
     @*<a asp-action="Modify" asp-route-id="@Model?.Id" class="btn btn-dark">Modify</a>*@
 </div>
+                                    
+@section Scripts {
+ <script src="~/js/clickableRows.js"></script>
+}
