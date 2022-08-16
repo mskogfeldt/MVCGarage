@@ -25,52 +25,49 @@ namespace MVCGarage.Controllers
 
         public async Task<IActionResult> Index(ListViewModel lvm)
         {
-            if (_context.Vehicle != null)
-            {
-                lvm.HasExpandedSearchItem =
-                    lvm.SearchType != null || lvm.SearchWheelCount != null ||
-                    !string.IsNullOrEmpty(lvm.SearchBrand) || !string.IsNullOrEmpty(lvm.SearchModel);
+            lvm.HasExpandedSearchItem =
+                lvm.SearchType != null || lvm.SearchWheelCount != null ||
+                !string.IsNullOrEmpty(lvm.SearchBrand) || !string.IsNullOrEmpty(lvm.SearchModel);
 
-                var dbVehicles = await _context.Vehicle!
-                    .Include(v => v.Member)
-                    .Join(_context.VehicleAssignment!,
-                    v => v.Id,
-                    va => va.VehicleId,
-                    (v, va) => new { vehicle = v, asgnmt = va })
-                    .WhereIf(lvm.SearchRegistrationNumber != null, x => x.vehicle.RegistrationNumber != null && x.vehicle.RegistrationNumber.StartsWith(lvm.SearchRegistrationNumber!.Trim()))
-                    .WhereIf(lvm.SearchBrand != null, x => x.vehicle.Brand != null && x.vehicle.Brand.StartsWith(lvm.SearchBrand!.Trim()))
-                    .WhereIf(lvm.SearchWheelCount != null, x => x.vehicle.WheelCount == lvm.SearchWheelCount)
-                    .WhereIf(lvm.SearchModel != null, x => x.vehicle.Model != null && x.vehicle.Model.StartsWith(lvm.SearchModel!.Trim()))
-                    .WhereIf(lvm.SearchType != null, x => x.vehicle.VehicleType.Id == lvm.SearchType)
-                    .Select(v => new IndexVehicleViewModel()
+            var dbVehicles = await _context.Vehicle
+                .AsNoTracking()
+                .Include(v => v.Member)
+                .Join(_context.VehicleAssignment!,
+                v => v.Id,
+                va => va.VehicleId,
+                (v, va) => new { vehicle = v, asgnmt = va })
+                .WhereIf(lvm.SearchRegistrationNumber != null, x => x.vehicle.RegistrationNumber != null && x.vehicle.RegistrationNumber.StartsWith(lvm.SearchRegistrationNumber!.Trim()))
+                .WhereIf(lvm.SearchBrand != null, x => x.vehicle.Brand != null && x.vehicle.Brand.StartsWith(lvm.SearchBrand!.Trim()))
+                .WhereIf(lvm.SearchWheelCount != null, x => x.vehicle.WheelCount == lvm.SearchWheelCount)
+                .WhereIf(lvm.SearchModel != null, x => x.vehicle.Model != null && x.vehicle.Model.StartsWith(lvm.SearchModel!.Trim()))
+                .WhereIf(lvm.SearchType != null, x => x.vehicle.VehicleType.Id == lvm.SearchType)
+                .Select(v => new IndexVehicleViewModel()
+                {
+                    Id = v.vehicle.Id,
+                    RegistrationNumber = v.vehicle.RegistrationNumber,
+                    Type = new VehicleType()
                     {
-                        Id = v.vehicle.Id,
-                        RegistrationNumber = v.vehicle.RegistrationNumber,
-                        Type = new VehicleType()
-                        {
-                            Id = v.vehicle.VehicleType.Id,
-                            Name = v.vehicle.VehicleType.Name,
-                            NeededSize = v.vehicle.VehicleType.NeededSize
-                        },
-                        ArrivalTime = v.asgnmt.ArrivalDate,
-                        ParkedTime = DateTime.Now.Subtract(v.asgnmt.ArrivalDate),
-                        Owner = $"{v.vehicle.Member.FirstName} {v.vehicle.Member.LastName}",
-                        MembershipType = new Membership(v.vehicle.Member.ProMembershipToDate).Type
-                    })
-                    .ToListAsync();
+                        Id = v.vehicle.VehicleType.Id,
+                        Name = v.vehicle.VehicleType.Name,
+                        NeededSize = v.vehicle.VehicleType.NeededSize
+                    },
+                    ArrivalTime = v.asgnmt.ArrivalDate,
+                    ParkedTime = DateTime.Now.Subtract(v.asgnmt.ArrivalDate),
+                    Owner = $"{v.vehicle.Member.FirstName} {v.vehicle.Member.LastName}",
+                    MembershipType = new Membership(v.vehicle.Member.ProMembershipToDate).Type
+                })
+                .ToListAsync();
 
-                var orderedVehicles =
-                    lvm.Order == Order.RegistrationNumber ? dbVehicles.OrderAscOrDesc(lvm.Desc, v => v.RegistrationNumber)
-                  : lvm.Order == Order.Type ? dbVehicles.OrderAscOrDesc(lvm.Desc, v => v.Type.Id)
-                  : lvm.Order == Order.ParkedTime ? dbVehicles.OrderAscOrDesc(lvm.Desc, v => v.ParkedTime)
-                  : dbVehicles.OrderAscOrDesc(lvm.Desc, v => v.ArrivalTime);
+            var orderedVehicles =
+                lvm.Order == Order.RegistrationNumber ? dbVehicles.OrderAscOrDesc(lvm.Desc, v => v.RegistrationNumber)
+                : lvm.Order == Order.Type ? dbVehicles.OrderAscOrDesc(lvm.Desc, v => v.Type.Id)
+                : lvm.Order == Order.ParkedTime ? dbVehicles.OrderAscOrDesc(lvm.Desc, v => v.ParkedTime)
+                : dbVehicles.OrderAscOrDesc(lvm.Desc, v => v.ArrivalTime);
 
-                lvm.VehicleList = orderedVehicles.GroupBy(x => x.Id).Select(y => y.First());
+            lvm.VehicleList = orderedVehicles.GroupBy(x => x.Id).Select(y => y.First());
 
-                lvm.VehicleTypes = await _context.VehicleType.ToListAsync();
-                return View(lvm);
-            }
-            else return Problem("Entity set 'MVCGarageContext.Vehicle'  is null.");
+            lvm.VehicleTypes = await _context.VehicleType.AsNoTracking().ToListAsync();
+            return View(lvm);
         }
 
         // GET: Vehicles/Details/5
@@ -82,6 +79,7 @@ namespace MVCGarage.Controllers
             }
 
             var vehicle = await _context.Vehicle
+                .AsNoTracking()
                 .Include(v => v.VehicleType)
                 .FirstOrDefaultAsync(v => v.Id == id);
 
@@ -90,7 +88,7 @@ namespace MVCGarage.Controllers
                 return NotFound();
             }
 
-            var member = await _context.Member.FirstOrDefaultAsync(m => m.Id == vehicle.MemberId);
+            var member = await _context.Member.AsNoTracking().FirstOrDefaultAsync(m => m.Id == vehicle.MemberId);
 
             var vehicleType = vehicle.VehicleType;
 
@@ -125,7 +123,7 @@ namespace MVCGarage.Controllers
 
         public async Task<List<VehicleType>> getVehicleTypesPlusCreate()
         {
-            var dbVehicleTypes = await _context.VehicleType.ToListAsync();
+            var dbVehicleTypes = await _context.VehicleType.AsNoTracking().ToListAsync();
             dbVehicleTypes.Add(new VehicleType()
             {
             Id = 0,
@@ -136,7 +134,7 @@ namespace MVCGarage.Controllers
 
         public async Task<IActionResult> Add(int? id)
         {
-            if (id == null || !await _context.Member.AnyAsync(m => m.Id == id))
+            if (id == null || !await _context.Member.AsNoTracking().AnyAsync(m => m.Id == id))
             {
                 return NotFound();
             }
@@ -212,7 +210,7 @@ namespace MVCGarage.Controllers
         {
             try
             {
-                if (await _context.Vehicle!.AnyAsync(v => v.RegistrationNumber == registrationNumber))
+                if (await _context.Vehicle.AsNoTracking().AnyAsync(v => v.RegistrationNumber == registrationNumber))
                     return Json("A vehicle with that registration number is already parked. Try modifying the vehicle instead.");
             }
             catch
@@ -231,6 +229,7 @@ namespace MVCGarage.Controllers
             }
 
             var vehicle = await _context.Vehicle
+                .AsNoTracking()
                 .Include(v => v.VehicleType)
                 .Include(v => v.Member)
                 .FirstOrDefaultAsync(v => v.Id == id);
@@ -302,6 +301,7 @@ namespace MVCGarage.Controllers
             }
 
             var vehicle = await _context.Vehicle
+                .AsNoTracking()
                 .Include(x => x.VehicleAssignments)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
@@ -399,7 +399,7 @@ namespace MVCGarage.Controllers
 
         private bool VehicleExists(int id)
         {
-            return (_context.Vehicle?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Vehicle?.AsNoTracking().Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
